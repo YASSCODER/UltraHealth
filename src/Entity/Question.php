@@ -30,6 +30,9 @@ class Question
     #[ORM\OneToMany(mappedBy: 'question', targetEntity: Reponse::class)]
     private Collection $reponses;
 
+    #[ORM\ManyToOne(inversedBy: 'questions')]
+    private ?User $UserQuestion = null;
+
     public function __construct()
     {
         $this->category = new ArrayCollection();
@@ -133,6 +136,18 @@ class Question
                 $reponse->setQuestion(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUserQuestion(): ?User
+    {
+        return $this->UserQuestion;
+    }
+
+    public function setUserQuestion(?User $UserQuestion): self
+    {
+        $this->UserQuestion = $UserQuestion;
 
         return $this;
     }

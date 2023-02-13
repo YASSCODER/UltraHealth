@@ -25,6 +25,9 @@ class Reponse
     #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
 
+    #[ORM\ManyToOne(inversedBy: 'reponses')]
+    private ?User $UserReponse = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +77,18 @@ class Reponse
     public function setUpdatedAt(\DateTimeImmutable $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function getUserReponse(): ?User
+    {
+        return $this->UserReponse;
+    }
+
+    public function setUserReponse(?User $UserReponse): self
+    {
+        $this->UserReponse = $UserReponse;
 
         return $this;
     }

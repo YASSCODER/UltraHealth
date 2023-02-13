@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -40,6 +42,33 @@ class User
 
     #[ORM\Column(length: 255)]
     private ?string $role = null;
+
+    #[ORM\OneToOne(mappedBy: 'userData', cascade: ['persist', 'remove'])]
+    private ?FichePatient $fichePatient = null;
+
+    #[ORM\OneToMany(mappedBy: 'creator', targetEntity: RendezVous::class)]
+    private Collection $rendezVouses;
+
+    #[ORM\OneToMany(mappedBy: 'userCommande', targetEntity: Commande::class)]
+    private Collection $commandes;
+
+    #[ORM\OneToMany(mappedBy: 'UserQuestion', targetEntity: Question::class)]
+    private Collection $questions;
+
+    #[ORM\OneToMany(mappedBy: 'UserReponse', targetEntity: Reponse::class)]
+    private Collection $reponses;
+
+    #[ORM\ManyToMany(targetEntity: Menu::class, mappedBy: 'UserMenu')]
+    private Collection $menus;
+
+    public function __construct()
+    {
+        $this->rendezVouses = new ArrayCollection();
+        $this->commandes = new ArrayCollection();
+        $this->questions = new ArrayCollection();
+        $this->reponses = new ArrayCollection();
+        $this->menus = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -150,6 +179,175 @@ class User
     public function setRole(string $role): self
     {
         $this->role = $role;
+
+        return $this;
+    }
+
+    public function getFichePatient(): ?FichePatient
+    {
+        return $this->fichePatient;
+    }
+
+    public function setFichePatient(?FichePatient $fichePatient): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($fichePatient === null && $this->fichePatient !== null) {
+            $this->fichePatient->setUserData(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($fichePatient !== null && $fichePatient->getUserData() !== $this) {
+            $fichePatient->setUserData($this);
+        }
+
+        $this->fichePatient = $fichePatient;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, RendezVous>
+     */
+    public function getRendezVouses(): Collection
+    {
+        return $this->rendezVouses;
+    }
+
+    public function addRendezVouse(RendezVous $rendezVouse): self
+    {
+        if (!$this->rendezVouses->contains($rendezVouse)) {
+            $this->rendezVouses->add($rendezVouse);
+            $rendezVouse->setCreator($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRendezVouse(RendezVous $rendezVouse): self
+    {
+        if ($this->rendezVouses->removeElement($rendezVouse)) {
+            // set the owning side to null (unless already changed)
+            if ($rendezVouse->getCreator() === $this) {
+                $rendezVouse->setCreator(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commande>
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commande $commande): self
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes->add($commande);
+            $commande->setUserCommande($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): self
+    {
+        if ($this->commandes->removeElement($commande)) {
+            // set the owning side to null (unless already changed)
+            if ($commande->getUserCommande() === $this) {
+                $commande->setUserCommande(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Question>
+     */
+    public function getQuestions(): Collection
+    {
+        return $this->questions;
+    }
+
+    public function addQuestion(Question $question): self
+    {
+        if (!$this->questions->contains($question)) {
+            $this->questions->add($question);
+            $question->setUserQuestion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuestion(Question $question): self
+    {
+        if ($this->questions->removeElement($question)) {
+            // set the owning side to null (unless already changed)
+            if ($question->getUserQuestion() === $this) {
+                $question->setUserQuestion(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reponse>
+     */
+    public function getReponses(): Collection
+    {
+        return $this->reponses;
+    }
+
+    public function addReponse(Reponse $reponse): self
+    {
+        if (!$this->reponses->contains($reponse)) {
+            $this->reponses->add($reponse);
+            $reponse->setUserReponse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReponse(Reponse $reponse): self
+    {
+        if ($this->reponses->removeElement($reponse)) {
+            // set the owning side to null (unless already changed)
+            if ($reponse->getUserReponse() === $this) {
+                $reponse->setUserReponse(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Menu>
+     */
+    public function getMenus(): Collection
+    {
+        return $this->menus;
+    }
+
+    public function addMenu(Menu $menu): self
+    {
+        if (!$this->menus->contains($menu)) {
+            $this->menus->add($menu);
+            $menu->addUserMenu($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMenu(Menu $menu): self
+    {
+        if ($this->menus->removeElement($menu)) {
+            $menu->removeUserMenu($this);
+        }
 
         return $this;
     }
