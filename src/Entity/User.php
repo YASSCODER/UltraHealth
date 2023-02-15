@@ -61,6 +61,12 @@ class User
     #[ORM\ManyToMany(targetEntity: Menu::class, mappedBy: 'UserMenu')]
     private Collection $menus;
 
+    #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Poste::class, orphanRemoval: true)]
+    private Collection $postes;
+
+    #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Commentaire::class)]
+    private Collection $commentaires;
+
     public function __construct()
     {
         $this->rendezVouses = new ArrayCollection();
@@ -68,6 +74,8 @@ class User
         $this->questions = new ArrayCollection();
         $this->reponses = new ArrayCollection();
         $this->menus = new ArrayCollection();
+        $this->postes = new ArrayCollection();
+        $this->commentaires = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -347,6 +355,66 @@ class User
     {
         if ($this->menus->removeElement($menu)) {
             $menu->removeUserMenu($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Poste>
+     */
+    public function getPostes(): Collection
+    {
+        return $this->postes;
+    }
+
+    public function addPoste(Poste $poste): self
+    {
+        if (!$this->postes->contains($poste)) {
+            $this->postes->add($poste);
+            $poste->setCreator($this);
+        }
+
+        return $this;
+    }
+
+    public function removePoste(Poste $poste): self
+    {
+        if ($this->postes->removeElement($poste)) {
+            // set the owning side to null (unless already changed)
+            if ($poste->getCreator() === $this) {
+                $poste->setCreator(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commentaire>
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaire $commentaire): self
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires->add($commentaire);
+            $commentaire->setCreator($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaire $commentaire): self
+    {
+        if ($this->commentaires->removeElement($commentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getCreator() === $this) {
+                $commentaire->setCreator(null);
+            }
         }
 
         return $this;
