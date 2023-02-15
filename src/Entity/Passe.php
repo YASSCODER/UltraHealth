@@ -5,23 +5,33 @@ namespace App\Entity;
 use App\Repository\PasseRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: PasseRepository::class)]
+/**
+ * @ORM\Entity(repositoryClass=PasseRepository::class)
+ */
 class Passe
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
 
-    #[ORM\Column(length: 35)]
-    private ?string $code = null;
+    /**
+     * @ORM\Column(type="string", length=30)
+     */
+    private $code;
 
-    #[ORM\Column]
-    private ?float $prix = null;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $prix;
 
-    #[ORM\ManyToOne(inversedBy: 'passe')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Evennement $evennement = null;
+    /**
+     * @ORM\ManyToOne(targetEntity=Evennement::class, inversedBy="passe")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $evennement;
 
     public function getId(): ?int
     {

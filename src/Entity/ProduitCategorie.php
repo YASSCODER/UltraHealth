@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\PosteCategorieRepository;
+use App\Repository\ProduitCategorieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=PosteCategorieRepository::class)
+ * @ORM\Entity(repositoryClass=ProduitCategorieRepository::class)
  */
-class PosteCategorie
+class ProduitCategorie
 {
     /**
      * @ORM\Id
@@ -25,13 +25,13 @@ class PosteCategorie
     private $titre;
 
     /**
-     * @ORM\OneToMany(targetEntity=Poste::class, mappedBy="category")
+     * @ORM\OneToMany(targetEntity=Produit::class, mappedBy="category", orphanRemoval=true)
      */
-    private $postes;
+    private $produits;
 
     public function __construct()
     {
-        $this->postes = new ArrayCollection();
+        $this->produits = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -52,29 +52,29 @@ class PosteCategorie
     }
 
     /**
-     * @return Collection<int, Poste>
+     * @return Collection<int, Produit>
      */
-    public function getPostes(): Collection
+    public function getProduits(): Collection
     {
-        return $this->postes;
+        return $this->produits;
     }
 
-    public function addPoste(Poste $poste): self
+    public function addProduit(Produit $produit): self
     {
-        if (!$this->postes->contains($poste)) {
-            $this->postes[] = $poste;
-            $poste->setCategory($this);
+        if (!$this->produits->contains($produit)) {
+            $this->produits[] = $produit;
+            $produit->setCategory($this);
         }
 
         return $this;
     }
 
-    public function removePoste(Poste $poste): self
+    public function removeProduit(Produit $produit): self
     {
-        if ($this->postes->removeElement($poste)) {
+        if ($this->produits->removeElement($produit)) {
             // set the owning side to null (unless already changed)
-            if ($poste->getCategory() === $this) {
-                $poste->setCategory(null);
+            if ($produit->getCategory() === $this) {
+                $produit->setCategory(null);
             }
         }
 

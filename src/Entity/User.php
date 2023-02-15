@@ -5,77 +5,121 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
+/**
+ * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ORM\Table(name="`user`")
+ */
 class User
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
 
-    #[ORM\Column(length: 8)]
-    private ?string $CIN = null;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $cin;
 
-    #[ORM\Column(length: 25)]
-    private ?string $nom = null;
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $nom;
 
-    #[ORM\Column(length: 25)]
-    private ?string $prenom = null;
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $prenom;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $dateNaissance = null;
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $dateNaissance;
 
-    #[ORM\Column(length: 255)]
-    private ?string $zone = null;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $speciality;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $speciality = null;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $zone;
 
-    #[ORM\Column(length: 255)]
-    private ?string $email = null;
+    /**
+     * @ORM\Column(type="string", length=30)
+     */
+    private $email;
 
-    #[ORM\Column(length: 255)]
-    private ?string $password = null;
+    /**
+     * @ORM\Column(type="string", length=30)
+     */
+    private $password;
 
-    #[ORM\Column(length: 255)]
-    private ?string $role = null;
+    /**
+     * @ORM\Column(type="string", length=30)
+     */
+    private $role;
 
-    #[ORM\OneToOne(mappedBy: 'userData', cascade: ['persist', 'remove'])]
-    private ?FichePatient $fichePatient = null;
+    /**
+     * @ORM\OneToOne(targetEntity=FichePatient::class, mappedBy="patient", cascade={"persist", "remove"})
+     */
+    private $fichePatient;
 
-    #[ORM\OneToMany(mappedBy: 'creator', targetEntity: RendezVous::class)]
-    private Collection $rendezVouses;
+    /**
+     * @ORM\OneToMany(targetEntity=RendezVous::class, mappedBy="UserCreator", orphanRemoval=true)
+     */
+    private $rendezVouses;
 
-    #[ORM\OneToMany(mappedBy: 'userCommande', targetEntity: Commande::class)]
-    private Collection $commandes;
+    /**
+     * @ORM\OneToMany(targetEntity=Commande::class, mappedBy="UserOwner", orphanRemoval=true)
+     */
+    private $commandes;
 
-    #[ORM\OneToMany(mappedBy: 'UserQuestion', targetEntity: Question::class)]
-    private Collection $questions;
+    /**
+     * @ORM\OneToMany(targetEntity=Menu::class, mappedBy="nutritioniste", orphanRemoval=true)
+     */
+    private $menus;
 
-    #[ORM\OneToMany(mappedBy: 'UserReponse', targetEntity: Reponse::class)]
-    private Collection $reponses;
+    /**
+     * @ORM\ManyToOne(targetEntity=Menu::class, inversedBy="client")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $menuClient;
 
-    #[ORM\ManyToMany(targetEntity: Menu::class, mappedBy: 'UserMenu')]
-    private Collection $menus;
+    /**
+     * @ORM\OneToMany(targetEntity=Poste::class, mappedBy="userOwner", orphanRemoval=true)
+     */
+    private $postes;
 
-    #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Poste::class, orphanRemoval: true)]
-    private Collection $postes;
+    /**
+     * @ORM\OneToMany(targetEntity=Commantaire::class, mappedBy="owner", orphanRemoval=true)
+     */
+    private $commantaires;
 
-    #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Commentaire::class)]
-    private Collection $commentaires;
+    /**
+     * @ORM\OneToMany(targetEntity=Question::class, mappedBy="author", orphanRemoval=true)
+     */
+    private $questions;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Reponse::class, mappedBy="author", orphanRemoval=true)
+     */
+    private $reponses;
 
     public function __construct()
     {
         $this->rendezVouses = new ArrayCollection();
         $this->commandes = new ArrayCollection();
-        $this->questions = new ArrayCollection();
-        $this->reponses = new ArrayCollection();
         $this->menus = new ArrayCollection();
         $this->postes = new ArrayCollection();
-        $this->commentaires = new ArrayCollection();
+        $this->commantaires = new ArrayCollection();
+        $this->questions = new ArrayCollection();
+        $this->reponses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -83,14 +127,14 @@ class User
         return $this->id;
     }
 
-    public function getCIN(): ?string
+    public function getCin(): ?string
     {
-        return $this->CIN;
+        return $this->cin;
     }
 
-    public function setCIN(string $CIN): self
+    public function setCin(string $cin): self
     {
-        $this->CIN = $CIN;
+        $this->cin = $cin;
 
         return $this;
     }
@@ -131,18 +175,6 @@ class User
         return $this;
     }
 
-    public function getZone(): ?string
-    {
-        return $this->zone;
-    }
-
-    public function setZone(string $zone): self
-    {
-        $this->zone = $zone;
-
-        return $this;
-    }
-
     public function getSpeciality(): ?string
     {
         return $this->speciality;
@@ -151,6 +183,18 @@ class User
     public function setSpeciality(?string $speciality): self
     {
         $this->speciality = $speciality;
+
+        return $this;
+    }
+
+    public function getZone(): ?string
+    {
+        return $this->zone;
+    }
+
+    public function setZone(string $zone): self
+    {
+        $this->zone = $zone;
 
         return $this;
     }
@@ -196,16 +240,11 @@ class User
         return $this->fichePatient;
     }
 
-    public function setFichePatient(?FichePatient $fichePatient): self
+    public function setFichePatient(FichePatient $fichePatient): self
     {
-        // unset the owning side of the relation if necessary
-        if ($fichePatient === null && $this->fichePatient !== null) {
-            $this->fichePatient->setUserData(null);
-        }
-
         // set the owning side of the relation if necessary
-        if ($fichePatient !== null && $fichePatient->getUserData() !== $this) {
-            $fichePatient->setUserData($this);
+        if ($fichePatient->getPatient() !== $this) {
+            $fichePatient->setPatient($this);
         }
 
         $this->fichePatient = $fichePatient;
@@ -224,8 +263,8 @@ class User
     public function addRendezVouse(RendezVous $rendezVouse): self
     {
         if (!$this->rendezVouses->contains($rendezVouse)) {
-            $this->rendezVouses->add($rendezVouse);
-            $rendezVouse->setCreator($this);
+            $this->rendezVouses[] = $rendezVouse;
+            $rendezVouse->setUserCreator($this);
         }
 
         return $this;
@@ -235,8 +274,8 @@ class User
     {
         if ($this->rendezVouses->removeElement($rendezVouse)) {
             // set the owning side to null (unless already changed)
-            if ($rendezVouse->getCreator() === $this) {
-                $rendezVouse->setCreator(null);
+            if ($rendezVouse->getUserCreator() === $this) {
+                $rendezVouse->setUserCreator(null);
             }
         }
 
@@ -254,8 +293,8 @@ class User
     public function addCommande(Commande $commande): self
     {
         if (!$this->commandes->contains($commande)) {
-            $this->commandes->add($commande);
-            $commande->setUserCommande($this);
+            $this->commandes[] = $commande;
+            $commande->setUserOwner($this);
         }
 
         return $this;
@@ -265,68 +304,8 @@ class User
     {
         if ($this->commandes->removeElement($commande)) {
             // set the owning side to null (unless already changed)
-            if ($commande->getUserCommande() === $this) {
-                $commande->setUserCommande(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Question>
-     */
-    public function getQuestions(): Collection
-    {
-        return $this->questions;
-    }
-
-    public function addQuestion(Question $question): self
-    {
-        if (!$this->questions->contains($question)) {
-            $this->questions->add($question);
-            $question->setUserQuestion($this);
-        }
-
-        return $this;
-    }
-
-    public function removeQuestion(Question $question): self
-    {
-        if ($this->questions->removeElement($question)) {
-            // set the owning side to null (unless already changed)
-            if ($question->getUserQuestion() === $this) {
-                $question->setUserQuestion(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Reponse>
-     */
-    public function getReponses(): Collection
-    {
-        return $this->reponses;
-    }
-
-    public function addReponse(Reponse $reponse): self
-    {
-        if (!$this->reponses->contains($reponse)) {
-            $this->reponses->add($reponse);
-            $reponse->setUserReponse($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReponse(Reponse $reponse): self
-    {
-        if ($this->reponses->removeElement($reponse)) {
-            // set the owning side to null (unless already changed)
-            if ($reponse->getUserReponse() === $this) {
-                $reponse->setUserReponse(null);
+            if ($commande->getUserOwner() === $this) {
+                $commande->setUserOwner(null);
             }
         }
 
@@ -344,8 +323,8 @@ class User
     public function addMenu(Menu $menu): self
     {
         if (!$this->menus->contains($menu)) {
-            $this->menus->add($menu);
-            $menu->addUserMenu($this);
+            $this->menus[] = $menu;
+            $menu->setNutritioniste($this);
         }
 
         return $this;
@@ -354,8 +333,23 @@ class User
     public function removeMenu(Menu $menu): self
     {
         if ($this->menus->removeElement($menu)) {
-            $menu->removeUserMenu($this);
+            // set the owning side to null (unless already changed)
+            if ($menu->getNutritioniste() === $this) {
+                $menu->setNutritioniste(null);
+            }
         }
+
+        return $this;
+    }
+
+    public function getMenuClient(): ?Menu
+    {
+        return $this->menuClient;
+    }
+
+    public function setMenuClient(?Menu $menuClient): self
+    {
+        $this->menuClient = $menuClient;
 
         return $this;
     }
@@ -371,8 +365,8 @@ class User
     public function addPoste(Poste $poste): self
     {
         if (!$this->postes->contains($poste)) {
-            $this->postes->add($poste);
-            $poste->setCreator($this);
+            $this->postes[] = $poste;
+            $poste->setUserOwner($this);
         }
 
         return $this;
@@ -382,8 +376,8 @@ class User
     {
         if ($this->postes->removeElement($poste)) {
             // set the owning side to null (unless already changed)
-            if ($poste->getCreator() === $this) {
-                $poste->setCreator(null);
+            if ($poste->getUserOwner() === $this) {
+                $poste->setUserOwner(null);
             }
         }
 
@@ -391,29 +385,89 @@ class User
     }
 
     /**
-     * @return Collection<int, Commentaire>
+     * @return Collection<int, Commantaire>
      */
-    public function getCommentaires(): Collection
+    public function getCommantaires(): Collection
     {
-        return $this->commentaires;
+        return $this->commantaires;
     }
 
-    public function addCommentaire(Commentaire $commentaire): self
+    public function addCommantaire(Commantaire $commantaire): self
     {
-        if (!$this->commentaires->contains($commentaire)) {
-            $this->commentaires->add($commentaire);
-            $commentaire->setCreator($this);
+        if (!$this->commantaires->contains($commantaire)) {
+            $this->commantaires[] = $commantaire;
+            $commantaire->setOwner($this);
         }
 
         return $this;
     }
 
-    public function removeCommentaire(Commentaire $commentaire): self
+    public function removeCommantaire(Commantaire $commantaire): self
     {
-        if ($this->commentaires->removeElement($commentaire)) {
+        if ($this->commantaires->removeElement($commantaire)) {
             // set the owning side to null (unless already changed)
-            if ($commentaire->getCreator() === $this) {
-                $commentaire->setCreator(null);
+            if ($commantaire->getOwner() === $this) {
+                $commantaire->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Question>
+     */
+    public function getQuestions(): Collection
+    {
+        return $this->questions;
+    }
+
+    public function addQuestion(Question $question): self
+    {
+        if (!$this->questions->contains($question)) {
+            $this->questions[] = $question;
+            $question->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuestion(Question $question): self
+    {
+        if ($this->questions->removeElement($question)) {
+            // set the owning side to null (unless already changed)
+            if ($question->getAuthor() === $this) {
+                $question->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reponse>
+     */
+    public function getReponses(): Collection
+    {
+        return $this->reponses;
+    }
+
+    public function addReponse(Reponse $reponse): self
+    {
+        if (!$this->reponses->contains($reponse)) {
+            $this->reponses[] = $reponse;
+            $reponse->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReponse(Reponse $reponse): self
+    {
+        if ($this->reponses->removeElement($reponse)) {
+            // set the owning side to null (unless already changed)
+            if ($reponse->getAuthor() === $this) {
+                $reponse->setAuthor(null);
             }
         }
 

@@ -7,27 +7,43 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: MenuRepository::class)]
+/**
+ * @ORM\Entity(repositoryClass=MenuRepository::class)
+ */
 class Menu
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
 
-    #[ORM\Column(length: 30)]
-    private ?string $titre = null;
+    /**
+     * @ORM\Column(type="string", length=30)
+     */
+    private $titre;
 
-    #[ORM\ManyToOne(inversedBy: 'menus')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?MenuCategory $category = null;
+    /**
+     * @ORM\ManyToOne(targetEntity=MenuCategorie::class, inversedBy="menus")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
 
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'menus')]
-    private Collection $UserMenu;
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="menus")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $nutritioniste;
+
+    /**
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="menuClient", orphanRemoval=true)
+     */
+    private $client;
 
     public function __construct()
     {
-        $this->UserMenu = new ArrayCollection();
+        $this->client = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -47,14 +63,26 @@ class Menu
         return $this;
     }
 
-    public function getCategory(): ?MenuCategory
+    public function getCategory(): ?MenuCategorie
     {
         return $this->category;
     }
 
-    public function setCategory(?MenuCategory $category): self
+    public function setCategory(?MenuCategorie $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getNutritioniste(): ?User
+    {
+        return $this->nutritioniste;
+    }
+
+    public function setNutritioniste(?User $nutritioniste): self
+    {
+        $this->nutritioniste = $nutritioniste;
 
         return $this;
     }
@@ -62,23 +90,29 @@ class Menu
     /**
      * @return Collection<int, User>
      */
-    public function getUserMenu(): Collection
+    public function getClient(): Collection
     {
-        return $this->UserMenu;
+        return $this->client;
     }
 
-    public function addUserMenu(User $userMenu): self
+    public function addClient(User $client): self
     {
-        if (!$this->UserMenu->contains($userMenu)) {
-            $this->UserMenu->add($userMenu);
+        if (!$this->client->contains($client)) {
+            $this->client[] = $client;
+            $client->setMenuClient($this);
         }
 
         return $this;
     }
 
-    public function removeUserMenu(User $userMenu): self
+    public function removeClient(User $client): self
     {
-        $this->UserMenu->removeElement($userMenu);
+        if ($this->client->removeElement($client)) {
+            // set the owning side to null (unless already changed)
+            if ($client->getMenuClient() === $this) {
+                $client->setMenuClient(null);
+            }
+        }
 
         return $this;
     }

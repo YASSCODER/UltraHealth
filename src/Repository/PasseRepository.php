@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Passe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -21,46 +23,56 @@ class PasseRepository extends ServiceEntityRepository
         parent::__construct($registry, Passe::class);
     }
 
-    public function save(Passe $entity, bool $flush = false): void
+    /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function add(Passe $entity, bool $flush = true): void
     {
-        $this->getEntityManager()->persist($entity);
-
+        $this->_em->persist($entity);
         if ($flush) {
-            $this->getEntityManager()->flush();
+            $this->_em->flush();
         }
     }
 
-    public function remove(Passe $entity, bool $flush = false): void
+    /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function remove(Passe $entity, bool $flush = true): void
     {
-        $this->getEntityManager()->remove($entity);
-
+        $this->_em->remove($entity);
         if ($flush) {
-            $this->getEntityManager()->flush();
+            $this->_em->flush();
         }
     }
 
-//    /**
-//     * @return Passe[] Returns an array of Passe objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    // /**
+    //  * @return Passe[] Returns an array of Passe objects
+    //  */
+    /*
+    public function findByExampleField($value)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('p.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    */
 
-//    public function findOneBySomeField($value): ?Passe
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /*
+    public function findOneBySomeField($value): ?Passe
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.exampleField = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+    */
 }

@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\PosteCategorieRepository;
+use App\Repository\MenuCategorieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=PosteCategorieRepository::class)
+ * @ORM\Entity(repositoryClass=MenuCategorieRepository::class)
  */
-class PosteCategorie
+class MenuCategorie
 {
     /**
      * @ORM\Id
@@ -25,13 +25,13 @@ class PosteCategorie
     private $titre;
 
     /**
-     * @ORM\OneToMany(targetEntity=Poste::class, mappedBy="category")
+     * @ORM\OneToMany(targetEntity=Menu::class, mappedBy="category", orphanRemoval=true)
      */
-    private $postes;
+    private $menus;
 
     public function __construct()
     {
-        $this->postes = new ArrayCollection();
+        $this->menus = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -52,29 +52,29 @@ class PosteCategorie
     }
 
     /**
-     * @return Collection<int, Poste>
+     * @return Collection<int, Menu>
      */
-    public function getPostes(): Collection
+    public function getMenus(): Collection
     {
-        return $this->postes;
+        return $this->menus;
     }
 
-    public function addPoste(Poste $poste): self
+    public function addMenu(Menu $menu): self
     {
-        if (!$this->postes->contains($poste)) {
-            $this->postes[] = $poste;
-            $poste->setCategory($this);
+        if (!$this->menus->contains($menu)) {
+            $this->menus[] = $menu;
+            $menu->setCategory($this);
         }
 
         return $this;
     }
 
-    public function removePoste(Poste $poste): self
+    public function removeMenu(Menu $menu): self
     {
-        if ($this->postes->removeElement($poste)) {
+        if ($this->menus->removeElement($menu)) {
             // set the owning side to null (unless already changed)
-            if ($poste->getCategory() === $this) {
-                $poste->setCategory(null);
+            if ($menu->getCategory() === $this) {
+                $menu->setCategory(null);
             }
         }
 

@@ -3,34 +3,41 @@
 namespace App\Entity;
 
 use App\Repository\CommandeRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CommandeRepository::class)]
+/**
+ * @ORM\Entity(repositoryClass=CommandeRepository::class)
+ */
 class Commande
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
 
-    #[ORM\Column(length: 255)]
-    private ?string $titre = null;
+    /**
+     * @ORM\Column(type="string", length=30)
+     */
+    private $titre;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    private $created_at;
 
-    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: produit::class)]
-    private Collection $produits;
+    /**
+     * @ORM\ManyToOne(targetEntity=Produit::class, inversedBy="commandes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $produits;
 
-    #[ORM\ManyToOne(inversedBy: 'commandes')]
-    private ?User $userCommande = null;
-
-    public function __construct()
-    {
-        $this->produits = new ArrayCollection();
-    }
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="commandes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $UserOwner;
 
     public function getId(): ?int
     {
@@ -61,44 +68,26 @@ class Commande
         return $this;
     }
 
-    /**
-     * @return Collection<int, produit>
-     */
-    public function getProduits(): Collection
+    public function getProduits(): ?Produit
     {
         return $this->produits;
     }
 
-    public function addProduit(produit $produit): self
+    public function setProduits(?Produit $produits): self
     {
-        if (!$this->produits->contains($produit)) {
-            $this->produits->add($produit);
-            $produit->setCommande($this);
-        }
+        $this->produits = $produits;
 
         return $this;
     }
 
-    public function removeProduit(produit $produit): self
+    public function getUserOwner(): ?User
     {
-        if ($this->produits->removeElement($produit)) {
-            // set the owning side to null (unless already changed)
-            if ($produit->getCommande() === $this) {
-                $produit->setCommande(null);
-            }
-        }
-
-        return $this;
+        return $this->UserOwner;
     }
 
-    public function getUserCommande(): ?User
+    public function setUserOwner(?User $UserOwner): self
     {
-        return $this->userCommande;
-    }
-
-    public function setUserCommande(?User $userCommande): self
-    {
-        $this->userCommande = $userCommande;
+        $this->UserOwner = $UserOwner;
 
         return $this;
     }

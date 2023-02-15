@@ -2,32 +2,32 @@
 
 namespace App\Repository;
 
-use App\Entity\Question;
+use App\Entity\EventCategorie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Question>
+ * @extends ServiceEntityRepository<EventCategorie>
  *
- * @method Question|null find($id, $lockMode = null, $lockVersion = null)
- * @method Question|null findOneBy(array $criteria, array $orderBy = null)
- * @method Question[]    findAll()
- * @method Question[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method EventCategorie|null find($id, $lockMode = null, $lockVersion = null)
+ * @method EventCategorie|null findOneBy(array $criteria, array $orderBy = null)
+ * @method EventCategorie[]    findAll()
+ * @method EventCategorie[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class QuestionRepository extends ServiceEntityRepository
+class EventCategorieRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Question::class);
+        parent::__construct($registry, EventCategorie::class);
     }
 
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(Question $entity, bool $flush = true): void
+    public function add(EventCategorie $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -39,7 +39,7 @@ class QuestionRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(Question $entity, bool $flush = true): void
+    public function remove(EventCategorie $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -48,15 +48,15 @@ class QuestionRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Question[] Returns an array of Question objects
+    //  * @return EventCategorie[] Returns an array of EventCategorie objects
     //  */
     /*
     public function findByExampleField($value)
     {
-        return $this->createQueryBuilder('q')
-            ->andWhere('q.exampleField = :val')
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('q.id', 'ASC')
+            ->orderBy('e.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
@@ -65,10 +65,10 @@ class QuestionRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Question
+    public function findOneBySomeField($value): ?EventCategorie
     {
-        return $this->createQueryBuilder('q')
-            ->andWhere('q.exampleField = :val')
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()

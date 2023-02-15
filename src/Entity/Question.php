@@ -7,35 +7,52 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: QuestionRepository::class)]
+/**
+ * @ORM\Entity(repositoryClass=QuestionRepository::class)
+ */
 class Question
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
 
-    #[ORM\Column(length: 255)]
-    private ?string $description = null;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $description;
 
-    #[ORM\OneToMany(mappedBy: 'question', targetEntity: Categorie::class)]
-    private Collection $category;
+    /**
+     * @ORM\ManyToOne(targetEntity=QuestionCategorie::class, inversedBy="questions")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    private $created_at;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $updated_at = null;
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    private $updated_at;
 
-    #[ORM\OneToMany(mappedBy: 'question', targetEntity: Reponse::class)]
-    private Collection $reponses;
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="questions")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $author;
 
-    #[ORM\ManyToOne(inversedBy: 'questions')]
-    private ?User $UserQuestion = null;
+    /**
+     * @ORM\OneToMany(targetEntity=Reponse::class, mappedBy="question", orphanRemoval=true)
+     */
+    private $reponses;
 
     public function __construct()
     {
-        $this->category = new ArrayCollection();
         $this->reponses = new ArrayCollection();
     }
 
@@ -56,32 +73,14 @@ class Question
         return $this;
     }
 
-    /**
-     * @return Collection<int, Categorie>
-     */
-    public function getCategory(): Collection
+    public function getCategory(): ?QuestionCategorie
     {
         return $this->category;
     }
 
-    public function addCategory(Categorie $category): self
+    public function setCategory(?QuestionCategorie $category): self
     {
-        if (!$this->category->contains($category)) {
-            $this->category->add($category);
-            $category->setQuestion($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCategory(Categorie $category): self
-    {
-        if ($this->category->removeElement($category)) {
-            // set the owning side to null (unless already changed)
-            if ($category->getQuestion() === $this) {
-                $category->setQuestion(null);
-            }
-        }
+        $this->category = $category;
 
         return $this;
     }
@@ -110,6 +109,18 @@ class Question
         return $this;
     }
 
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Reponse>
      */
@@ -121,7 +132,7 @@ class Question
     public function addReponse(Reponse $reponse): self
     {
         if (!$this->reponses->contains($reponse)) {
-            $this->reponses->add($reponse);
+            $this->reponses[] = $reponse;
             $reponse->setQuestion($this);
         }
 
@@ -136,18 +147,6 @@ class Question
                 $reponse->setQuestion(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getUserQuestion(): ?User
-    {
-        return $this->UserQuestion;
-    }
-
-    public function setUserQuestion(?User $UserQuestion): self
-    {
-        $this->UserQuestion = $UserQuestion;
 
         return $this;
     }

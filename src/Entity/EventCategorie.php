@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\PlatRepository;
+use App\Repository\EventCategorieRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=PlatRepository::class)
+ * @ORM\Entity(repositoryClass=EventCategorieRepository::class)
  */
-class Plat
+class EventCategorie
 {
     /**
      * @ORM\Id
@@ -21,11 +21,6 @@ class Plat
      * @ORM\Column(type="string", length=30)
      */
     private $titre;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $caloris;
 
     public function getId(): ?int
     {
@@ -40,18 +35,6 @@ class Plat
     public function setTitre(string $titre): self
     {
         $this->titre = $titre;
-
-        return $this;
-    }
-
-    public function getCaloris(): ?int
-    {
-        return $this->caloris;
-    }
-
-    public function setCaloris(int $caloris): self
-    {
-        $this->caloris = $caloris;
 
         return $this;
     }

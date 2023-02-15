@@ -7,54 +7,53 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: PosteRepository::class)]
+/**
+ * @ORM\Entity(repositoryClass=PosteRepository::class)
+ */
 class Poste
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
 
-    #[ORM\Column(length: 30)]
-    private ?string $titre = null;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $description;
 
-    #[ORM\Column(length: 255)]
-    private ?string $description = null;
+    /**
+     * @ORM\ManyToOne(targetEntity=PosteCategorie::class, inversedBy="postes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
 
-    #[ORM\ManyToOne(inversedBy: 'postes')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?PosteCategorie $category = null;
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    private $created_at;
 
-    #[ORM\ManyToOne(inversedBy: 'postes')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $creator = null;
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="postes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $userOwner;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
-
-    #[ORM\OneToMany(mappedBy: 'posteRelated', targetEntity: Commentaire::class, orphanRemoval: true)]
-    private Collection $commentaires;
+    /**
+     * @ORM\OneToMany(targetEntity=Commantaire::class, mappedBy="description", orphanRemoval=true)
+     */
+    private $commantaires;
 
     public function __construct()
     {
-        $this->commentaires = new ArrayCollection();
+        $this->commantaires = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getTitre(): ?string
-    {
-        return $this->titre;
-    }
-
-    public function setTitre(string $titre): self
-    {
-        $this->titre = $titre;
-
-        return $this;
     }
 
     public function getDescription(): ?string
@@ -81,18 +80,6 @@ class Poste
         return $this;
     }
 
-    public function getCreator(): ?User
-    {
-        return $this->creator;
-    }
-
-    public function setCreator(?User $creator): self
-    {
-        $this->creator = $creator;
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->created_at;
@@ -105,30 +92,42 @@ class Poste
         return $this;
     }
 
-    /**
-     * @return Collection<int, Commentaire>
-     */
-    public function getCommentaires(): Collection
+    public function getUserOwner(): ?User
     {
-        return $this->commentaires;
+        return $this->userOwner;
     }
 
-    public function addCommentaire(Commentaire $commentaire): self
+    public function setUserOwner(?User $userOwner): self
     {
-        if (!$this->commentaires->contains($commentaire)) {
-            $this->commentaires->add($commentaire);
-            $commentaire->setPosteRelated($this);
+        $this->userOwner = $userOwner;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commantaire>
+     */
+    public function getCommantaires(): Collection
+    {
+        return $this->commantaires;
+    }
+
+    public function addCommantaire(Commantaire $commantaire): self
+    {
+        if (!$this->commantaires->contains($commantaire)) {
+            $this->commantaires[] = $commantaire;
+            $commantaire->setDescription($this);
         }
 
         return $this;
     }
 
-    public function removeCommentaire(Commentaire $commentaire): self
+    public function removeCommantaire(Commantaire $commantaire): self
     {
-        if ($this->commentaires->removeElement($commentaire)) {
+        if ($this->commantaires->removeElement($commantaire)) {
             // set the owning side to null (unless already changed)
-            if ($commentaire->getPosteRelated() === $this) {
-                $commentaire->setPosteRelated(null);
+            if ($commantaire->getDescription() === $this) {
+                $commantaire->setDescription(null);
             }
         }
 

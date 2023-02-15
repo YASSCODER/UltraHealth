@@ -2,32 +2,32 @@
 
 namespace App\Repository;
 
-use App\Entity\Question;
+use App\Entity\QuestionCategorie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Question>
+ * @extends ServiceEntityRepository<QuestionCategorie>
  *
- * @method Question|null find($id, $lockMode = null, $lockVersion = null)
- * @method Question|null findOneBy(array $criteria, array $orderBy = null)
- * @method Question[]    findAll()
- * @method Question[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method QuestionCategorie|null find($id, $lockMode = null, $lockVersion = null)
+ * @method QuestionCategorie|null findOneBy(array $criteria, array $orderBy = null)
+ * @method QuestionCategorie[]    findAll()
+ * @method QuestionCategorie[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class QuestionRepository extends ServiceEntityRepository
+class QuestionCategorieRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Question::class);
+        parent::__construct($registry, QuestionCategorie::class);
     }
 
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(Question $entity, bool $flush = true): void
+    public function add(QuestionCategorie $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -39,7 +39,7 @@ class QuestionRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(Question $entity, bool $flush = true): void
+    public function remove(QuestionCategorie $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -48,7 +48,7 @@ class QuestionRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Question[] Returns an array of Question objects
+    //  * @return QuestionCategorie[] Returns an array of QuestionCategorie objects
     //  */
     /*
     public function findByExampleField($value)
@@ -65,7 +65,7 @@ class QuestionRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Question
+    public function findOneBySomeField($value): ?QuestionCategorie
     {
         return $this->createQueryBuilder('q')
             ->andWhere('q.exampleField = :val')

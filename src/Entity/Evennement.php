@@ -5,34 +5,44 @@ namespace App\Entity;
 use App\Repository\EvennementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: EvennementRepository::class)]
+/**
+ * @ORM\Entity(repositoryClass=EvennementRepository::class)
+ */
 class Evennement
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
 
-    #[ORM\Column(length: 50)]
-    private ?string $titre = null;
+    /**
+     * @ORM\Column(type="string", length=30)
+     */
+    private $titre;
 
-    #[ORM\Column(length: 255)]
-    private ?string $description = null;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $description;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $dateDebut = null;
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $dateDebut;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $dateFin = null;
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $dateFin;
 
-    #[ORM\Column(length: 255)]
-    private ?string $zone = null;
-
-    #[ORM\OneToMany(mappedBy: 'evennement', targetEntity: Passe::class)]
-    private Collection $passe;
+    /**
+     * @ORM\OneToMany(targetEntity=Passe::class, mappedBy="evennement", orphanRemoval=true)
+     */
+    private $passe;
 
     public function __construct()
     {
@@ -92,18 +102,6 @@ class Evennement
         return $this;
     }
 
-    public function getZone(): ?string
-    {
-        return $this->zone;
-    }
-
-    public function setZone(string $zone): self
-    {
-        $this->zone = $zone;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Passe>
      */
@@ -115,7 +113,7 @@ class Evennement
     public function addPasse(Passe $passe): self
     {
         if (!$this->passe->contains($passe)) {
-            $this->passe->add($passe);
+            $this->passe[] = $passe;
             $passe->setEvennement($this);
         }
 

@@ -5,22 +5,32 @@ namespace App\Entity;
 use App\Repository\IngrediantRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: IngrediantRepository::class)]
+/**
+ * @ORM\Entity(repositoryClass=IngrediantRepository::class)
+ */
 class Ingrediant
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
 
-    #[ORM\Column(length: 30)]
-    private ?string $titre = null;
+    /**
+     * @ORM\Column(type="string", length=30)
+     */
+    private $titre;
 
-    #[ORM\Column]
-    private ?int $caloris = null;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $caloris;
 
-    #[ORM\Column]
-    private ?float $poids = null;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $poids;
 
     public function getId(): ?int
     {

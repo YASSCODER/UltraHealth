@@ -5,25 +5,44 @@ namespace App\Entity;
 use App\Repository\FichePatientRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: FichePatientRepository::class)]
+/**
+ * @ORM\Entity(repositoryClass=FichePatientRepository::class)
+ */
 class FichePatient
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
 
-    #[ORM\Column]
-    private ?int $numSeance = null;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $numSeance;
 
-    #[ORM\Column(length: 255)]
-    private ?string $description = null;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $description;
 
-    #[ORM\OneToOne(inversedBy: 'fichePatient', cascade: ['persist', 'remove'])]
-    private ?User $userData = null;
+    /**
+     * @ORM\OneToOne(targetEntity=User::class, inversedBy="fichePatient", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $patient;
 
-    #[ORM\OneToOne(mappedBy: 'fichePatient', cascade: ['persist', 'remove'])]
-    private ?RendezVous $rendezVous = null;
+    /**
+     * @ORM\OneToOne(targetEntity=User::class, inversedBy="fichePatient", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $medecin;
+
+    /**
+     * @ORM\OneToOne(targetEntity=RendezVous::class, mappedBy="fiche", cascade={"persist", "remove"})
+     */
+    private $rendezVous;
 
     public function getId(): ?int
     {
@@ -54,14 +73,26 @@ class FichePatient
         return $this;
     }
 
-    public function getUserData(): ?User
+    public function getPatient(): ?User
     {
-        return $this->userData;
+        return $this->patient;
     }
 
-    public function setUserData(?User $userData): self
+    public function setPatient(User $patient): self
     {
-        $this->userData = $userData;
+        $this->patient = $patient;
+
+        return $this;
+    }
+
+    public function getMedecin(): ?User
+    {
+        return $this->medecin;
+    }
+
+    public function setMedecin(User $medecin): self
+    {
+        $this->medecin = $medecin;
 
         return $this;
     }
@@ -74,8 +105,8 @@ class FichePatient
     public function setRendezVous(RendezVous $rendezVous): self
     {
         // set the owning side of the relation if necessary
-        if ($rendezVous->getFichePatient() !== $this) {
-            $rendezVous->setFichePatient($this);
+        if ($rendezVous->getFiche() !== $this) {
+            $rendezVous->setFiche($this);
         }
 
         $this->rendezVous = $rendezVous;

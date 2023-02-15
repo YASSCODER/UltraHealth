@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\PosteCategorieRepository;
+use App\Repository\QuestionCategorieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=PosteCategorieRepository::class)
+ * @ORM\Entity(repositoryClass=QuestionCategorieRepository::class)
  */
-class PosteCategorie
+class QuestionCategorie
 {
     /**
      * @ORM\Id
@@ -25,13 +25,13 @@ class PosteCategorie
     private $titre;
 
     /**
-     * @ORM\OneToMany(targetEntity=Poste::class, mappedBy="category")
+     * @ORM\OneToMany(targetEntity=Question::class, mappedBy="category", orphanRemoval=true)
      */
-    private $postes;
+    private $questions;
 
     public function __construct()
     {
-        $this->postes = new ArrayCollection();
+        $this->questions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -52,29 +52,29 @@ class PosteCategorie
     }
 
     /**
-     * @return Collection<int, Poste>
+     * @return Collection<int, Question>
      */
-    public function getPostes(): Collection
+    public function getQuestions(): Collection
     {
-        return $this->postes;
+        return $this->questions;
     }
 
-    public function addPoste(Poste $poste): self
+    public function addQuestion(Question $question): self
     {
-        if (!$this->postes->contains($poste)) {
-            $this->postes[] = $poste;
-            $poste->setCategory($this);
+        if (!$this->questions->contains($question)) {
+            $this->questions[] = $question;
+            $question->setCategory($this);
         }
 
         return $this;
     }
 
-    public function removePoste(Poste $poste): self
+    public function removeQuestion(Question $question): self
     {
-        if ($this->postes->removeElement($poste)) {
+        if ($this->questions->removeElement($question)) {
             // set the owning side to null (unless already changed)
-            if ($poste->getCategory() === $this) {
-                $poste->setCategory(null);
+            if ($question->getCategory() === $this) {
+                $question->setCategory(null);
             }
         }
 

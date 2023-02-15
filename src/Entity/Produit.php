@@ -3,34 +3,57 @@
 namespace App\Entity;
 
 use App\Repository\ProduitRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ProduitRepository::class)]
+/**
+ * @ORM\Entity(repositoryClass=ProduitRepository::class)
+ */
 class Produit
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
 
-    #[ORM\Column(length: 255)]
-    private ?string $titre = null;
+    /**
+     * @ORM\Column(type="string", length=30)
+     */
+    private $titre;
 
-    #[ORM\Column(length: 255)]
-    private ?string $description = null;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $description;
 
-    #[ORM\Column(length: 255)]
-    private ?string $image = null;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $image;
 
-    #[ORM\Column]
-    private ?float $prix = null;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $prix;
 
-    #[ORM\ManyToOne(inversedBy: 'produits')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?categorieProduit $category = null;
+    /**
+     * @ORM\ManyToOne(targetEntity=ProduitCategorie::class, inversedBy="produits")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
 
-    #[ORM\ManyToOne(inversedBy: 'produits')]
-    private ?Commande $commande = null;
+    /**
+     * @ORM\OneToMany(targetEntity=Commande::class, mappedBy="produits", orphanRemoval=true)
+     */
+    private $commandes;
+
+    public function __construct()
+    {
+        $this->commandes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -85,26 +108,44 @@ class Produit
         return $this;
     }
 
-    public function getCategory(): ?categorieProduit
+    public function getCategory(): ?ProduitCategorie
     {
         return $this->category;
     }
 
-    public function setCategory(?categorieProduit $category): self
+    public function setCategory(?ProduitCategorie $category): self
     {
         $this->category = $category;
 
         return $this;
     }
 
-    public function getCommande(): ?Commande
+    /**
+     * @return Collection<int, Commande>
+     */
+    public function getCommandes(): Collection
     {
-        return $this->commande;
+        return $this->commandes;
     }
 
-    public function setCommande(?Commande $commande): self
+    public function addCommande(Commande $commande): self
     {
-        $this->commande = $commande;
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes[] = $commande;
+            $commande->setProduits($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): self
+    {
+        if ($this->commandes->removeElement($commande)) {
+            // set the owning side to null (unless already changed)
+            if ($commande->getProduits() === $this) {
+                $commande->setProduits(null);
+            }
+        }
 
         return $this;
     }

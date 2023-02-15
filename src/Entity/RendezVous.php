@@ -5,91 +5,72 @@ namespace App\Entity;
 use App\Repository\RendezVousRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: RendezVousRepository::class)]
+/**
+ * @ORM\Entity(repositoryClass=RendezVousRepository::class)
+ */
 class RendezVous
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $dateRdv;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $updated_At = null;
+    /**
+     * @ORM\OneToOne(targetEntity=FichePatient::class, inversedBy="rendezVous", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $fiche;
 
-    #[ORM\Column(length: 15)]
-    private ?string $etat = null;
-
-    #[ORM\ManyToOne(inversedBy: 'rendezVouses')]
-    private ?User $creator = null;
-
-    #[ORM\OneToOne(inversedBy: 'rendezVous', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?FichePatient $fichePatient = null;
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="rendezVouses")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $UserCreator;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getDateRdv(): ?\DateTimeInterface
     {
-        return $this->created_at;
+        return $this->dateRdv;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    public function setDateRdv(\DateTimeInterface $dateRdv): self
     {
-        $this->created_at = $created_at;
+        $this->dateRdv = $dateRdv;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getFiche(): ?FichePatient
     {
-        return $this->updated_At;
+        return $this->fiche;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updated_At): self
+    public function setFiche(FichePatient $fiche): self
     {
-        $this->updated_At = $updated_At;
+        $this->fiche = $fiche;
 
         return $this;
     }
 
-    public function getEtat(): ?string
+    public function getUserCreator(): ?User
     {
-        return $this->etat;
+        return $this->UserCreator;
     }
 
-    public function setEtat(string $etat): self
+    public function setUserCreator(?User $UserCreator): self
     {
-        $this->etat = $etat;
-
-        return $this;
-    }
-
-    public function getCreator(): ?User
-    {
-        return $this->creator;
-    }
-
-    public function setCreator(?User $creator): self
-    {
-        $this->creator = $creator;
-
-        return $this;
-    }
-
-    public function getFichePatient(): ?FichePatient
-    {
-        return $this->fichePatient;
-    }
-
-    public function setFichePatient(FichePatient $fichePatient): self
-    {
-        $this->fichePatient = $fichePatient;
+        $this->UserCreator = $UserCreator;
 
         return $this;
     }

@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\ReponseRepository;
+use App\Repository\CommantaireRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=ReponseRepository::class)
+ * @ORM\Entity(repositoryClass=CommantaireRepository::class)
  */
-class Reponse
+class Commantaire
 {
     /**
      * @ORM\Id
@@ -18,7 +18,8 @@ class Reponse
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity=Poste::class, inversedBy="commantaires")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $description;
 
@@ -33,28 +34,22 @@ class Reponse
     private $updated_at;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Question::class, inversedBy="reponses")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="commantaires")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $question;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reponses")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $author;
+    private $owner;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getDescription(): ?string
+    public function getDescription(): ?Poste
     {
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?Poste $description): self
     {
         $this->description = $description;
 
@@ -85,26 +80,14 @@ class Reponse
         return $this;
     }
 
-    public function getQuestion(): ?Question
+    public function getOwner(): ?User
     {
-        return $this->question;
+        return $this->owner;
     }
 
-    public function setQuestion(?Question $question): self
+    public function setOwner(?User $owner): self
     {
-        $this->question = $question;
-
-        return $this;
-    }
-
-    public function getAuthor(): ?User
-    {
-        return $this->author;
-    }
-
-    public function setAuthor(?User $author): self
-    {
-        $this->author = $author;
+        $this->owner = $owner;
 
         return $this;
     }
