@@ -87,7 +87,7 @@ class User
 
     /**
      * @ORM\ManyToOne(targetEntity=Menu::class, inversedBy="client")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $menuClient;
 
