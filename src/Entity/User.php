@@ -44,12 +44,21 @@ class User
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $specialite = null;
 
+
+    #[ORM\OneToMany(mappedBy: 'users', targetEntity: Menu::class)]
+    private Collection $menus;
+
+    public function __construct()
+    {
+        $this->menus = new ArrayCollection();
+
     #[ORM\OneToMany(mappedBy: 'userOwner', targetEntity: Commande::class)]
     private Collection $commandes;
 
     public function __construct()
     {
         $this->commandes = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -166,6 +175,20 @@ class User
     }
 
     /**
+
+     * @return Collection<int, Menu>
+     */
+    public function getMenus(): Collection
+    {
+        return $this->menus;
+    }
+
+    public function addMenu(Menu $menu): self
+    {
+        if (!$this->menus->contains($menu)) {
+            $this->menus->add($menu);
+            $menu->setUsers($this);
+
      * @return Collection<int, Commande>
      */
     public function getCommandes(): Collection
@@ -178,10 +201,19 @@ class User
         if (!$this->commandes->contains($commande)) {
             $this->commandes->add($commande);
             $commande->setUserOwner($this);
+
         }
 
         return $this;
     }
+
+
+    public function removeMenu(Menu $menu): self
+    {
+        if ($this->menus->removeElement($menu)) {
+            // set the owning side to null (unless already changed)
+            if ($menu->getUsers() === $this) {
+                $menu->setUsers(null);
 
     public function removeCommande(Commande $commande): self
     {
@@ -189,6 +221,7 @@ class User
             // set the owning side to null (unless already changed)
             if ($commande->getUserOwner() === $this) {
                 $commande->setUserOwner(null);
+
             }
         }
 
