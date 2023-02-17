@@ -23,6 +23,10 @@ class Menu
     #[ORM\JoinColumn(nullable: false)]
     private ?Plat $plats = null;
 
+    #[ORM\ManyToOne(inversedBy: 'menu')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $userOwner = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +64,18 @@ class Menu
     public function setPlats(?Plat $plats): self
     {
         $this->plats = $plats;
+
+        return $this;
+    }
+
+    public function getUserOwner(): ?User
+    {
+        return $this->userOwner;
+    }
+
+    public function setUserOwner(?User $userOwner): self
+    {
+        $this->userOwner = $userOwner;
 
         return $this;
     }

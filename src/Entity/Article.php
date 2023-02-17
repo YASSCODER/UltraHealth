@@ -30,6 +30,10 @@ class Article
     #[ORM\OneToMany(mappedBy: 'poste', targetEntity: Commantaire::class, orphanRemoval: true)]
     private Collection $commantaires;
 
+    #[ORM\ManyToOne(inversedBy: 'article')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $author = null;
+
     public function __construct()
     {
         $this->commantaires = new ArrayCollection();
@@ -114,6 +118,18 @@ class Article
                 $commantaire->setPoste(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }
