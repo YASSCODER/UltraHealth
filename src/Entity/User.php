@@ -39,6 +39,9 @@ class User
     #[ORM\Column(length: 30)]
     private ?string $role = null;
 
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $specialite = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -139,4 +142,17 @@ class User
 
         return $this;
     }
+
+    public function getSpecialite(): ?string
+    {
+        return $this->specialite;
+    }
+
+    public function setSpecialite(?string $specialite): self
+    {
+        $this->specialite = $specialite;
+
+        return $this;
+    }
+
 }
