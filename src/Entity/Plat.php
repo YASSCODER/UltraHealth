@@ -18,18 +18,18 @@ class Plat
     #[ORM\Column(length: 30)]
     private ?string $titre = null;
 
-    #[ORM\ManyToOne(inversedBy: 'plats')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Ingrediant $ingrediants = null;
-
     #[ORM\Column]
     private ?int $caloris = null;
 
-    #[ORM\OneToMany(mappedBy: 'plats', targetEntity: Menu::class)]
+    #[ORM\ManyToMany(targetEntity: Ingrediant::class, inversedBy: 'plats')]
+    private Collection $ingrediants;
+
+    #[ORM\ManyToMany(targetEntity: Menu::class, inversedBy: 'plats')]
     private Collection $menus;
 
     public function __construct()
     {
+        $this->ingrediants = new ArrayCollection();
         $this->menus = new ArrayCollection();
     }
 
@@ -50,18 +50,6 @@ class Plat
         return $this;
     }
 
-    public function getIngrediants(): ?Ingrediant
-    {
-        return $this->ingrediants;
-    }
-
-    public function setIngrediants(?Ingrediant $ingrediants): self
-    {
-        $this->ingrediants = $ingrediants;
-
-        return $this;
-    }
-
     public function getCaloris(): ?int
     {
         return $this->caloris;
@@ -70,6 +58,30 @@ class Plat
     public function setCaloris(int $caloris): self
     {
         $this->caloris = $caloris;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Ingrediant>
+     */
+    public function getIngrediants(): Collection
+    {
+        return $this->ingrediants;
+    }
+
+    public function addIngrediant(Ingrediant $ingrediant): self
+    {
+        if (!$this->ingrediants->contains($ingrediant)) {
+            $this->ingrediants->add($ingrediant);
+        }
+
+        return $this;
+    }
+
+    public function removeIngrediant(Ingrediant $ingrediant): self
+    {
+        $this->ingrediants->removeElement($ingrediant);
 
         return $this;
     }
@@ -86,7 +98,6 @@ class Plat
     {
         if (!$this->menus->contains($menu)) {
             $this->menus->add($menu);
-            $menu->setPlats($this);
         }
 
         return $this;
@@ -94,12 +105,7 @@ class Plat
 
     public function removeMenu(Menu $menu): self
     {
-        if ($this->menus->removeElement($menu)) {
-            // set the owning side to null (unless already changed)
-            if ($menu->getPlats() === $this) {
-                $menu->setPlats(null);
-            }
-        }
+        $this->menus->removeElement($menu);
 
         return $this;
     }
