@@ -24,13 +24,14 @@ class Ingrediant
     #[ORM\Column]
     private ?float $poids = null;
 
-    #[ORM\OneToMany(mappedBy: 'ingrediants', targetEntity: Plat::class, orphanRemoval: true)]
+    #[ORM\ManyToMany(targetEntity: Plat::class, mappedBy: 'ingrediants')]
     private Collection $plats;
 
     public function __construct()
     {
         $this->plats = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -85,7 +86,7 @@ class Ingrediant
     {
         if (!$this->plats->contains($plat)) {
             $this->plats->add($plat);
-            $plat->setIngrediants($this);
+            $plat->addIngrediant($this);
         }
 
         return $this;
@@ -94,10 +95,7 @@ class Ingrediant
     public function removePlat(Plat $plat): self
     {
         if ($this->plats->removeElement($plat)) {
-            // set the owning side to null (unless already changed)
-            if ($plat->getIngrediants() === $this) {
-                $plat->setIngrediants(null);
-            }
+            $plat->removeIngrediant($this);
         }
 
         return $this;
