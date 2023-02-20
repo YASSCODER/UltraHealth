@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ingrediant index{% endblock %}
+
+{% block body %}
+    <header class="bg-secondary py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">Liste des ingredients</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+        {% for ingrediant in ingrediants %}
+            <div class="col mb-5">
+                <div class="card h-100">
+                    <!-- Product image-->
+                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                    <!-- Product details-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- Product name-->
+                            <h5 class="fw-bolder">{{ ingrediant.titre }}</h5>
+                            <h6 class="fw-bolder">{{ ingrediant.caloris }}</h6>
+                            <h6 class="fw-bolder">{{ ingrediant.poids }} grammes</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="col-12">
+                <div class="alert alert-warning">No records found</div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <a href="{{ path('app_ingrediant_new') }}">Create new</a>
+{% endblock %}
