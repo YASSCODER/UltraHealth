@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commantaire{% endblock %}
+
+{% block body %}
+    <h1>Commantaire</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ commantaire.id }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ commantaire.description }}</td>
+            </tr>
+            <tr>
+                <th>Created_at</th>
+                <td>{{ commantaire.createdAt ? commantaire.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_commantaire_index') }}">back to list</a>
+
+    <a href="{{ path('app_commantaire_edit', {'id': commantaire.id}) }}">edit</a>
+
+    {{ include('commantaire/_delete_form.html.twig') }}
+{% endblock %}

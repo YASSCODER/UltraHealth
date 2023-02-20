@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Commantaire{% endblock %}
+
+{% block body %}
+    <h1>Create new Commantaire</h1>
+
+    {{ include('commantaire/_form.html.twig') }}
+
+    <a href="{{ path('app_commantaire_index') }}">back to list</a>
+{% endblock %}
