@@ -6,6 +6,7 @@ use App\Repository\EventCategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EventCategoryRepository::class)]
 class EventCategory
@@ -16,9 +17,23 @@ class EventCategory
     private ?int $id = null;
 
     #[ORM\Column(length: 30)]
+    #[Assert\NotBlank(message: "titre categorie ne peux pas être vide! ")]
+    #[Assert\Length(
+        min: 3,
+        max: 10,
+        minMessage: "The name must be at least {{ limit }} characters long",
+        maxMessage: "The name cannot be longer than {{ limit }} characters"
+    )]
     private ?string $titre = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "description categorie ne peux pas être vide! ")]
+    #[Assert\Length(
+        min: 7,
+        max: 20,
+        minMessage: "The name must be at least {{ limit }} characters long",
+        maxMessage: "The name cannot be longer than {{ limit }} characters"
+    )]
     private ?string $description = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Evennement::class, orphanRemoval: true)]
@@ -86,5 +101,9 @@ class EventCategory
         }
 
         return $this;
+    }
+    public function __toString()
+    {
+        return $this->titre;
     }
 }

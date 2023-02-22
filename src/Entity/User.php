@@ -30,7 +30,7 @@ class User
     private ?\DateTimeInterface $dateNaissance = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $zonde = null;
+    private ?string $zone = null;
 
     #[ORM\Column(length: 50)]
     private ?string $email = null;
@@ -126,14 +126,14 @@ class User
         return $this;
     }
 
-    public function getZonde(): ?string
+    public function getzone(): ?string
     {
-        return $this->zonde;
+        return $this->zone;
     }
 
-    public function setZonde(string $zonde): self
+    public function setzone(string $zone): self
     {
-        $this->zonde = $zonde;
+        $this->zone = $zone;
 
         return $this;
     }

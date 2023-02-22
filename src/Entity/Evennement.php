@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\EvennementRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EvennementRepository::class)]
 class Evennement
@@ -15,18 +16,40 @@ class Evennement
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "titre evennement ne peux pas être vide! ")]
+    #[Assert\Length(
+        min: 3,
+        max: 10,
+        minMessage: "The name must be at least {{ limit }} characters long",
+        maxMessage: "The name cannot be longer than {{ limit }} characters"
+    )]
     private ?string $titre = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "description evennement ne peux pas être vide! ")]
+    #[Assert\Length(
+        min: 7,
+        max: 20,
+        minMessage: "The name must be at least {{ limit }} characters long",
+        maxMessage: "The name cannot be longer than {{ limit }} characters"
+    )]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\GreaterThan("today", message: "The tarifhoraire must not be in the past.")]
     private ?\DateTimeInterface $dateDebut = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateFin = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "zone evennement ne peux pas être vide! ")]
+    #[Assert\Length(
+        min: 3,
+        max: 20,
+        minMessage: "The name must be at least {{ limit }} characters long",
+        maxMessage: "The name cannot be longer than {{ limit }} characters"
+    )]
     private ?string $zone = null;
 
     #[ORM\ManyToOne(inversedBy: 'evennements')]
@@ -128,5 +151,9 @@ class Evennement
         $this->passe = $passe;
 
         return $this;
+    }
+    public function __toString()
+    {
+        return $this->titre;
     }
 }

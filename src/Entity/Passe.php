@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\PasseRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PasseRepository::class)]
 class Passe
@@ -14,9 +15,18 @@ class Passe
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "code ne peux pas être vide! ")]
+    #[Assert\Length(
+        min: 3,
+        max: 10,
+        minMessage: "The name must be at least {{ limit }} characters long",
+        maxMessage: "The name cannot be longer than {{ limit }} characters"
+    )]
     private ?string $code = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "price evennement ne peux pas être vide! ")]
+    #[Assert\Positive(message: "price doit etre positive! ")]
     private ?float $prix = null;
 
     #[ORM\OneToOne(inversedBy: 'passe', cascade: ['persist', 'remove'])]

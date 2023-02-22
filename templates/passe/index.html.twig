@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Passe
+{% endblock %}
+
+{% block body %}
+
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Code</th>
+				<th>Prix</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for passe in passes %}
+				<tr>
+					<td>{{ passe.id }}</td>
+					<td>{{ passe.code }}</td>
+					<td>{{ passe.prix }}</td>
+					<td>
+						<a href="{{ path('app_passe_show', {'id': passe.id}) }}">show</a>
+						<a href="{{ path('app_passe_edit', {'id': passe.id}) }}">edit</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a href="{{ path('app_passe_new') }}">Create new</a>
+{% endblock %}
