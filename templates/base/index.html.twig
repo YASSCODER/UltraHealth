@@ -40,26 +40,32 @@
     </head>
     <body class="clinic_version">
         {% block body %}
+          <!-- LOADER -->
+      <div id="preloader">
+         <img class="preloader" src="images-base/loaders/heart-loading2.gif" alt="">
+      </div>
+      <!-- END LOADER -->
             <header>
             <div class="header-top wow fadeIn">
             <div class="container">
-               <a class="navbar-brand" href="index.html"><img src="images-base/logo.png" alt="image"></a>
+            <span class="icon"><img src="images-base/myLogo/UHlogo.png" alt="#" /></span>
                <div class="right-header">
                   <div class="header-info">
                      <div class="info-inner">
                         <span class="icontop"><img src="images-base/phone-icon.png" alt="#"></span>
-                        <span class="iconcont"><a href="tel:800 123 456">800 123 456</a></span>	
+                        <span class="iconcont"><a href="tel:800 123 456">+21658450148</a></span>	
                      </div>
                      <div class="info-inner">
-                        <span class="icontop"><i class="fa-solid fa-house" aria-hidden="false"></i></span>
-                        <span class="iconcont"><a data-scroll href="mailto:info@yoursite.com">info@Lifecare.com</a></span>	
+                        <span class="icontop"><img src ="images-base/myIcones/email.png"></span>
+                        <span class="iconcont"><a data-scroll href="mailto:info@yoursite.com">UltraHealth@gmail.com</a></span>	
                      </div>
                      <div class="info-inner">
-                        <span class="icontop"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
-                        <span class="iconcont"><a data-scroll href="#">Daily: 7:00am - 8:00pm</a></span>	
+                        <span class="icontop"><img src="images-base/myIcones/user.png" alt="#"></span>
+                        <span class="iconcont"><a data-scroll href={{asset('/user/new')}}>SignUp</a></span>
                      </div>
                      <div class="info-inner">
-                        <span class="icontop"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
+                        <span class="icontop"><img src="images-base/myIcones/signIn.png" alt="#"></span>
+                        <span class="iconcont"><a data-scroll href={{asset('#')}}>SignIn</a></span>
                      </div>
                   </div>
                </div>
@@ -104,7 +110,7 @@
                <div class="col-md-12 col-sm-12">
                   <div class="text-contant">
                      <h2>
-                        <span class="center"><span class="icon"><img src="images/icon-logo.png" alt="#" /></span></span>
+                        <span class="center"><span class="icon"><img src="images-base/icon-logo.png" alt="#" /></span></span>
                         <a href="" class="typewrite" data-period="2000" data-type='[ "Welcome to UltraHealth", "We Care Your Health", "We are Expert!" ]'>
                         <span class="wrap"></span>
                         </a>
@@ -116,7 +122,46 @@
          </div>
          <!-- end container -->
       </div>
-            
+            {# time tables & doctors signUp #}
+
+             <div id="time-table" class="time-table-section">
+         <div class="container">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+               <div class="row">
+                  <div class="service-time one" style="background:#2895f1;">
+                     <span class="info-icon"><i class="fa fa-ambulance" aria-hidden="false"></i></span>
+                     <h3>Emergency Case</h3>
+                     <p>Dignissimos ducimus qui blanditii sentium volta tum deleniti atque cori as quos dolores et quas mole.</p>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+               <div class="row">
+                  <div class="service-time middle" style="background:#0071d1;">
+                     <span class="info-icon"><i class="fa fa-clock-o" aria-hidden="true"></i></span> 
+                     <h3>Working Hours</h3>
+                     <div class="time-table-section">
+                        <ul>
+                           <li><span class="left">Monday - Friday</span><span class="right">8.00 – 18.00</span></li>
+                           <li><span class="left">Saturday</span><span class="right">8.00 – 16.00</span></li>
+                           <li><span class="left">Sunday</span><span class="right">8.00 – 13.00</span></li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+               <div class="row">
+                  <div class="service-time three" style="background:#0060b1;">
+                     <span class="info-icon"><i class="fa fa-hospital-o" aria-hidden="true"></i></span>
+                     <h3>Clinic Timetable</h3>
+                     <p>Dignissimos ducimus qui blanditii sentium volta tum deleniti atque cori as quos dolores et quas mole.</p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+            {#  #}
         
         <footer id="footer" class="footer-area wow fadeIn">
          <div class="container">
