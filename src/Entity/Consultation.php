@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\ConsultationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: ConsultationRepository::class)]
 class Consultation
@@ -14,16 +16,22 @@ class Consultation
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $traitement = null;
 
     #[ORM\Column]
+    #[Assert\Positive]
+
     private ?int $numSeance = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+
     private ?string $description = null;
 
     #[ORM\OneToOne(inversedBy: 'consultation', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
+
     private ?RendezVous $rendezVous = null;
 
     public function getId(): ?int

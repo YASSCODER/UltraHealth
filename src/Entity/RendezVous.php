@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\RendezVousRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: RendezVousRepository::class)]
 class RendezVous
@@ -15,12 +17,15 @@ class RendezVous
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    
     private ?\DateTimeInterface $dateRdv = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
+
     private ?\DateTimeInterface $heure = null;
 
     #[ORM\OneToOne(mappedBy: 'rendezVous', cascade: ['persist', 'remove'])]
+    
     private ?Consultation $consultation = null;
 
     public function getId(): ?int
@@ -57,17 +62,16 @@ class RendezVous
         return $this->consultation;
     }
 
-    public function setConsultation(Consultation $consultation): self
-    {
-        // set the owning side of the relation if necessary
-        if ($consultation->getRendezVous() !== $this) {
-            $consultation->setRendezVous($this);
-        }
-
-        $this->consultation = $consultation;
-
-        return $this;
+    public function setConsultation(Consultation $consultation): self{
+  //  set the owning side of the relation if necessary
+if ($consultation->getRendezVous() !== $this) {
+       $consultation->setRendezVous($this);
     }
+
+      $this->consultation = $consultation;
+
+    return $this;
+  }
 
     public function __toString()
     {
