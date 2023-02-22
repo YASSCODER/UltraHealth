@@ -75,4 +75,6 @@ class ConsultationController extends AbstractController
 
         return $this->redirectToRoute('app_consultation_index', [], Response::HTTP_SEE_OTHER);
     }
+
+  
 }
