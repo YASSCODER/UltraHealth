@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Animated Login Form</title>
+    {% block stylesheets %} 
+        <link rel="stylesheet" type="text/css" href={{asset('css-login/style.css')}}>
+        <link href={{asset('https://fonts.googleapis.com/css?family=Poppins:600&display=swap')}} rel="stylesheet">
+    {% endblock %}
+    {% block javascripts %}
+        <script src={{asset('https://kit.fontawesome.com/a81368914c.js')}}></script>
+        <script type="text/javascript" src={{asset('js-login/main.js')}}></script>
+    {% endblock %}
+	
+</head>
+<body>
+	<img class="wave" src={{asset('img-login/wave.png')}}>
+	<div class="container">
+    
+		<div class="login-content">
+        {{form_start(form,{'attr':{'novalidate':'novalidate'}})}}
+				<h2 class="title">Welcome to UltraHealth !</h2>
+
+           		<div class="input-div one">
+                <div class="i"> 
+           		    <i class="fas fa-map-pin"></i>
+           		</div>
+           		   <div class="div">
+           		   		{{form_label(form.cin)}}
+                        {{form_widget(form.cin)}}
+                        {% if form_errors(form.cin) is not empty %}
+                        <div class = "alert" style ="width:100%;height:100%;background-color:#DC143C;">
+                        {{ form_errors(form.cin) }}
+                        </div>
+                        {% endif %}
+           		   </div>
+           		</div>
+
+                <div class="input-div one">
+                <div class="i"> 
+           		    <i class="fas fa-map-pin"></i>
+           		</div>
+           		   <div class="div">
+           		   		{{form_label(form.nom)}}
+                        {{form_widget(form.nom)}}
+						{% if form_errors(form.nom) is not empty %}
+						<div class = "alert" style ="width:100%;height:100%;background-color:#DC143C;">
+                        {{ form_errors(form.nom) }}
+                        </div>
+                        {% endif %}
+           		   </div>
+           		</div>
+
+                <div class="input-div one">
+                <div class="i"> 
+           		    	<i class="fas fa-map-pin"></i>
+           		</div>
+           		   <div class="div">
+           		   		{{form_label(form.prenom)}}
+                        {{form_widget(form.prenom)}}
+						{% if form_errors(form.prenom) is not empty %}
+						<div class = "alert" style ="width:100%;height:100%;background-color:#DC143C;">
+                        {{ form_errors(form.prenom) }}
+                        </div>
+                        {% endif %}
+           		   </div>
+           		</div>
+           		   	{{form_label(form.dateNaissance)}}
+                    {{form_widget(form.dateNaissance)}}
+					{% if form_errors(form.dateNaissance) is not empty %}
+						<div class = "alert" style ="width:100%;height:100%;background-color:#DC143C;">
+                        {{ form_errors(form.dateNaissance) }}
+                        </div>
+                        {% endif %}
+                <div class="input-div one">
+                    <div class="i"> 
+           		    	<i class="fas fa-map-pin"></i>
+           		   </div>
+           		   <div class="div">
+           		   		{{form_label(form.zone)}}
+                        {{form_widget(form.zone)}}
+						{% if form_errors(form.zone) is not empty %}
+						<div class = "alert" style ="width:100%;height:100%;background-color:#DC143C;">
+                        {{ form_errors(form.zone) }}
+                        </div>
+                        {% endif %}
+           		   </div>
+           		</div>
+
+                 <div class="input-div one">
+                 <div class="i"> 
+                    <i class="fas fa-at"></i>
+                </div>
+           		<div class="div">
+           		   	{{form_label(form.email)}}
+                    {{form_widget(form.email)}}
+                    {% if form_errors(form.email) is not empty %}
+                        <div class = "alert" style ="width:100%;height:100%;background-color:red;">
+                        {{ form_errors(form.email) }}
+                        </div>
+                        {% endif %}
+           		</div>
+           		</div>
+
+           		<div class="input-div pass">
+           		   <div class="i"> 
+           		    	<i class="fas fa-lock"></i>
+           		   </div>
+           		   <div class="div">
+           		    	{{form_label(form.password)}}
+                        {{form_widget(form.password)}}
+						{% if form_errors(form.password) is not empty %}
+						<div class = "alert" style ="width:100%;height:100%;background-color:#DC143C;">
+                        {{ form_errors(form.password) }}
+                        </div>
+                        {% endif %}
+            	   </div>
+            	</div>
+            	<a href="#">Forgot Password?</a>
+            	<button class="btn">{{ button_label|default('Save') }}</button>
+        {{ form_end(form) }}
+        </div>
+    </div>
+</body>
+</html>
+

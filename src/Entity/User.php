@@ -37,7 +37,6 @@ class User
     private ?string $prenom = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Assert\Date]
     private ?\DateTimeInterface $dateNaissance = null;
 
     #[ORM\Column(length: 255)]
