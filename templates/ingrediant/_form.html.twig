@@ -1,4 +1,60 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{% block head%}
+  <style>
+        .text-style{
+            font-size: 30px;
+         }
+		.btn-container {
+			text-align: center;
+            background-color: #dbdbdb;
+		}
+        .new-ing-body{
+           background-color: #dbdbdb;   
+           padding: 0 40px
+
+        }
+        
+	</style>
+{% endblock %}
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'new-ing-body'}}) }}
+
+    <div style="padding:20px 0 0 0">
+    {{ form_row(form.titre, {
+    'label': 'Nom d\'ingrédient:',
+    'label_attr': {'class': 'text-style', 'style': 'font-size: 24px;'},
+    'attr': {'class': 'form-control'}
+}) }}
+{% if form_errors(form.titre) is not empty %}
+<br>
+    <div class="alert alert-danger">
+    {{ form_errors(form.titre) }}
+</div>
+{% endif %}
+
+    
+    {{ form_label(form.caloris,"Calories/100g:", {'label_attr': {'class': 'text-style','style':'font-size:24px;'}}) }}
+    
+    {{ form_widget(form.caloris,{ 'attr': {'class': 'form-control'} }) }}
+    {% if form_errors(form.caloris) is not empty %}
+    <br>
+    <div class="alert alert-danger">
+    {{ form_errors(form.caloris) }}
+    </div>
+    {% endif %}
+
+    {{ form_label(form.caloris,"Poids en gramme:", {'label_attr': {'class': 'text-style', 'style':'font-size:24px;'}}) }}
+    
+    {{ form_widget(form.poids,{ 'attr': {'class': 'form-control'} }) }} 
+    {% if form_errors(form.poids) is not empty %}
+    <br>
+    <div class="alert alert-danger">
+    {{ form_errors(form.poids) }}
+    </div>
+    {% endif %}
+
+    
+    <br>
+    <div class="btn-container" style="padding:0 0 15px 0;">
+    <button type="submit" class="btn btn-success" style="margin:10px;" >{{ button_label|default('Save') }}</button>
+    
+    
 {{ form_end(form) }}

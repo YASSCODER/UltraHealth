@@ -1,10 +1,30 @@
 {% extends 'base.html.twig' %}
+{% block head %}
 
+<style>
+
+
+        .Form {
+            margin: 0 20px;
+        }
+        
+       
+	</style>
+{% endblock %}
 {% block title %}Ingrediant{% endblock %}
 
 {% block body %}
-    <h1>Ingrediant</h1>
 
+<div class="container">
+<header class="bg-secondary py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">Details ingredient</h1>
+            </div>
+        </div>
+    </header>
+<br>
+<br>
     <table class="table">
         <tbody>
             <tr>
@@ -25,10 +45,21 @@
             </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('app_ingrediant_index') }}">back to list</a>
-
-    <a href="{{ path('app_ingrediant_edit', {'id': ingrediant.id}) }}">edit</a>
-
-    {{ include('ingrediant/_delete_form.html.twig') }}
+    <br>
+    <div class="text-center">
+  <div class="btn-show-container">
+    <div style="display: inline-block" >
+    <div  style="border-radius: 5px; padding:4.8px 13px 8px 13px; background-color: #EBBC00;">
+        <a href="{{ path('app_ingrediant_edit', {'id': ingrediant.id}) }}" style="color: #ffffff;">Edit</a>
+    </div>
+    </div>
+    <div style="display: inline-block">
+        {{ include('ingrediant/_delete_form.html.twig') }}
+    </div>
+</div>
+<br>
+    <div class="text-center">
+    <a href="{{ path('app_ingrediant_index') }}" style="color: #295C6E; border-radius: 10px; border: 1px solid #222875;  padding: 5px 10px; background-color: #D6D6D6;">Back To List</a>
+    </div>
+    </div>
 {% endblock %}

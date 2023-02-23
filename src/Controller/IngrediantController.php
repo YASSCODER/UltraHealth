@@ -48,25 +48,25 @@ class IngrediantController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_ingrediant_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Ingrediant $ingrediant, IngrediantRepository $ingrediantRepository): Response
-    {
-        $form = $this->createForm(IngrediantType::class, $ingrediant);
-        $form->handleRequest($request);
+        #[Route('/{id}/edit', name: 'app_ingrediant_edit', methods: ['GET','POST'])]
+        public function edit(Request $request, Ingrediant $ingrediant, IngrediantRepository $ingrediantRepository): Response
+        {
+            $form = $this->createForm(IngrediantType::class, $ingrediant);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $ingrediantRepository->save($ingrediant, true);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $ingrediantRepository->save($ingrediant, true);
 
-            return $this->redirectToRoute('app_ingrediant_index', [], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('app_ingrediant_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+            return $this->renderForm('ingrediant/edit.html.twig', [
+                'ingrediant' => $ingrediant,
+                'form' => $form,
+            ]);
         }
 
-        return $this->renderForm('ingrediant/edit.html.twig', [
-            'ingrediant' => $ingrediant,
-            'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_ingrediant_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_ingrediant_delete', methods: ['GET','POST'])]
     public function delete(Request $request, Ingrediant $ingrediant, IngrediantRepository $ingrediantRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$ingrediant->getId(), $request->request->get('_token'))) {

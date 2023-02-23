@@ -6,6 +6,7 @@ use App\Repository\IngrediantRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: IngrediantRepository::class)]
 class Ingrediant
@@ -14,18 +15,22 @@ class Ingrediant
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
-    #[ORM\Column(length: 30)]
+ 
+    #[ORM\Column(length: 30)]   
+    #[Assert\NotNull(message: 'Please enter a value.')]
+    #[Assert\Type('string', message: 'Please enter a valid name.')]
     private ?string $titre = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'This field can not be empty')]
+    #[Assert\Positive(message: 'Please enter a positive number')]
     private ?int $caloris = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'This field can not be empty')]
+    #[Assert\Positive(message: 'Please enter a positive number')]
     private ?float $poids = null;
 
-    #[ORM\ManyToMany(targetEntity: Plat::class, mappedBy: 'ingrediants')]
-    private Collection $plats;
 
     public function __construct()
     {

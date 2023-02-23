@@ -1,11 +1,32 @@
 {% extends 'base.html.twig' %}
+{% block head %}
 
+	  <style>
+		.container {
+			text-align: center;
+            background-color: #8080c0;  
+		}
+        
+       
+	</style>
+  
+{% endblock %}   
 {% block title %}New Ingrediant{% endblock %}
 
 {% block body %}
-    <h1>Create new Ingrediant</h1>
-
+<div class="container" style="padding:0 15% 0 15%">
+    <header class="bg-secondary py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">Create new Ingredient</h1>
+            </div>
+        </div>
+    </header>
+    <div >
     {{ include('ingrediant/_form.html.twig') }}
-
-    <a href="{{ path('app_ingrediant_index') }}">back to list</a>
+    
+    <center><a href="{{ path('app_ingrediant_index') }}" style="color: #295C6E; border-radius: 10px; border: 1px solid #222875;  padding: 5px 10px; background-color: #D6D6D6;">Back To List</a></center>
+    
+    </div>
+    </div>
 {% endblock %}
