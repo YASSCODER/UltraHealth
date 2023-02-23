@@ -8,6 +8,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Assert\Assert;
+
+
 
 
 class ProductType extends AbstractType
@@ -25,7 +28,6 @@ class ProductType extends AbstractType
                     new File([
                         'maxSize' => '1024k',
                         'mimeTypes' => [
-                            'image/jpeg',
                             'image/png',
                         ],
                         'mimeTypesMessage' => 'Please upload a valid PNG file'
@@ -38,10 +40,16 @@ class ProductType extends AbstractType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Product::class,
+            'constraint' => function (Assert $assert) {
+                $assert->notEmpty('titre', 'Le champ "titre" ne peut pas être vide');
+                $assert->notEmpty('description', 'Le champ "description" ne peut pas être vide');
+                $assert->Positive('prix', 'Le champ "prix" doit être supérieure à zéro');
+               // $assert->NotNull('image', 'Le champ "image" doit être une image');
+            },
         ]);
     }
 }
