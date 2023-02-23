@@ -29,7 +29,7 @@ class EventCategory
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "description categorie ne peux pas être vide! ")]
     #[Assert\Length(
-        min: 7,
+        min: 5,
         max: 20,
         minMessage: "The name must be at least {{ limit }} characters long",
         maxMessage: "The name cannot be longer than {{ limit }} characters"

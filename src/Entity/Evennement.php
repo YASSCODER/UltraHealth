@@ -39,13 +39,13 @@ class Evennement
     #[Assert\GreaterThan("today", message: "date inferieur a aujourd'hui.")]
     #[Assert\NotBlank(message: "description evennement ne peux pas être vide! ")]
     #[Assert\NotNull(message: "description evennement ne peux pas être vide! ")]
-    #[Assert\DateTime(message: "description evennement ne peux pas être vide! ")]
+    //#[Assert\DateTime(message: "description evennement ne peux pas être vide! ")]
     private ?\DateTimeInterface $dateDebut = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\NotBlank(message: "description evennement ne peux pas être vide! ")]
-    #[Assert\NotNull(message: "description evennement ne peux pas être vide! ")]
-    #[Assert\DateTime(message: "description evennement ne peux pas être vide! ")]
+    //#[Assert\NotNull(message: "description evennement ne peux pas être vide! ")]
+    // #[Assert\DateTime(message: "description evennement ne peux pas être vide! ")]
     private ?\DateTimeInterface $dateFin = null;
 
     #[ORM\Column(length: 255)]
