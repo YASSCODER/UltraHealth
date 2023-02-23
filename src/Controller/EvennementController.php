@@ -21,6 +21,24 @@ class EvennementController extends AbstractController
         ]);
     }
 
+    /*front*/
+    #[Route('/fronti/{id}', name: 'app_evennement_front_show', methods: ['GET'])]
+    public function showF(Evennement $evennement): Response
+    {
+        return $this->render('evennement/frontshow.html.twig', [
+            'evennement' => $evennement,
+        ]);
+    }
+
+    #[Route('/fronti', name: 'app_evennement_front_index', methods: ['GET'])]
+    public function indexF(EvennementRepository $evennementRepository): Response
+    {
+        return $this->render('evennement/frontindex.html.twig', [
+            'evennements' => $evennementRepository->findAll(),
+        ]);
+    }
+    /*endfront*/
+
     #[Route('/new', name: 'app_evennement_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EvennementRepository $evennementRepository): Response
     {
@@ -69,7 +87,7 @@ class EvennementController extends AbstractController
     #[Route('/{id}', name: 'app_evennement_delete', methods: ['POST'])]
     public function delete(Request $request, Evennement $evennement, EvennementRepository $evennementRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$evennement->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $evennement->getId(), $request->request->get('_token'))) {
             $evennementRepository->remove($evennement, true);
         }
 

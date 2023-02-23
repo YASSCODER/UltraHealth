@@ -21,6 +21,22 @@ class PasseController extends AbstractController
         ]);
     }
 
+    #[Route('/fronti', name: 'app_passe_front_index', methods: ['GET'])]
+    public function indexF(PasseRepository $passeRepository): Response
+    {
+        return $this->render('passe/frontindex.html.twig', [
+            'passes' => $passeRepository->findAll(),
+        ]);
+    }
+
+    #[Route('fronti/{id}', name: 'app_passe_front_show', methods: ['GET'])]
+    public function showF(Passe $passe): Response
+    {
+        return $this->render('passe/frontshow.html.twig', [
+            'passe' => $passe,
+        ]);
+    }
+
     #[Route('/new', name: 'app_passe_new', methods: ['GET', 'POST'])]
     public function new(Request $request, PasseRepository $passeRepository): Response
     {

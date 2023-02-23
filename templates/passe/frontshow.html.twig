@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'frontbase.html.twig' %}
 
 {% block title %}Passe
 {% endblock %}
@@ -8,10 +8,7 @@
 
 	<table class="table">
 		<tbody>
-			<tr>
-				<th>Id</th>
-				<td>{{ passe.id }}</td>
-			</tr>
+
 			<tr>
 				<th>Code</th>
 				<td>{{ passe.code }}</td>
@@ -21,15 +18,13 @@
 				<td>{{ passe.prix }}</td>
 			</tr>
 			<tr>
-				<th>evennement</th>
+				<th>Evennement</th>
 				<td>{{ passe.getEvennement().getTitre() }}</td>
 			</tr>
 		</tbody>
 	</table>
 
-	<a href="{{ path('app_passe_index') }}">back to list</a>
+	<a href="{{ path('app_passe_front_index') }}">back to list</a>
 
-	<a href="{{ path('app_passe_edit', {'id': passe.id}) }}">edit</a>
 
-	{{ include('passe/_delete_form.html.twig') }}
 {% endblock %}

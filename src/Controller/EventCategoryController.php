@@ -21,6 +21,22 @@ class EventCategoryController extends AbstractController
         ]);
     }
 
+    #[Route('/fronti', name: 'app_event_category_front_index', methods: ['GET'])]
+    public function indexF(EventCategoryRepository $eventCategoryRepository): Response
+    {
+        return $this->render('event_category/frontindex.html.twig', [
+            'event_categories' => $eventCategoryRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/fronti/{id}', name: 'app_event_category_front_show', methods: ['GET'])]
+    public function showF(EventCategory $eventCategory): Response
+    {
+        return $this->render('event_category/frontshow.html.twig', [
+            'event_category' => $eventCategory,
+        ]);
+    }
+
     #[Route('/new', name: 'app_event_category_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EventCategoryRepository $eventCategoryRepository): Response
     {
@@ -69,7 +85,7 @@ class EventCategoryController extends AbstractController
     #[Route('/{id}', name: 'app_event_category_delete', methods: ['POST'])]
     public function delete(Request $request, EventCategory $eventCategory, EventCategoryRepository $eventCategoryRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$eventCategory->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $eventCategory->getId(), $request->request->get('_token'))) {
             $eventCategoryRepository->remove($eventCategory, true);
         }
 

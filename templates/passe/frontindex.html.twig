@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'frontbase.html.twig' %}
 
 {% block title %}Passe
 {% endblock %}
@@ -9,7 +9,7 @@
 	<table class="table">
 		<thead>
 			<tr>
-				<th>Id</th>
+
 				<th>Code</th>
 				<th>Prix</th>
 				<th>evennement</th>
@@ -19,13 +19,13 @@
 		<tbody>
 			{% for passe in passes %}
 				<tr>
-					<td>{{ passe.id }}</td>
+
 					<td>{{ passe.code }}</td>
 					<td>{{ passe.prix }}</td>
 					<td>{{ passe.getEvennement().getTitre() }}</td>
 					<td>
-						<a href="{{ path('app_passe_show', {'id': passe.id}) }}">show</a>
-						<a href="{{ path('app_passe_edit', {'id': passe.id}) }}">edit</a>
+						<a href="{{ path('app_passe_front_show', {'id': passe.id}) }}">show</a>
+
 					</td>
 				</tr>
 			{% else %}
@@ -36,5 +36,5 @@
 		</tbody>
 	</table>
 
-	<a href="{{ path('app_passe_new') }}">Create new</a>
+
 {% endblock %}

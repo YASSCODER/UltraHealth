@@ -1,0 +1,44 @@
+{% extends 'frontbase.html.twig' %}
+
+{% block title %}EVENNEMENT
+{% endblock %}
+
+{% block body %}
+
+
+	<table class="table">
+		<thead>
+			<tr>
+
+				<th>Titre</th>
+				<th>Description</th>
+				<th>DateDebut</th>
+				<th>DateFin</th>
+				<th>Zone</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for evennement in evennements %}
+				<tr>
+
+					<td>{{ evennement.titre }}</td>
+					<td>{{ evennement.description }}</td>
+					<td>{{ evennement.dateDebut ? evennement.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
+					<td>{{ evennement.dateFin ? evennement.dateFin|date('Y-m-d H:i:s') : '' }}</td>
+					<td>{{ evennement.zone }}</td>
+					<td>
+						<a href="{{ path('app_evennement_front_show', {'id': evennement.id}) }}">show</a>
+
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="7">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+
+{% endblock %}
