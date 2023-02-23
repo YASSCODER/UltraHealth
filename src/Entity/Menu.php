@@ -16,9 +16,13 @@ class Menu
     private ?int $id = null;
 
     #[ORM\Column(length: 30)]
+    #[Assert\NotNull(message: 'Please enter a value.')]
+    #[Assert\Type('string', message: 'Please enter a valid Name')]
     private ?string $titre = null;
 
     #[ORM\Column(length: 30)]
+    #[Assert\NotNull(message: 'Please enter a value.')]
+    #[Assert\Type('string', message: 'Please enter a valid Category')]
     private ?string $category = null;
 
 
@@ -101,4 +105,5 @@ class Menu
 
         return $this;
     }
+    
 }

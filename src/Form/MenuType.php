@@ -14,8 +14,8 @@ class MenuType extends AbstractType
         $builder
             ->add('titre')
             ->add('category')
-            ->add('plats')
-            ->add('userOwner')
+            
+           
         ;
     }
 

@@ -14,7 +14,7 @@ class PlatType extends AbstractType
         $builder
             ->add('titre')
             ->add('caloris')
-            ->add('ingrediants')
+            
         ;
     }
 

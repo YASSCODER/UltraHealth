@@ -3,7 +3,16 @@
 {% block title %}Plat{% endblock %}
 
 {% block body %}
-    <h1>Plat</h1>
+<div class="container">
+<header class="bg-secondary py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">Details Plat</h1>
+            </div>
+        </div>
+    </header>
+<br>
+<br>
 
     <table class="table">
         <tbody>
@@ -21,10 +30,24 @@
             </tr>
         </tbody>
     </table>
+       <br>
+    <div class="text-center">
+  <div class="btn-show-container">
+    <div style="display: inline-block" >
+    <div  style="border-radius: 5px; padding:4.8px 13px 8px 13px; background-color: #EBBC00;">
+        <a href="{{ path('app_plat_edit', {'id': plat.id}) }}" style="color: #ffffff;">Edit</a>
+    </div>
+    </div>
+    <div style="display: inline-block">
+        {{ include('plat/_delete_form.html.twig') }}
+    </div>
+</div>
+<br>
+    <div class="text-center">
+    <a href="{{ path('app_plat_index') }}" style="color: #295C6E; border-radius: 10px; border: 1px solid #222875;  padding: 5px 10px; background-color: #D6D6D6;">Back To List</a>
+    </div>
+    </div>
 
-    <a href="{{ path('app_plat_index') }}">back to list</a>
 
-    <a href="{{ path('app_plat_edit', {'id': plat.id}) }}">edit</a>
-
-    {{ include('plat/_delete_form.html.twig') }}
+    
 {% endblock %}

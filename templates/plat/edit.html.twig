@@ -1,13 +1,33 @@
 {% extends 'base.html.twig' %}
+{% block head %}
+<style>
+       
+		
+        .Form {
+            margin: 0 20px;
+        }
+        
+       
+	</style>
+{% endblock %}
 
-{% block title %}Edit Plat{% endblock %}
 
 {% block body %}
-    <h1>Edit Plat</h1>
+    <div class="container" style="padding:0 15% 0 15%">
+    <header class="bg-secondary py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">Modifier Details De Plat</h1>
+            </div>
+        </div>
+    </header>
+    <div class="form">
 
     {{ include('plat/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_plat_index') }}">back to list</a>
-
-    {{ include('plat/_delete_form.html.twig') }}
+    <div class="btn-container">
+    <a href="{{ path('app_menu_index') }}" style="color: #295C6E; border-radius: 10px; border: 1px solid #222875;  padding: 5px 10px; background-color: #D6D6D6;">back to list</a>
+    </div>
+    </div>
+    </div>
 {% endblock %}
+

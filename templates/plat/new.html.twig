@@ -1,11 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Plat{% endblock %}
+
 
 {% block body %}
-    <h1>Create new Plat</h1>
-
+<div class="container" style="padding:0 15% 0 15%">
+    <header class="bg-secondary py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">Create new Plat</h1>
+            </div>
+        </div>
+    </header>
+    <div >
     {{ include('plat/_form.html.twig') }}
+    
+    <center><a href="{{ path('app_plat_index') }}" style="color: #295C6E; border-radius: 10px; border: 1px solid #222875;  padding: 5px 10px; background-color: #D6D6D6;">Back To List</a></center>
+    
+    </div>
+    </div>
+    
 
-    <a href="{{ path('app_plat_index') }}">back to list</a>
 {% endblock %}

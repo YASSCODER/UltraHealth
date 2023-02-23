@@ -16,9 +16,13 @@ class Plat
     private ?int $id = null;
 
     #[ORM\Column(length: 30)]
+    #[Assert\NotNull(message: 'Please enter a value.')]
+    #[Assert\Type('string', message: 'Please enter a valid name.')]
     private ?string $titre = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'This field can not be empty')]
+    #[Assert\Positive(message: 'Please enter a positive number')]
     private ?int $caloris = null;
 
     #[ORM\ManyToMany(targetEntity: Ingrediant::class, inversedBy: 'plats')]
@@ -108,5 +112,9 @@ class Plat
         $this->menus->removeElement($menu);
 
         return $this;
+    }
+    public function __toString()
+    {
+        return $this->titre;
     }
 }

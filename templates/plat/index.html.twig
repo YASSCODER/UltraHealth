@@ -1,37 +1,57 @@
 {% extends 'base.html.twig' %}
+{% block head %}
 
-{% block title %}Plat index{% endblock %}
+<style>	
+        
+        .Form {
+            margin: 0 20px;
+        }
+        
+       
+	</style>
+{% endblock %}
+
 
 {% block body %}
-    <h1>Plat index</h1>
+    <header class="bg-secondary py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">Liste Des Plats</h1>
+            </div>
+        </div>
+    </header>
+<br>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Titre</th>
-                <th>Caloris</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+<div style="padding:0px 25px" >
+    <div class="row row-cols-1 row-cols-md-4 g-4">
         {% for plat in plats %}
-            <tr>
-                <td>{{ plat.id }}</td>
-                <td>{{ plat.titre }}</td>
-                <td>{{ plat.caloris }}</td>
-                <td>
-                    <a href="{{ path('app_plat_show', {'id': plat.id}) }}">show</a>
-                    <a href="{{ path('app_plat_edit', {'id': plat.id}) }}">edit</a>
-                </td>
-            </tr>
+            <div class="col mb-5">
+                <div class="card h-100">
+                    <!-- Product image-->
+                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                    <!-- Product details-->
+                    <div class="card-body -4" style="background-color: #F0F0F2">
+                        <div class="text-center">
+                            <!-- Product name-->
+                            <h5 class="fw-bolder">Nom de Plat: {{ plat.titre }}</h5>
+                            <h6 class="fw-bolder">Energy: {{ plat.caloris }} Kcal/100g</h6>
+                            <div style="padding:20px 0 0 0">
+                           <a href="{{ path('app_plat_show', {'id': plat.id}) }}" style="color: #295C6E; border-radius: 5px; border: 1px solid #222875;  padding: 5px 10px; background-color: #D6D6D6;">Show Details</a>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
+            <div class="col-12">
+                <div class="alert alert-warning">No records found</div>
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
+    </div>
+</div>
+<center><a href="{{ path('app_plat_new') }}" style="color: #466A20; border: 2px solid #466A20; border-radius: 10px; background-color: #D6D6D6; padding: 5px 10px; font-size:15px; font-weight: bold;">Create new</a><center>
+<br>
+</div>
 
-    <a href="{{ path('app_plat_new') }}">Create new</a>
 {% endblock %}
+
