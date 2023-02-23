@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseback.html.twig' %}
 
 {% block title %}RendezVous index{% endblock %}
 
@@ -23,8 +23,8 @@
  
                 <td>{{ rendez_vou.heure ? rendez_vou.heure|date('H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_rendez_vous_show', {'id': rendez_vou.id}) }}">show</a>
-                    <a href="{{ path('app_rendez_vous_edit', {'id': rendez_vou.id}) }}">edit</a>
+                    <a href="{{ path('app_rendez_vous_back_show', {'id': rendez_vou.id}) }}">show</a>
+                    <a href="{{ path('app_rendez_vous_back_edit', {'id': rendez_vou.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -35,5 +35,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_rendez_vous_new') }}">Create new</a>
+    <a href="{{ path('app_rendez_vous_back_new') }}">Create new</a>
 {% endblock %}

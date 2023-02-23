@@ -21,6 +21,16 @@ class ConsultationController extends AbstractController
         ]);
     }
 
+
+    #[Route('/back', name: 'app_consultation_back_index', methods: ['GET'])]
+    public function indexback(ConsultationRepository $consultationRepository): Response
+    {
+        return $this->render('consultation/indexback.html.twig', [
+            'consultations' => $consultationRepository->findAll(),
+        ]);
+    }
+
+
     #[Route('/new', name: 'app_consultation_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ConsultationRepository $consultationRepository): Response
     {
@@ -33,8 +43,22 @@ class ConsultationController extends AbstractController
 
             return $this->redirectToRoute('app_consultation_index', [], Response::HTTP_SEE_OTHER);
         }
+    }
 
-        return $this->renderForm('consultation/new.html.twig', [
+        #[Route('/back/new', name: 'app_consultation_back_new', methods: ['GET', 'POST'])]
+    public function newback(Request $request, ConsultationRepository $consultationRepository): Response
+    {
+        $consultation = new Consultation();
+        $form = $this->createForm(ConsultationType::class, $consultation);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $consultationRepository->save($consultation, true);
+
+            return $this->redirectToRoute('app_consultation_back_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('consultation/newback.html.twig', [
             'consultation' => $consultation,
             'form' => $form,
         ]);
@@ -47,6 +71,16 @@ class ConsultationController extends AbstractController
             'consultation' => $consultation,
         ]);
     }
+
+    #[Route('/back/{id}', name: 'app_consultation_back_show', methods: ['GET'])]
+    public function showback(Consultation $consultation): Response
+    {
+        return $this->render('consultation/showback.html.twig', [
+            'consultation' => $consultation,
+        ]);
+    }
+
+
 
     #[Route('/{id}/edit', name: 'app_consultation_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Consultation $consultation, ConsultationRepository $consultationRepository): Response
@@ -66,6 +100,25 @@ class ConsultationController extends AbstractController
         ]);
     }
 
+
+    #[Route('/back/{id}/edit', name: 'app_consultation_back_edit', methods: ['GET', 'POST'])]
+    public function editback(Request $request, Consultation $consultation, ConsultationRepository $consultationRepository): Response
+    {
+        $form = $this->createForm(ConsultationType::class, $consultation);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $consultationRepository->save($consultation, true);
+
+            return $this->redirectToRoute('app_consultation_back_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('consultation/editback.html.twig', [
+            'consultation' => $consultation,
+            'form' => $form,
+        ]);
+    }
+
     #[Route('/{id}', name: 'app_consultation_delete', methods: ['POST'])]
     public function delete(Request $request, Consultation $consultation, ConsultationRepository $consultationRepository): Response
     {
@@ -74,6 +127,16 @@ class ConsultationController extends AbstractController
         }
 
         return $this->redirectToRoute('app_consultation_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/back/{id}', name: 'app_consultation_back_delete', methods: ['POST'])]
+    public function deleteback(Request $request, Consultation $consultation, ConsultationRepository $consultationRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$consultation->getId(), $request->request->get('_token'))) {
+            $consultationRepository->remove($consultation, true);
+        }
+
+        return $this->redirectToRoute('app_consultation_back_index', [], Response::HTTP_SEE_OTHER);
     }
 
   

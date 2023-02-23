@@ -21,6 +21,14 @@ class RendezVousController extends AbstractController
         ]);
     }
 
+    #[Route('/back', name: 'app_rendez_vous_back_index', methods: ['GET'])]
+    public function indexback(RendezVousRepository $rendezVousRepository): Response
+    {
+        return $this->render('rendez_vous/indexback.html.twig', [
+            'rendez_vouses' => $rendezVousRepository->findAll(),
+        ]);
+    }
+
     #[Route('/new', name: 'app_rendez_vous_new', methods: ['GET', 'POST'])]
     public function new(Request $request, RendezVousRepository $rendezVousRepository): Response
     {
@@ -40,10 +48,38 @@ class RendezVousController extends AbstractController
         ]);
     }
 
+
+    #[Route('/back/new', name: 'app_rendez_vous_back_new', methods: ['GET', 'POST'])]
+    public function newback(Request $request, RendezVousRepository $rendezVousRepository): Response
+    {
+        $rendezVou = new RendezVous();
+        $form = $this->createForm(RendezVousType::class, $rendezVou);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $rendezVousRepository->save($rendezVou, true);
+
+            return $this->redirectToRoute('app_rendez_vous_back_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('rendez_vous/newback.html.twig', [
+            'rendez_vou' => $rendezVou,
+            'form' => $form,
+        ]);
+    }
+
     #[Route('/{id}', name: 'app_rendez_vous_show', methods: ['GET'])]
     public function show(RendezVous $rendezVou): Response
     {
         return $this->render('rendez_vous/show.html.twig', [
+            'rendez_vou' => $rendezVou,
+        ]);
+    }
+
+    #[Route('/back/{id}', name: 'app_rendez_vous_back_show', methods: ['GET'])]
+    public function showback(RendezVous $rendezVou): Response
+    {
+        return $this->render('rendez_vous/showback.html.twig', [
             'rendez_vou' => $rendezVou,
         ]);
     }
@@ -66,6 +102,24 @@ class RendezVousController extends AbstractController
         ]);
     }
 
+    #[Route('/back/{id}/edit', name: 'app_rendez_vous_back_edit', methods: ['GET', 'POST'])]
+    public function editback(Request $request, RendezVous $rendezVou, RendezVousRepository $rendezVousRepository): Response
+    {
+        $form = $this->createForm(RendezVousType::class, $rendezVou);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $rendezVousRepository->save($rendezVou, true);
+
+            return $this->redirectToRoute('app_rendez_vous_back_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('rendez_vous/editback.html.twig', [
+            'rendez_vou' => $rendezVou,
+            'form' => $form,
+        ]);
+    }
+
     #[Route('/{id}', name: 'app_rendez_vous_delete', methods: ['POST'])]
     public function delete(Request $request, RendezVous $rendezVou, RendezVousRepository $rendezVousRepository): Response
     {
@@ -74,5 +128,14 @@ class RendezVousController extends AbstractController
         }
 
         return $this->redirectToRoute('app_rendez_vous_index', [], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('back/{id}', name: 'app_rendez_vous_back_delete', methods: ['POST'])]
+    public function deleteback(Request $request, RendezVous $rendezVou, RendezVousRepository $rendezVousRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$rendezVou->getId(), $request->request->get('_token'))) {
+            $rendezVousRepository->remove($rendezVou, true);
+        }
+
+        return $this->redirectToRoute('app_rendez_vous_back_index', [], Response::HTTP_SEE_OTHER);
     }
 }

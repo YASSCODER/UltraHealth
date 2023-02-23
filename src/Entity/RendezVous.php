@@ -6,6 +6,8 @@ use App\Repository\RendezVousRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+
 
 
 #[ORM\Entity(repositoryClass: RendezVousRepository::class)]
@@ -17,7 +19,8 @@ class RendezVous
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    
+    // #[Assert\DateTime]
+
     private ?\DateTimeInterface $dateRdv = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
@@ -76,5 +79,6 @@ if ($consultation->getRendezVous() !== $this) {
     public function __toString()
     {
         return $this->id;
+        
     }
 }
