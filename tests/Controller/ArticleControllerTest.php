@@ -7,6 +7,7 @@ use App\Repository\ArticleRepository;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+
 class ArticleControllerTest extends WebTestCase
 {
     private KernelBrowser $client;
@@ -132,4 +133,5 @@ class ArticleControllerTest extends WebTestCase
         self::assertSame($originalNumObjectsInRepository, count($this->repository->findAll()));
         self::assertResponseRedirects('/article/');
     }
+
 }

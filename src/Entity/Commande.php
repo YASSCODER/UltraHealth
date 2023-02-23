@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CommandeRepository::class)]
 class Commande
@@ -18,7 +19,15 @@ class Commande
 
     #[ORM\Column(length: 30)]
     private ?string $titre = null;
-
+/**
+     * @Assert\NotBlank(message=" titre doit etre non vide")
+     * @Assert\Length(
+     *      min = 5,
+     *      minMessage=" Entrer un titre au mini de 5 caracteres"
+     *
+     *     )
+     * @ORM\Column(type="string", length=255)
+     */
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
@@ -28,7 +37,9 @@ class Commande
     #[ORM\ManyToOne(inversedBy: 'commande')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $commandeOwner = null;
-
+ 
+    #[ORM\Column(length: 30)]
+    private ?int $poste_id = null;
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -37,6 +48,10 @@ class Commande
     public function getId(): ?int
     {
         return $this->id;
+    }
+    public function getPosteId(): ?int
+    {
+        return $this->poste_id;
     }
 
     public function getTitre(): ?string

@@ -6,6 +6,7 @@ use App\Entity\Article;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+
 /**
  * @extends ServiceEntityRepository<Article>
  *
@@ -38,7 +39,26 @@ class ArticleRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
+    
+    
+        public function findAll()
+        {
+            return $this->createQueryBuilder('a')
+                ->orderBy('a.id', 'ASC')
+                ->getQuery()
+                ->getResult();
+        }
+        function clean_input($input) {
+            // Liste de mots vulgaires
+            $vulgar_words = array("mot1", "mot2", "mot3");
+            // Supprimer les espaces en début et fin de la chaîne
+            $input = trim($input);
+            // Supprimer les balises HTML et PHP
+            $input = strip_tags($input);
+            // Remplacer les mots vulgaires par des astérisques
+            $input = str_ireplace($vulgar_words, "****", $input);
+            return $input;
+        }
 //    /**
 //     * @return Article[] Returns an array of Article objects
 //     */

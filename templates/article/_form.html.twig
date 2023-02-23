@@ -1,4 +1,8 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
+{{ form_start(form,{attr:{novalidate:'novalidate'}}) }}
+    {{ form_row(form.titre) }}
+    {{ form_errors(form.titre,{'attr':{'class':'text-danger'}}) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.image) }}
+    {{ form_row(form.author) }}
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

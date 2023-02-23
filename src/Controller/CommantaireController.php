@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Controller;
-
+use DateTimeImmutable;
+use App\Entity\Article;
 use App\Entity\Commantaire;
 use App\Form\CommantaireType;
 use App\Repository\CommantaireRepository;
@@ -9,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Doctrine\Persistence\ManagerRegistry;
 #[Route('/commantaire')]
 class CommantaireController extends AbstractController
 {
@@ -20,11 +21,21 @@ class CommantaireController extends AbstractController
             'commantaires' => $commantaireRepository->findAll(),
         ]);
     }
+    #[Route('/back', name: 'app_commantaire_backindex', methods: ['GET'])]
+    public function backindex(CommantaireRepository $commantaireRepository): Response
+    {
+        return $this->render('commantaire/backindex.html.twig', [
+            'commantaires' => $commantaireRepository->findAll(),
+        ]);
+    }
 
     #[Route('/new', name: 'app_commantaire_new', methods: ['GET', 'POST'])]
     public function new(Request $request, CommantaireRepository $commantaireRepository): Response
     {
+        
         $commantaire = new Commantaire();
+        $createdAt = new DateTimeImmutable();
+        $commantaire->setCreatedAt($createdAt);
         $form = $this->createForm(CommantaireType::class, $commantaire);
         $form->handleRequest($request);
 
@@ -33,8 +44,32 @@ class CommantaireController extends AbstractController
 
             return $this->redirectToRoute('app_commantaire_index', [], Response::HTTP_SEE_OTHER);
         }
-
         return $this->renderForm('commantaire/new.html.twig', [
+            'commantaire' => $commantaire,
+            'form' => $form,
+        ]);}
+
+        #[Route('/backnew', name: 'app_commantaire_backnew', methods: ['GET', 'POST'])]
+        public function backnew(Request $request, CommantaireRepository $commantaireRepository): Response
+        {
+            
+            $commantaire = new Commantaire();
+            $createdAt = new DateTimeImmutable();
+            $commantaire->setCreatedAt($createdAt);
+            $form = $this->createForm(CommantaireType::class, $commantaire);
+            $form->handleRequest($request);
+    
+            if ($form->isSubmitted() && $form->isValid()) {
+                
+            $clean1=$commantaire->getDescription();
+            $cleaninput1=$commantaireRepository->clean_input($clean1);
+            $commantaire->setDescription($cleaninput1);
+                $commantaireRepository->save($commantaire, true);
+    
+                return $this->redirectToRoute('app_commantaire_backindex', [], Response::HTTP_SEE_OTHER);
+            }
+
+        return $this->renderForm('commantaire/backnew.html.twig', [
             'commantaire' => $commantaire,
             'form' => $form,
         ]);
@@ -44,6 +79,13 @@ class CommantaireController extends AbstractController
     public function show(Commantaire $commantaire): Response
     {
         return $this->render('commantaire/show.html.twig', [
+            'commantaire' => $commantaire,
+        ]);
+    }
+    #[Route('/back/{id}', name: 'app_commantaire_backshow', methods: ['GET'])]
+    public function backshow(Commantaire $commantaire): Response
+    {
+        return $this->render('commantaire/backshow.html.twig', [
             'commantaire' => $commantaire,
         ]);
     }
@@ -61,6 +103,23 @@ class CommantaireController extends AbstractController
         }
 
         return $this->renderForm('commantaire/edit.html.twig', [
+            'commantaire' => $commantaire,
+            'form' => $form,
+        ]);
+    }
+    #[Route('/{id}/backedit', name: 'app_commantaire_backedit', methods: ['GET', 'POST'])]
+    public function backedit(Request $request, Commantaire $commantaire, CommantaireRepository $commantaireRepository): Response
+    {
+        $form = $this->createForm(CommantaireType::class, $commantaire);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $commantaireRepository->save($commantaire, true);
+
+            return $this->redirectToRoute('app_commantaire_backindex', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('commantaire/backedit.html.twig', [
             'commantaire' => $commantaire,
             'form' => $form,
         ]);

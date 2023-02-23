@@ -6,6 +6,7 @@ use App\Repository\ArticleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 class Article
@@ -15,9 +16,28 @@ class Article
     #[ORM\Column]
     private ?int $id = null;
 
+    
+    /**
+     * @Assert\NotBlank(message=" titre doit etre non vide")
+     * @Assert\Length(
+     *      min = 5,
+     *      minMessage=" Entrer un titre au mini de 5 caracteres"
+     *
+     *     )
+     * @ORM\Column(type="string", length=255)
+     */
     #[ORM\Column(length: 30)]
     private ?string $titre = null;
 
+    /**
+     * @Assert\NotBlank(message="description  doit etre non vide")
+     * @Assert\Length(
+     *      min = 20,
+     *      max = 200,
+     *      minMessage = "doit etre >=20 ",
+     *      maxMessage = "doit etre <=200" )
+     * @ORM\Column(type="string", length=1000)
+     */
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
@@ -33,6 +53,9 @@ class Article
     #[ORM\ManyToOne(inversedBy: 'article')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $author = null;
+    
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null; 
 
     public function __construct()
     {
@@ -132,5 +155,20 @@ class Article
         $this->author = $author;
 
         return $this;
+    }
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+    public function __toString()
+    {
+        return $this->getTitre(); // replace getTitle() with the appropriate method to get a string representation of the Article object
     }
 }

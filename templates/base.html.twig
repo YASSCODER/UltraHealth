@@ -5,31 +5,20 @@
         <link rel="icon" href="{{ asset ('assets/images/icon-logo.png')}}">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
-            <!-- Bootstrap CSS -->
-            <link rel="stylesheet" href="{{ asset ('assets/css/bootstrap.min.css')}}">
-            <!-- Site CSS -->
-            <link rel="stylesheet" href="{{ asset ('assets/css/style.css')}}">
-            <!-- Colors CSS -->
-            <link rel="stylesheet" href="{{asset ('assets/css/colors.css')}}">
-            <!-- ALL VERSION CSS -->
-            <link rel="stylesheet" href="{{ asset ('assets/css/versions.css')}}">
-            <!-- Responsive CSS -->
-            <link rel="stylesheet" href="{{ asset ('assets/css/responsive.css')}}">
-            <!-- Custom CSS -->
-            <link rel="stylesheet" href="{{ asset ('assets/css/custom.css')}}">
+             <!-- Bootstrap CSS -->
+   <link rel="stylesheet" href="{{ asset ('assets/css/bootstrap.min.css')}}">
+   <!-- Site CSS -->
+   <link rel="stylesheet" href="{{ asset ('assets/style.css')}}">
+   <!-- Colors CSS -->
+   <link rel="stylesheet" href="{{asset ('assets/css/colors.css')}}">
+   <!-- ALL VERSION CSS -->
+   <link rel="stylesheet" href="{{ asset ('assets/css/versions.css')}}">
+   <!-- Responsive CSS -->
+   <link rel="stylesheet" href="{{ asset ('assets/css/responsive.css')}}">
+   <!-- Custom CSS -->
+   <link rel="stylesheet" href="{{ asset ('assets/css/custom.css')}}">
         {% endblock %}
-        <!-- Bootstrap CSS -->
-            <link rel="stylesheet" href="{{ asset ('assets/css/bootstrap.min.css')}}">
-            <!-- Site CSS -->
-            <link rel="stylesheet" href="{{ asset ('assets/css/style.css')}}">
-            <!-- Colors CSS -->
-            <link rel="stylesheet" href="{{asset ('assets/css/colors.css')}}">
-            <!-- ALL VERSION CSS -->
-            <link rel="stylesheet" href="{{ asset ('assets/css/versions.css')}}">
-            <!-- Responsive CSS -->
-            <link rel="stylesheet" href="{{ asset ('assets/css/responsive.css')}}">
-            <!-- Custom CSS -->
-            <link rel="stylesheet" href="{{ asset ('assets/css/custom.css')}}">
+        
     </head>
 
     <body>
@@ -93,23 +82,43 @@
                
                         
                         <div id="testimonials" class="section wb wow fadeIn">
-                            <div class="container">
-                                <div class="heading">
-                                <span class="icon-logo"><img src="{{ asset ('assets/images/icon-logo.png')}}" alt="#"></span>
-                                <h2>Testimonials</h2>
+
+                                <h2>Articles</h2>
+                                        <div id="home" class="parallax first-section wow fadeIn" data-stellar-background-ratio="0.4" style="background-image:url('images/slider-bg.png');">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-12 col-sm-12">
+                  <div class="text-contant">
+                     <h2>
+                        <span class="center"><span class="icon"><img src="{{ asset ('assets/images/icon-logo.png')}}" alt="#" /></span></span>
+                        <a href="{{ asset ('assets/')}}" class="typewrite" data-period="2000" data-type='[ "Welcome to Life Care", "We Care Your Health", "We are Expert!" ]'>
+                        <span class="wrap"></span>
+                        </a>
+                     </h2>
+                      {% block body %}{% endblock %}
+                  </div>
+               </div>
+            </div>
+             
+            <!-- end row -->
+         </div>
+         <!-- end container -->
+         
                                 </div>
                                 <!-- end title -->
-                                <div class="row">
-                                <div class="col-md-6 col-sm-12 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s">
-                                    
-                                    {% block body %}{% endblock %}
+                             
+                               
                                 </div>
-                            </div>
-                         </div>     
+                                
+                                 
+                            
+                        </div>      
                                 
 
                             
         
+
+      
 
         {% block javascripts %}
             <script src="{{ asset ('assets/js/modernizer.js')}}"></script>

@@ -1,0 +1,44 @@
+{# templates/article/index.html.twig #}
+
+
+{% extends 'backbase.html.twig' %}
+
+{% block title %}Article index{% endblock %}
+
+{% block body %}
+
+    <h1>Tous les articles</h1>
+    <div class="shadow">
+            {% for article in articles %}
+<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s" style="visibility: visible; animation-duration: 1s; animation-delay: 0.2s; animation-name: fadeIn;">
+                    <div class="widget clearfix">
+                        <img src="{{article.image ? article.image}}" >
+                        
+                        <div class="widget-title">
+                            <h3>{{ article.titre }}</h3>
+                            
+                            <small>{{ article.createdAt ? article.createdAt|date('Y-m-d H:i:s') : '' }}</small>
+                        </div>
+                        <!-- end title -->
+                        <p>{{ article.description }}</p>
+                        
+
+                        <div class="footer-social">
+                            <a href="{{ asset ('assets/#')}}" class="btn grd1"><i class="fa fa-facebook"></i></a>
+                            <a href="{{ asset ('assets/#')}}" class="btn grd1"><i class="fa fa-github"></i></a>
+                            <a href="{{ path('app_commantaire_new') }}">Commenter</a>
+                            
+                            
+                        </div>
+                    </div><!--widget -->
+                </div>
+            {% endfor %}
+    
+    </div>
+        
+
+  <div class="form-group">  <a class="shadow__btn" href="{{ path('app_article_new') }}"> new article</a></div>
+{% endblock %}
+
+
+

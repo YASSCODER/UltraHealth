@@ -2,8 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\Article;
 use App\Entity\Commantaire;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,9 +15,9 @@ class CommantaireType extends AbstractType
     {
         $builder
             ->add('description')
-            ->add('created_at')
             ->add('poste')
             ->add('author')
+            ->add('save', SubmitType::class)
         ;
     }
 

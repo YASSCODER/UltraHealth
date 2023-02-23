@@ -6,6 +6,11 @@ use App\Entity\Article;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use App\Transformer\StringToFileTransformer;
+
+
+
 
 class ArticleType extends AbstractType
 {
@@ -14,16 +19,25 @@ class ArticleType extends AbstractType
         $builder
             ->add('titre')
             ->add('description')
-            ->add('created_at')
-            ->add('updated_at')
             ->add('author')
+            ->add('image', FileType::class, [
+                'required' => false,
+                'label' => 'Image file',
+            ])
+            ->get('image')->addViewTransformer(new StringToFileTransformer($options['data_class']))
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        
         $resolver->setDefaults([
             'data_class' => Article::class,
         ]);
     }
+    
+
+
+    
+    
 }
