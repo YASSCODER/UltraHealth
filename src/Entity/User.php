@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -18,24 +19,38 @@ class User
     private ?int $id = null;
 
     #[ORM\Column(length: 8)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 8,
+        max: 8,
+        minMessage: 'Your CIN must be at least {{ limit }} 8 characters',
+        maxMessage: 'Your CIN must be at least {{ limit }} 8 characters',
+    )]
     private ?string $cin = null;
 
     #[ORM\Column(length: 30)]
+    #[Assert\NotBlank]
     private ?string $nom = null;
 
     #[ORM\Column(length: 30)]
+    #[Assert\NotBlank]
     private ?string $prenom = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateNaissance = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $zone = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\Email(
+        message: 'The email {{ value }} is not a valid email.',
+    )]
     private ?string $email = null;
 
     #[ORM\Column(length: 30)]
+    #[Assert\NotBlank]
     private ?string $password = null;
 
     #[ORM\Column(length: 30)]
