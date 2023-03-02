@@ -23,7 +23,7 @@
 
            		<div class="input-div one">
                 <div class="i"> 
-           		    <i class="fas fa-map-pin"></i>
+                <i class="fas fa-address-card" style="color:green;"></i>
            		</div>
            		   <div class="div">
            		   		{{form_label(form.cin)}}
@@ -38,7 +38,7 @@
 
                 <div class="input-div one">
                 <div class="i"> 
-           		    <i class="fas fa-map-pin"></i>
+           		    <i class="fas fa-user" style="color:green;"></i>
            		</div>
            		   <div class="div">
            		   		{{form_label(form.nom)}}
@@ -52,9 +52,9 @@
            		</div>
 
                 <div class="input-div one">
-                <div class="i"> 
-           		    	<i class="fas fa-map-pin"></i>
-           		</div>
+                    <div class="i"> 
+                        <i class="fas fa-user" style="color:green;"></i>
+                    </div>
            		   <div class="div">
            		   		{{form_label(form.prenom)}}
                         {{form_widget(form.prenom)}}
@@ -65,16 +65,18 @@
                         {% endif %}
            		   </div>
            		</div>
+                <div class="input-div one">
            		   	{{form_label(form.dateNaissance)}}
                     {{form_widget(form.dateNaissance)}}
 					{% if form_errors(form.dateNaissance) is not empty %}
-						<div class = "alert" style ="width:100%;height:100%;background-color:#DC143C;">
+					<div class = "alert" style ="width:100%;height:100%;background-color:#DC143C;">
                         {{ form_errors(form.dateNaissance) }}
-                        </div>
-                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
                 <div class="input-div one">
                     <div class="i"> 
-           		    	<i class="fas fa-map-pin"></i>
+           		    	<i class="fas fa-map-pin" style="color:green;"></i>
            		   </div>
            		   <div class="div">
            		   		{{form_label(form.zone)}}
@@ -89,7 +91,7 @@
 
                  <div class="input-div one">
                  <div class="i"> 
-                    <i class="fas fa-at"></i>
+                    <i class="fas fa-at" style="color:green;"></i>
                 </div>
            		<div class="div">
            		   	{{form_label(form.email)}}
@@ -104,7 +106,7 @@
 
            		<div class="input-div pass">
            		   <div class="i"> 
-           		    	<i class="fas fa-lock"></i>
+           		    	<i class="fas fa-lock" style="color:green;"></i>
            		   </div>
            		   <div class="div">
            		    	{{form_label(form.password)}}
