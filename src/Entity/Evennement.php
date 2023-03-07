@@ -44,7 +44,7 @@ class Evennement
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\NotBlank(message: "description evennement ne peux pas être vide! ")]
-    //#[Assert\NotNull(message: "description evennement ne peux pas être vide! ")]
+    #[Assert\NotNull(message: "description evennement ne peux pas être vide! ")]
     // #[Assert\DateTime(message: "description evennement ne peux pas être vide! ")]
     private ?\DateTimeInterface $dateFin = null;
 
@@ -64,6 +64,17 @@ class Evennement
 
     #[ORM\OneToOne(mappedBy: 'evennement', cascade: ['persist', 'remove'])]
     private ?Passe $passe = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $eventimg = null;
+
+
+
+
+    #[ORM\Column(nullable: true)]
+    #[Assert\NotBlank(message: "nombre passe ne peux pas être vide! ")]
+    #[Assert\Positive(message: "nombre passe doit etre positive! ")]
+    private ?int $nbrPasse = null;
 
     public function getId(): ?int
     {
@@ -161,5 +172,31 @@ class Evennement
     public function __toString()
     {
         return $this->titre;
+    }
+
+    public function getEventimg(): ?string
+    {
+        return  $this->eventimg;
+    }
+
+
+    public function setEventimg(?string $eventimg): self
+    {
+        $this->eventimg = $eventimg;
+
+        // Save the file path to the database
+        return $this;
+    }
+
+    public function getNbrPasse(): ?int
+    {
+        return $this->nbrPasse;
+    }
+
+    public function setNbrPasse(?int $nbrPasse): self
+    {
+        $this->nbrPasse = $nbrPasse;
+
+        return $this;
     }
 }

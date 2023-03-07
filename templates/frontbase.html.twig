@@ -10,15 +10,12 @@
 		{# Run composer require symfony/webpack-encore-bundle to start using Symfony UX #}
 		{% block stylesheets %}
 			<!-- Bootstrap CSS -->
-			<link
-			rel="stylesheet" href="{{ asset ('assets/css/bootstrap.min.css')}}">
+			<link rel="stylesheet" href="{{ asset ('assets/css/bootstrap.min.css')}}">
 			<!-- Site CSS -->
-			<link
-			rel="stylesheet" href="{{ asset ('assets/css/style.css')}}">
+
 			<!-- Colors CSS -->
 			<link
-			rel="stylesheet" href="{{asset ('assets/css/colors.css')}}">
-			<!-- ALL VERSION CSS -->
+			rel="stylesheet" href="{{asset ('assets/css/colors.css')}}"> <!-- ALL VERSION CSS -->
 			<link
 			rel="stylesheet" href="{{ asset ('assets/css/versions.css')}}">
 			<!-- Responsive CSS -->
@@ -40,7 +37,7 @@
 							<div class="info-inner">
 								<span class="icontop"><img src="{{ asset ('assets/images/phone-icon.png')}}" alt="#"></span>
 								<span class="iconcont">
-									<a href="{{ asset ('assets/tel:800 123 456')}}">800 123 456</a>
+									<a href="{{ asset ('assets/tel:800 123 456')}}">55069081</a>
 								</span>
 							</div>
 							<div class="info-inner">
@@ -48,7 +45,7 @@
 									<i class="fa fa-envelope" aria-hidden="true"></i>
 								</span>
 								<span class="iconcont">
-									<a data-scroll href="{{ asset ('assets/mailto:info@yoursite.com')}}">info@Lifecare.com</a>
+									<a data-scroll href="{{ asset ('assets/mailto:info@yoursite.com')}}">info@ultrahealth.com</a>
 								</span>
 							</div>
 							<div class="info-inner">
@@ -83,33 +80,11 @@
 								<li>
 									<a data-scroll href=" {{ path('app_event_category_front_index') }}">categories</a>
 								</li>
-								<li>
-									<a data-scroll href="{{ asset ('assets/#doctors')}}">Doctors</a>
-								</li>
-								<li>
-									<a data-scroll href="{{ asset ('assets/#price')}}">Price</a>
-								</li>
-								<li>
-									<a data-scroll href="{{ asset ('assets/#testimonials')}}">Testimonials</a>
-								</li>
-								<li>
-									<a data-scroll href="{{ asset ('assets/#getintouch')}}">Contact</a>
-								</li>
+
 							</ul>
 						</div>
 					</nav>
-					<div class="serch-bar">
-						<div id="custom-search-input">
-							<div class="input-group col-md-12">
-								<input type="text" class="form-control input-lg" placeholder="Search"/>
-								<span class="input-group-btn">
-									<button class="btn btn-info btn-lg" type="button">
-										<i class="fa fa-search" aria-hidden="true"></i>
-									</button>
-								</span>
-							</div>
-						</div>
-					</div>
+
 				</div>
 			</div>
 		</header>
@@ -122,16 +97,18 @@
 					<h2>Testimonials</h2>
 				</div>
 				<!-- end title -->
-				<div class="row">
-					<div class="col-md-6 col-sm-12 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s"> {% block body %}{% endblock %}
-						</div>
-					</div>
+				<div>
+					{% block header %}{% endblock %}
 				</div>
+				<div>
+					{% block body %}{% endblock %}
+				</div>
+			</div>
+		</div>
 
 
-				{% block javascripts %}
-					<script src="{{ asset ('assets/js/modernizer.js')}}"></script>
-				{% endblock %}
-			</body>
-		</body>
-	</html>
+		{% block javascripts %}
+			<script src="{{ asset ('assets/js/modernizer.js')}}"></script>
+		{% endblock %}
+	</body>
+</html></body></html>

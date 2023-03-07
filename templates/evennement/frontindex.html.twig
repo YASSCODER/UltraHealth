@@ -3,42 +3,70 @@
 {% block title %}EVENNEMENT
 {% endblock %}
 
+
 {% block body %}
 
 
-	<table class="table">
-		<thead>
-			<tr>
+	<div class="container">
 
-				<th>Titre</th>
-				<th>Description</th>
-				<th>DateDebut</th>
-				<th>DateFin</th>
-				<th>Zone</th>
-				<th>actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for evennement in evennements %}
-				<tr>
+		<div class="serch-bar">
+			<div id="custom-search-input">
+				<div class="input-group col-md-12">
+					<input type="text" class="form-control input-lg" placeholder="Search"/>
+					<span class="input-group-btn">
+						<button class="btn btn-info btn-lg" type="button">
+							<i class="fa fa-search" aria-hidden="true"></i>
+						</button>
+					</span>
+				</div>
+			</div>
+		</div>
 
-					<td>{{ evennement.titre }}</td>
-					<td>{{ evennement.description }}</td>
-					<td>{{ evennement.dateDebut ? evennement.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
-					<td>{{ evennement.dateFin ? evennement.dateFin|date('Y-m-d H:i:s') : '' }}</td>
-					<td>{{ evennement.zone }}</td>
-					<td>
-						<a href="{{ path('app_evennement_front_show', {'id': evennement.id}) }}">show</a>
-
-					</td>
-				</tr>
-			{% else %}
-				<tr>
-					<td colspan="7">no records found</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+	</div>
 
 
+	<div class="container">
+
+		{% for evennement in evennements %}
+			<div>
+
+				<div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="fade-up">
+					<div
+						class="icon-box">
+
+
+						<!-- Product image-->
+						<img
+						class="card-img-top" src="{{asset('assets/img/' ~ evennement.eventimg)}}" alt="..." width=" 350" height=" 300"/>
+						<!-- Product details-->
+
+						<div
+							class="text-center">
+							<!-- Product name-->
+							<h5 class="fw-bolder">
+								nom Event:
+								{{ evennement.titre }}</h5>
+							<h6 class="fw-bolder">decription:
+								{{ evennement.description}}</h6>
+							<h6>{{ evennement.dateDebut ? evennement.dateDebut|date('Y-m-d H:i:s') : '' }}</h6>
+							<h6>{{ evennement.dateFin ? evennement.dateFin|date('Y-m-d H:i:s') : '' }}</h6>
+							<h6>{{ evennement.zone }}</h6>
+							<h6>{{ evennement.nbrPasse }}</h6>
+
+							<div style="padding:20px 20px 20px 20px">
+								<a href="{{ path('app_evennement_front_show', {'id': evennement.id}) }}" style="color: #295C6E; border-radius: 5px; border: 1px solid #222875;  padding: 5px 10px; background-color: #D6D6D6;">Show Details</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		{% else %}
+			<div class="col-12">
+				<div class="alert alert-warning">No records found</div>
+			</div>
+		{% endfor %}
+
+
+	</div>
 {% endblock %}

@@ -3,36 +3,61 @@
 {% block title %}Evennement
 {% endblock %}
 
+
 {% block body %}
-	<h1>Evennement</h1>
+	<h1 style="text-align:center;">{{ evennement.titre }}</h1>
+	<div style="float:center;">
+		<img
+		class="card-img-top" src="{{asset('assets/img/' ~ evennement.eventimg)}}" alt="..." width="1150" height=" 300"/>
+	<!-- Product details-->
+
+	</div>
 
 	<table class="table">
 		<tbody>
 
 			<tr>
-				<th>Titre</th>
+				<th>Titre:
+				</th>
 				<td>{{ evennement.titre }}</td>
+
 			</tr>
 			<tr>
-				<th>Description</th>
+				<th>Description:
+				</th>
 				<td>{{ evennement.description }}</td>
 			</tr>
 			<tr>
-				<th>DateDebut</th>
+				<th>DateDebut:
+				</th>
 				<td>{{ evennement.dateDebut ? evennement.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
 			</tr>
 			<tr>
-				<th>DateFin</th>
+				<th>DateFin:
+				</th>
 				<td>{{ evennement.dateFin ? evennement.dateFin|date('Y-m-d H:i:s') : '' }}</td>
 			</tr>
 			<tr>
-				<th>Zone</th>
+				<th>Zone:
+				</th>
 				<td>{{ evennement.zone }}</td>
 			</tr>
+			<tr>
+				<th>nombre de Passe restant:
+				</th>
+				<td>{{ evennement.nbrPasse }}</td>
+			</tr>
+			<tr>
+				<th>
+					<a href="{{ path('app_evennement_front_indexd') }}" style="color: #295C6E; border-radius: 5px; border: 1px solid #222875;  padding: 5px 10px; background-color: #D6D6D6;">back to list</a>
+					<a href="{{ path('app_evennement_update', {'id': evennement.id, 'nbrP': evennement.nbrPasse }) }}" style="color: #295C6E; border-radius: 5px; border: 1px solid #222875;  padding: 5px 10px; background-color: #D6D6D6;">BUY</a>
+					<a href="{{ path('app_evennement_participate') }}" style="color: #295C6E; border-radius: 5px; border: 1px solid #222875;  padding: 5px 10px; background-color: #D6D6D6;">participate</a>
+				</th>
+				<td></td>
+			</tr>
 		</tbody>
-	</table>
 
-	<a href="{{ path('app_evennement_front_index') }}">back to list</a>
+	</table>
 
 
 {% endblock %}

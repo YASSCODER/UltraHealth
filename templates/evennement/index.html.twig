@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}EVENNEMENT
+{% block title %}Evennement index
 {% endblock %}
 
 {% block body %}
-
+	<h1>Evennement index</h1>
 
 	<table class="table">
 		<thead>
@@ -15,6 +15,8 @@
 				<th>DateDebut</th>
 				<th>DateFin</th>
 				<th>Zone</th>
+				<th>Eventimg</th>
+				<th>NbrPasse</th>
 				<th>actions</th>
 			</tr>
 		</thead>
@@ -27,6 +29,8 @@
 					<td>{{ evennement.dateDebut ? evennement.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
 					<td>{{ evennement.dateFin ? evennement.dateFin|date('Y-m-d H:i:s') : '' }}</td>
 					<td>{{ evennement.zone }}</td>
+					<td>{{ evennement.eventimg }}</td>
+					<td>{{ evennement.nbrPasse }}</td>
 					<td>
 						<a href="{{ path('app_evennement_show', {'id': evennement.id}) }}">show</a>
 						<a href="{{ path('app_evennement_edit', {'id': evennement.id}) }}">edit</a>
@@ -34,11 +38,14 @@
 				</tr>
 			{% else %}
 				<tr>
-					<td colspan="7">no records found</td>
+					<td colspan="9">no records found</td>
 				</tr>
 			{% endfor %}
 		</tbody>
 	</table>
+	<div class="pagination">
+		{{ knp_pagination_render(evennements) }}
+	</div>
 
 	<a href="{{ path('app_evennement_new') }}">Create new</a>
 {% endblock %}

@@ -4,8 +4,13 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    event_images_directory: '%kernel.project_dir%/public/assets/img'
 
 services:
+
+    propel.pager:
+        class: sfPropelPager
+        arguments: ['@propel.configuration', '@propel.connection']
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
@@ -20,5 +25,7 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+
+   
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

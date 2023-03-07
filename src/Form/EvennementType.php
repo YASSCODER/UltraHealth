@@ -8,6 +8,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Validator\Constraints\Expression;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class EvennementType extends AbstractType
 {
@@ -29,7 +31,21 @@ class EvennementType extends AbstractType
                 'widget' => 'single_text',
             ])
             ->add('zone')
-            ->add('category');
+            ->add('category')
+            ->add('image', FileType::class, [
+                'label' => 'image (PNG file) ',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '51200k',
+                        'mimeTypes' => [
+                            'image/png',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid PNG file'
+                    ])
+                ],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

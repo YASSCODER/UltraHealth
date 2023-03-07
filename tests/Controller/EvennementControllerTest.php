@@ -49,6 +49,8 @@ class EvennementControllerTest extends WebTestCase
             'evennement[dateDebut]' => 'Testing',
             'evennement[dateFin]' => 'Testing',
             'evennement[zone]' => 'Testing',
+            'evennement[eventimg]' => 'Testing',
+            'evennement[nbrPasse]' => 'Testing',
             'evennement[category]' => 'Testing',
             'evennement[passe]' => 'Testing',
         ]);
@@ -67,6 +69,8 @@ class EvennementControllerTest extends WebTestCase
         $fixture->setDateDebut('My Title');
         $fixture->setDateFin('My Title');
         $fixture->setZone('My Title');
+        $fixture->setEventimg('My Title');
+        $fixture->setNbrPasse('My Title');
         $fixture->setCategory('My Title');
         $fixture->setPasse('My Title');
 
@@ -89,6 +93,8 @@ class EvennementControllerTest extends WebTestCase
         $fixture->setDateDebut('My Title');
         $fixture->setDateFin('My Title');
         $fixture->setZone('My Title');
+        $fixture->setEventimg('My Title');
+        $fixture->setNbrPasse('My Title');
         $fixture->setCategory('My Title');
         $fixture->setPasse('My Title');
 
@@ -102,6 +108,8 @@ class EvennementControllerTest extends WebTestCase
             'evennement[dateDebut]' => 'Something New',
             'evennement[dateFin]' => 'Something New',
             'evennement[zone]' => 'Something New',
+            'evennement[eventimg]' => 'Something New',
+            'evennement[nbrPasse]' => 'Something New',
             'evennement[category]' => 'Something New',
             'evennement[passe]' => 'Something New',
         ]);
@@ -115,6 +123,8 @@ class EvennementControllerTest extends WebTestCase
         self::assertSame('Something New', $fixture[0]->getDateDebut());
         self::assertSame('Something New', $fixture[0]->getDateFin());
         self::assertSame('Something New', $fixture[0]->getZone());
+        self::assertSame('Something New', $fixture[0]->getEventimg());
+        self::assertSame('Something New', $fixture[0]->getNbrPasse());
         self::assertSame('Something New', $fixture[0]->getCategory());
         self::assertSame('Something New', $fixture[0]->getPasse());
     }
@@ -131,6 +141,8 @@ class EvennementControllerTest extends WebTestCase
         $fixture->setDateDebut('My Title');
         $fixture->setDateFin('My Title');
         $fixture->setZone('My Title');
+        $fixture->setEventimg('My Title');
+        $fixture->setNbrPasse('My Title');
         $fixture->setCategory('My Title');
         $fixture->setPasse('My Title');
 

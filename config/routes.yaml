@@ -1,3 +1,13 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+app_evennement_participate:
+    path: /fronti/participate
+    controller: App\Controller\EvennementController::sendEmail
+   # methods: [GET, POST]
+app_evennement_front_index:
+    path: /fronti
+    controller: App\Controller\EvennementController::indexF
+
+
