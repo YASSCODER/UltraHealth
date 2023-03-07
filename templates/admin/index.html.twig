@@ -128,7 +128,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
                         <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="/admin/new">Register</a>
+                        <a class="collapse-item" href="/admin/register">Register</a>
                         <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Other Pages:</h6>
@@ -437,7 +437,11 @@
                                             <td>{{ user.zone }}</td>
                                             <td>{{ user.email }}</td>
                                             <td>{{ user.password }}</td>
-                                            <td>{{ user.role }}</td>
+                                            <td>
+                                            {% for role in user.role %}
+                                            {{ role }}
+                                            {% endfor %}
+                                            </td>
                                             <td>
                                                 <a href="{{ path('app_admin_edit', {'id': user.id}) }}">edit</a>
                                                 <a href="{{ path('app_admin_show', {'id': user.id}) }}">show</a>
