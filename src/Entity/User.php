@@ -91,11 +91,14 @@ class User implements UserInterface
         $this->commantaire = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getUserIdentifier(): ?int
     {
         return $this->id;
     }
 
+    /**
+         * @see UserInterface
+    */
     public function getCin(): ?string
     {
         return $this->cin;
@@ -114,7 +117,7 @@ class User implements UserInterface
          */
         public function getUsername(): string
         {
-                return (string) $this->username;
+                return (string) $this->nom;
         }
     public function getNom(): ?string
     {
@@ -179,7 +182,7 @@ class User implements UserInterface
 
     /**
          * @see UserInterface
-         */
+    */
     public function getpassword(): ?string
     {
         return $this->password;
@@ -197,7 +200,7 @@ class User implements UserInterface
          */
         public function getRoles(): array
         {
-                $roles = $this->roles;
+                $roles = $this->role;
                 // guarantee every user at least has ROLE_USER
                 $roles[] = 'ROLE_USER';
 
