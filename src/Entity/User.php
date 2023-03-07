@@ -94,9 +94,9 @@ class User implements UserInterface
  /**
          * @see UserInterface
     */
-    public function getUserIdentifier(): ?int
+    public function getUserIdentifier(): ?string
     {
-        return $this->id;
+        return $this->email;
     }
 
     public function getId(): ?int
@@ -206,9 +206,6 @@ class User implements UserInterface
         public function getRoles(): array
         {
                 $roles = $this->role;
-                // guarantee every user at least has ROLE_USER
-                $roles[] = 'ROLE_USER';
-
                 return array_unique($roles);
         }
      /**
