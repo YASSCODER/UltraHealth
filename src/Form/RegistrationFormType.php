@@ -23,6 +23,7 @@ class RegistrationFormType extends AbstractType
             ->add('dateNaissance')
             ->add('zone')
             ->add('email')
+            ->add('password', PasswordType::class)
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
@@ -47,6 +48,8 @@ class RegistrationFormType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
+                'label' => 'Plain password'
+                
             ])
         ;
     }

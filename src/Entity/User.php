@@ -56,9 +56,6 @@ class User implements UserInterface
     #[Assert\NotBlank]
     private ?string $password = null;
 
-    #[ORM\Column(length: 30)]
-    private ?string $role = null;
-
     #[ORM\OneToMany(mappedBy: 'commandeOwner', targetEntity: Commande::class)]
     private Collection $commande;
 
@@ -80,6 +77,9 @@ class User implements UserInterface
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Commantaire::class)]
     private Collection $commantaire;
 
+    #[ORM\Column(type: Types::JSON)]
+    private array $role = [];
+
     public function __construct()
     {
         $this->commande = new ArrayCollection();
@@ -91,14 +91,19 @@ class User implements UserInterface
         $this->commantaire = new ArrayCollection();
     }
 
+ /**
+         * @see UserInterface
+    */
     public function getUserIdentifier(): ?int
     {
         return $this->id;
     }
 
-    /**
-         * @see UserInterface
-    */
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+ 
     public function getCin(): ?string
     {
         return $this->cin;
@@ -221,17 +226,6 @@ class User implements UserInterface
         {
                 // not needed when using the "bcrypt" algorithm in security.yaml
         }
-    public function getRole(): ?string
-    {
-        return $this->role;
-    }
-
-    public function setRole(string $role): self
-    {
-        $this->role = $role;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Commande>
@@ -439,6 +433,18 @@ class User implements UserInterface
                 $commantaire->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRole(): array
+    {
+        return $this->role;
+    }
+
+    public function setRole(array $role): self
+    {
+        $this->role = $role;
 
         return $this;
     }

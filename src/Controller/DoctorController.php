@@ -25,7 +25,8 @@ class DoctorController extends AbstractController
     public function newAdmin(Request $request, UserRepository $userRepository): Response
     {
         $user = new User();
-        $user->setRole("DOCTOR");
+        $role = ['role' => 'DOCTOR'];
+        $user->setRole($role);
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 

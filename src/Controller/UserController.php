@@ -25,7 +25,8 @@ class UserController extends AbstractController
     public function newAdmin(Request $request, UserRepository $userRepository): Response
     {
         $user = new User();
-        $user->setRole("CLIENT");
+        $role = ['role' => 'CLIENT'];
+        $user->setRole($role);
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
