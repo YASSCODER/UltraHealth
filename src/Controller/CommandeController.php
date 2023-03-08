@@ -21,6 +21,12 @@ class CommandeController extends AbstractController
         ]);
     }
 
+    #[Route('/home', name: 'xxxx')]
+    public function affii(): Response
+    {
+        return $this->render('commande/home.html.twig');
+    }
+
     #[Route('/new', name: 'app_commande_new', methods: ['GET', 'POST'])]
     public function new(Request $request, CommandeRepository $commandeRepository): Response
     {

@@ -1,63 +1,39 @@
-{% extends 'base.html.twig' %}
+{% extends "base.html.twig" %}
 
 {% block title %}Product index{% endblock %}
 
 {% block content %}
     <h1>Product index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Titre</th>
-                <th>Description</th>
-                <th>Image</th>
-                <th>Prix</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for product in products %}
-            <tr>
-                <td>{{ product.id }}</td>
-                <td>{{ product.titre }}</td>
-                <td>{{ product.description }}</td>
-                <td>{{ product.image }}</td>
-                <td>{{ product.prix }}</td>
-                <td>
-                    <a href="{{ path('app_product_show', {'id': product.id}) }}">show</a>
-                    <a href="{{ path('app_product_edit', {'id': product.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
     <a href="{{ path('app_product_new') }}">Create new</a>
-{% for product in products %}
-    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="{{ asset(' dum10113-dumo-fresh-luchtverfrisser-500ml-dumortier-ul6190h-63f63ad3a683d.png	') }}" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">{{ product.titre }}</h5>
-                                    <!-- Product price-->
-                                    {{ product.prix }}
+    {% for product in products %}
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                        <div class="col mb-5">
+                            <div class="card h-100">
+                                <!-- Product image-->;
+                                <div>
+                                    <img src="{{ asset('uploads/image/'~ product.image) }}">
+                                </div>
+                                <!-- Product details-->
+                                
+                                <div class="card-body p-4">
+                                    <div class="text-center">
+                                        <!-- Product name-->
+                                        <h5 class="fw-bolder">{{ product.titre }}</h5>
+                                        <!-- Product price-->
+                                        {{ product.prix }}
+                                    </div>
+                                </div>
+                                <!-- Product actions--> 
+                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                    <div class="text-center">
+                                        <a href="{{ path('app_product_show', {'id': product.id}) }}">show</a>
+                                        <a href="{{ path('app_product_edit', {'id': product.id}) }}">edit</a>
+                                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href=/cart>View options</a></div>
+                                    </div> 
                                 </div>
                             </div>
-                            <!-- Product actions--> 
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div>
-                            </div>
                         </div>
-                    </div>
-                     {% endfor %}
+        </div>
+    {% endfor %}
 {% endblock %}

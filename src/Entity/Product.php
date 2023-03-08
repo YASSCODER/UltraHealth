@@ -6,6 +6,7 @@ use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Assert\Assert;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
@@ -16,6 +17,7 @@ class Product
     private ?int $id = null;
 
     #[ORM\Column(length: 30)]
+    
     private ?string $titre = null;
 
     #[ORM\Column(length: 255)]
@@ -54,6 +56,7 @@ class Product
         $this->titre = $titre;
 
         return $this;
+        
     }
 
     public function getDescription(): ?string
@@ -135,4 +138,8 @@ class Product
     {
         return $this->id;
     }
+    
+    
+    
+   
 }
