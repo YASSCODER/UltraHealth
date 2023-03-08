@@ -25,6 +25,8 @@
                 <td>
                     <a href="{{ path('app_consultation_back_show', {'id': consultation.id}) }}">show</a>
                     <a href="{{ path('app_consultation_back_edit', {'id': consultation.id}) }}">edit</a>
+                     <a href="{{ path('app_pdf_consultation_back_show', {'id': consultation.id}) }}">pdf</a>
+
                 </td>
             </tr>
         {% else %}
