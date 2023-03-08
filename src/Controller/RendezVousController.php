@@ -15,6 +15,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\Transport\Smtp\GmailTransport;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Twilio\Rest\Client;
 
 
 
@@ -40,6 +41,22 @@ class RendezVousController extends AbstractController
             'rendez_vouses' => $pagination,
         ]);
     }
+
+
+
+
+  
+    #[Route('/sms', name: 'app_sms')]
+        function envoyerSMS(RendezVousRepository $repository, Request $request)
+        {
+            
+            
+            $repository->sms();
+            $this->addFlash('Danger', 'SMS envoyée avec succées');
+            return $this->redirectToRoute('app_rendez_vous_index');
+        }
+    
+
 
     #[Route('/back', name: 'app_rendez_vous_back_index', methods: ['GET'])]
     public function indexback(RendezVousRepository $rendezVousRepository ,Request $request, PaginatorInterface $paginator): Response

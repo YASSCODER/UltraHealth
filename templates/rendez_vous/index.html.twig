@@ -4,6 +4,7 @@
 
 {% block body %}
     <h1>RendezVous index</h1>
+   
 
     <table class="table">
         <thead>
@@ -25,13 +26,18 @@
                 <td>
                     <a href="{{ path('app_rendez_vous_show', {'id': rendez_vou.id}) }}">show</a>
                     <a href="{{ path('app_rendez_vous_edit', {'id': rendez_vou.id}) }}">edit</a>
+                    <a href="{{ path('app_sms') }}">SMS</a>
+
                 </td>
             </tr>
+
         {% else %}
             <tr>
                 <td colspan="4">no records found</td>
             </tr>
         {% endfor %}
+
+    
         </tbody>
     </table>
 

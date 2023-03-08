@@ -16,6 +16,19 @@ use Dompdf\Options;
 use App\Repository\ActiviteRepository;
 use App\Repository\UtilisateurRepository;
 
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Color\Color;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
+use Endroid\QrCode\Label\Label;
+use Endroid\QrCode\Logo\Logo;
+use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
+use Endroid\QrCode\Writer\PngWriter;
+use Endroid\QrCode\Writer\ValidationException;
+use Endroid\QrCode\Label\Font\NotoSans;
+use Doctrine\Persistence\ManagerRegistry;
+
+
 
 
 #[Route('/consultation')]
@@ -31,6 +44,43 @@ class ConsultationController extends AbstractController
         
     }
 
+
+  
+  
+    #[Route('/QrCode/{id}', name: 'app_QrCode')]
+    public function qrCode(ManagerRegistry $doctrine, $id, ConsultationRepository $Consultation)
+    {
+        return $this->render("consultation/qrcodeconsultation.html.twig", ['id' => $id]);
+    }
+
+    #[Route('/QrCode/generate/{id}', name: 'app_qr_codes')]
+    public function qrGenerator(ManagerRegistry $doctrine, $id, ConsultationRepository $Consultation)
+    {
+        $em = $doctrine->getManager();
+        $res = $Consultation->find($id);
+      //  $qrcode = QrCode::create($res->getNom() .  " Et le prix est: " . $res->getPrix())
+        $qrcode = QrCode::create( " - Votre fiche patient est:". $res->getId() . " , et vous avez: " . $res->getTraitement() . " place")
+
+            ->setEncoding(new Encoding('UTF-8'))
+            ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())
+            ->setSize(300)
+            ->setMargin(10)
+            ->setRoundBlockSizeMode(new RoundBlockSizeModeMargin())
+            ->setForegroundColor(new Color(0, 0, 0))
+            ->setBackgroundColor(new Color(255, 255, 255));
+        $writer = new PngWriter();
+        return new Response($writer->write($qrcode)->getString(),
+            Response::HTTP_OK,
+            ['content-type' => 'image/png']
+        );
+
+    }
+
+
+
+
+
+    
 
     #[Route('/back', name: 'app_consultation_back_index', methods: ['GET'])]
     public function indexback(ConsultationRepository $consultationRepository): Response
@@ -78,6 +128,19 @@ class ConsultationController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    #[Route('/search', name: 'search_consultation', methods: ['GET','POST'])]
+    public function searchConsultation(Request $request, ConsultationRepository $ConsultationRepository)
+    {
+        $searchQuery = $request->query->get('searchQuery', '');
+
+        $consultations = $ConsultationRepository->searchByTitre($searchQuery);
+
+        return $this->render('consultation/searchresconsultation.html.twig', [
+            'consultations' => $consultations,
+        ]);
+    }
+
 
     #[Route('/{id}', name: 'app_consultation_show', methods: ['GET'])]
     public function show(Consultation $consultation): Response

@@ -6,6 +6,8 @@ namespace App\Entity;
 use App\Repository\ConsultationRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;     
 
 #[ORM\Entity(repositoryClass: ConsultationRepository::class)]
 class Consultation
