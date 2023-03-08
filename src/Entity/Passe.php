@@ -25,7 +25,7 @@ class Passe
 
     #[ORM\ManyToOne(inversedBy: 'Passe')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $PasseOwner = null;
+    private ?Utilisateur $utilisateur = null;
 
     public function getId(): ?int
     {
@@ -68,14 +68,15 @@ class Passe
         return $this;
     }
 
-    public function getPasseOwner(): ?User
+
+    public function getUtilisateur(): ?Utilisateur
     {
-        return $this->PasseOwner;
+        return $this->utilisateur;
     }
 
-    public function setPasseOwner(?User $PasseOwner): self
+    public function setUtilisateur(?Utilisateur $utilisateur): self
     {
-        $this->PasseOwner = $PasseOwner;
+        $this->utilisateur = $utilisateur;
 
         return $this;
     }

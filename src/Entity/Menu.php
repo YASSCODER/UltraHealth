@@ -22,12 +22,12 @@ class Menu
     private ?string $category = null;
 
 
-    #[ORM\ManyToOne(inversedBy: 'menu')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $userOwner = null;
-
     #[ORM\ManyToMany(targetEntity: Plat::class, mappedBy: 'menus')]
     private Collection $plats;
+
+    #[ORM\ManyToOne(inversedBy: 'menu')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Utilisateur $utilisateur = null;
 
     public function __construct()
     {
@@ -63,17 +63,6 @@ class Menu
         return $this;
     }
 
-    public function getUserOwner(): ?User
-    {
-        return $this->userOwner;
-    }
-
-    public function setUserOwner(?User $userOwner): self
-    {
-        $this->userOwner = $userOwner;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Plat>
@@ -98,6 +87,18 @@ class Menu
         if ($this->plats->removeElement($plat)) {
             $plat->removeMenu($this);
         }
+
+        return $this;
+    }
+
+    public function getUtilisateur(): ?Utilisateur
+    {
+        return $this->utilisateur;
+    }
+
+    public function setUtilisateur(?Utilisateur $utilisateur): self
+    {
+        $this->utilisateur = $utilisateur;
 
         return $this;
     }

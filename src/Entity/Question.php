@@ -33,7 +33,7 @@ class Question
 
     #[ORM\ManyToOne(inversedBy: 'question')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $author = null;
+    private ?Utilisateur $utilisateur = null;
 
     public function __construct()
     {
@@ -123,14 +123,14 @@ class Question
         return $this;
     }
 
-    public function getAuthor(): ?User
+    public function getUtilisateur(): ?Utilisateur
     {
-        return $this->author;
+        return $this->utilisateur;
     }
 
-    public function setAuthor(?User $author): self
+    public function setUtilisateur(?Utilisateur $utilisateur): self
     {
-        $this->author = $author;
+        $this->utilisateur = $utilisateur;
 
         return $this;
     }
