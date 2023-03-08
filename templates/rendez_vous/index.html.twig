@@ -18,7 +18,7 @@
         {% for rendez_vou in rendez_vouses %}
             <tr>
                 <td>{{ rendez_vou.id }}</td>
-             //   <td>{{ rendez_vou.dateRdv ? rendez_vou.dateRdv|date('Y-m-d H:i:s') : '' }}</td>
+              <td>{{ rendez_vou.dateRdv ? rendez_vou.dateRdv|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ rendez_vou.dateRdv ? rendez_vou.dateRdv|date('Y-m-d ') : '' }}</td>
  
                 <td>{{ rendez_vou.heure ? rendez_vou.heure|date('H:i:s') : '' }}</td>
@@ -34,6 +34,10 @@
         {% endfor %}
         </tbody>
     </table>
+
+    <div class="pagination">
+		{{ knp_pagination_render(rendez_vouses) }}
+	</div>
 
     <a href="{{ path('app_rendez_vous_new') }}">Create new</a>
 {% endblock %}

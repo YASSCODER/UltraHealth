@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
+
 use App\Repository\RendezVousRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+
 
 
 
@@ -20,7 +22,7 @@ class RendezVous
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     // #[Assert\DateTime]
-
+    //#[Assert\GreaterThan("today", message:"la date doit étre supérieure à aujourd'hui.")] 
     private ?\DateTimeInterface $dateRdv = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]

@@ -34,6 +34,7 @@
         {% endfor %}
         </tbody>
     </table>
-
+       <div class="align-center" style="color: black; float: left; padding: 8px 16px;  text-decoration: none; display: inline-block;> {{ knp_pagination_render(rendez_vouses) }}</div>
+	
     <a href="{{ path('app_rendez_vous_back_new') }}">Create new</a>
 {% endblock %}

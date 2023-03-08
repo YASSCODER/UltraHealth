@@ -1,0 +1,11 @@
+services:
+    gmail_transport:
+        class: Symfony\Component\Mailer\Transport\Smtp\GmailTransport
+        arguments:
+            - 'gymelite95@gmail.com'
+            - 'sevlblnxqgzlxwnn'
+
+    mailer:
+        class: Symfony\Component\Mailer\Mailer
+        arguments:
+            - '@gmail_transport'

@@ -10,6 +10,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use App\Repository\ActiviteRepository;
+use App\Repository\UtilisateurRepository;
+
+
+
 #[Route('/consultation')]
 class ConsultationController extends AbstractController
 {
@@ -19,6 +27,8 @@ class ConsultationController extends AbstractController
         return $this->render('consultation/index.html.twig', [
             'consultations' => $consultationRepository->findAll(),
         ]);
+
+        
     }
 
 
@@ -43,6 +53,11 @@ class ConsultationController extends AbstractController
 
             return $this->redirectToRoute('app_consultation_index', [], Response::HTTP_SEE_OTHER);
         }
+
+        return $this->renderForm('consultation/new.html.twig', [
+            'consultation' => $consultation,
+            'form' => $form,
+        ]);
     }
 
         #[Route('/back/new', name: 'app_consultation_back_new', methods: ['GET', 'POST'])]
@@ -72,6 +87,8 @@ class ConsultationController extends AbstractController
         ]);
     }
 
+   
+
     #[Route('/back/{id}', name: 'app_consultation_back_show', methods: ['GET'])]
     public function showback(Consultation $consultation): Response
     {
@@ -81,6 +98,47 @@ class ConsultationController extends AbstractController
     }
 
 
+    #[Route('/back/{id}/pdf', name: 'app_pdf_consultation_back_show', methods: ['GET'])]
+    public function indexx(Consultation $consultation)
+    {
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+        
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+        
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('consultation/pdfconsultation.html.twig', [
+            'consultation' => $consultation,
+        ]);
+        
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+        
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Store PDF Binary Data
+        $output = $dompdf->output();
+       
+        $publicDirectory = $this->getParameter('consultation_pdf_directory');
+
+        $pdfFilepath =  $publicDirectory . '/' . uniqid() . '.pdf';
+
+        // Write file to the desired path
+        file_put_contents($pdfFilepath, $output);
+        
+        // Send some text response
+        return new Response("The PDF file has been succesfully generated !");
+    }
+
+
+
+    
 
     #[Route('/{id}/edit', name: 'app_consultation_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Consultation $consultation, ConsultationRepository $consultationRepository): Response
@@ -113,7 +171,7 @@ class ConsultationController extends AbstractController
             return $this->redirectToRoute('app_consultation_back_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('consultation/editback.html.twig', [
+        return $this->renderForm('consultation.html.twig', [
             'consultation' => $consultation,
             'form' => $form,
         ]);
@@ -138,6 +196,12 @@ class ConsultationController extends AbstractController
 
         return $this->redirectToRoute('app_consultation_back_index', [], Response::HTTP_SEE_OTHER);
     }
+ 
 
-  
+
+   
+
+
+
+
 }
