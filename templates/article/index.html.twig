@@ -6,11 +6,42 @@
 {% block title %}Article index{% endblock %}
 
 {% block body %}
+<form id="search-form">
+    <input type="text" name="q" placeholder="Rechercher un article">
+    <button type="submit">Rechercher</button>
+</form>
+
+
+<div id="search-results">
+    <!-- Liste des articles correspondants à la recherche -->
+</div>
+
+<script>
+    const searchForm = document.querySelector('#search-form');
+    const searchResults = document.querySelector('#search-results');
+
+    searchForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const formData = new FormData(searchForm);
+        const searchUrl = "{{ path('app_article_search') }}";
+
+        fetch(searchUrl + '?' + new URLSearchParams(formData))
+            .then(response => response.text())
+            .then(html => {
+                searchResults.innerHTML = html;
+            });
+    });
+</script>
+
+
+
+
 
     <h1>Tous les articles</h1>
-    <div class="row dev-list text-center">
+    
             {% for article in articles %}
-<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s" style="visibility: visible; animation-duration: 1s; animation-delay: 0.2s; animation-name: fadeIn;">
+            <div class="row dev-list text-center">
+                 <div class="header" data-wow-duration="1s" data-wow-delay="0.2s" style="visibility: visible; animation-duration: 1s; animation-delay: 0.2s; animation-name: fadeIn;">
                     <div class="widget clearfix">
                         <img src="{{article.image ? article.image}}" >
                         
@@ -24,19 +55,19 @@
                         
 
                         <div class="footer-social">
-                            <a href="{{ asset ('assets/#')}}" class="btn grd1"><i class="fa fa-facebook"></i></a>
-                            <a href="{{ asset ('assets/#')}}" class="btn grd1"><i class="fa fa-github"></i></a>
-                            <a href="{{ path('app_commantaire_new') }}">Commenter</a>
-                            
+
+                                <button type="button" onclick="window.location.href='{{ path('app_article_edit', {'id': article.id} )}}'" class="btn">modifier</button>
+                                {{ include('article/_delete_form.html.twig') }}                         
+     
+    <button type="button" onclick="window.location.href='{{ path('app_commantaire_new', {'articleId': article.id} ) }}'" class="btn">commanter</button>                   
                             
                         </div>
                     </div><!--widget -->
                 </div>
             {% endfor %}
     
-    </div>
-        
-
+    </div><div class="align-center"> {{ knp_pagination_render(articles) }}</div>
+    
   <div class="form-group">  <a class="shadow__btn" href="{{ path('app_article_new') }}"> new article</a></div>
 {% endblock %}
 

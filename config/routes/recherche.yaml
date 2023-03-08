@@ -1,0 +1,4 @@
+app_article_search:
+    path: '/articles/search'
+    methods: ['GET']
+    controller: 'App\Controller\ArticleController::search'

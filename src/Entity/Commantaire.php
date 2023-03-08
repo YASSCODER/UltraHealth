@@ -16,6 +16,10 @@ class Commantaire
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
+
+    #[ORM\Column(length: 255)]
+    private ?string $titre = null;
+
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
@@ -27,11 +31,25 @@ class Commantaire
     #[ORM\JoinColumn(nullable: false)]
     private ?User $author = null;
 
+
+    
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    public function gettitre(): ?string
+    {
+        return $this->titre;
+    }
+
+    public function settitre(string $titre): self
+    {
+        $this->titre = $titre;
+
+        return $this;
+    }
     public function getDescription(): ?string
     {
         return $this->description;
@@ -79,4 +97,9 @@ class Commantaire
 
         return $this;
     }
+    public function __toString()
+    {
+        return $this->getTitre(); // replace getTitle() with the appropriate method to get a string representation of the Article object
+    }
+    
 }

@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Repository\ArticleRepository;
+use App\Repository\UserRepository;;
 #[Route('/commantaire')]
 class CommantaireController extends AbstractController
 {
@@ -29,25 +31,39 @@ class CommantaireController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_commantaire_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CommantaireRepository $commantaireRepository): Response
-    {
+    #[Route('/new/{articleId}', name: 'app_commantaire_new', methods: ['GET', 'POST'])]
+public function new(Request $request, articleRepository $articleRepository, UserRepository $userRepository, CommantaireRepository $commantaireRepository, $articleId): Response
+{
+    $article = $articleRepository->find($articleId);
+    
+    if (!$article) {
+        throw $this->createNotFoundException('The article does not exist');
+    }
+    
+    $commantaire = new Commantaire();
         
-        $commantaire = new Commantaire();
-        $createdAt = new DateTimeImmutable();
-        $commantaire->setCreatedAt($createdAt);
-        $form = $this->createForm(CommantaireType::class, $commantaire);
-        $form->handleRequest($request);
+    $createdAt = new DateTimeImmutable();
+    $commantaire->setCreatedAt($createdAt);
+    $form = $this->createForm(CommantaireType::class, $commantaire);
+    $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $commantaireRepository->save($commantaire, true);
-
-            return $this->redirectToRoute('app_commantaire_index', [], Response::HTTP_SEE_OTHER);
-        }
-        return $this->renderForm('commantaire/new.html.twig', [
-            'commantaire' => $commantaire,
-            'form' => $form,
-        ]);}
+    if ($form->isSubmitted() && $form->isValid()) {
+        $s = $commantaire->getAuthor();
+        $username = $s->getNom();
+        $userlastname = $s->getPrenom();
+        $concat = $userlastname.$username;
+        $commantaire->setTitre($concat);
+        $commantaire->setPoste($article); // associate the comment with the article
+        $commantaireRepository->save($commantaire, true);
+        
+        return $this->redirectToRoute('app_commantaire_index', [], Response::HTTP_SEE_OTHER);
+    }
+    
+    return $this->renderForm('commantaire/new.html.twig', [
+        'commantaire' => $commantaire,
+        'form' => $form,
+    ]);
+}
 
         #[Route('/backnew', name: 'app_commantaire_backnew', methods: ['GET', 'POST'])]
         public function backnew(Request $request, CommantaireRepository $commantaireRepository): Response

@@ -9,15 +9,21 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+
+
 class CommantaireType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('description')
-            ->add('poste')
+        ->add('description', TextareaType::class, [
+            'label' => 'article.content',
+            'translation_domain' => 'messages',
+        ])
             ->add('author')
             ->add('save', SubmitType::class)
+           
         ;
     }
 

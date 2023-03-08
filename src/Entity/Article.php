@@ -40,6 +40,7 @@ class Article
      */
     #[ORM\Column(length: 255)]
     private ?string $description = null;
+    
 
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
@@ -55,11 +56,23 @@ class Article
     private ?User $author = null;
     
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $image = null; 
+    private ?string $image = null;
+
+    /**
+ * @ORM\Column(type="integer")
+ */
+private $likes = 0;
+
+/**
+ * @ORM\Column(type="integer")
+ */
+private $dislikes = 0;
+   
 
     public function __construct()
     {
         $this->commantaires = new ArrayCollection();
+       
     }
 
     public function getId(): ?int
@@ -171,4 +184,20 @@ class Article
     {
         return $this->getTitre(); // replace getTitle() with the appropriate method to get a string representation of the Article object
     }
+    
+      /**
+     * Get the number of comments associated with the article.
+     *
+     * @return int
+     */
+    public function getCommentCount(): int
+    {
+        return $this->commantaires->count();
+    }
+   
+
+
+  
+
+
 }

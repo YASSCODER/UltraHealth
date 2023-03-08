@@ -5,11 +5,11 @@
 {% block body %}
 <div class="form-group">
     <h1>Create new Article</h1>
-    <h1>created at</h1>
-<small>{{ article.createdAt ? article.createdAt|date('Y-m-d H:i:s') : '' }}</small>
-    {{ include('article/_form.html.twig') }}
-<a href="{{ path('app_article_index') }}">back to list</a>
     
+
+    {{ include('article/_form.html.twig') }}
+
+
 </div>
     
 

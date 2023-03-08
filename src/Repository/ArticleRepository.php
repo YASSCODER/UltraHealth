@@ -3,8 +3,12 @@
 namespace App\Repository;
 
 use App\Entity\Article;
+use App\Entity\Commantaire;
+use Container12uY4AE\getContainer_GetenvService;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 
 /**
@@ -17,7 +21,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ArticleRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry,)
     {
         parent::__construct($registry, Article::class);
     }
@@ -41,12 +45,16 @@ class ArticleRepository extends ServiceEntityRepository
     }
     
     
-        public function findAll()
+        public function findAll($filters=null)
         {
-            return $this->createQueryBuilder('a')
-                ->orderBy('a.id', 'ASC')
-                ->getQuery()
-                ->getResult();
+            
+            $q = $this->createQueryBuilder('a');
+                    if ($filters != null) {
+                        $q->andWhere('a.auther IN (:authers)')
+                            ->setParameter(':authers', array_values($filters));
+                    }
+                    $q->orderBy('a.created_at', 'ASC');
+                    return $q->getQuery()->getResult();
         }
         function clean_input($input) {
             // Liste de mots vulgaires
@@ -59,6 +67,14 @@ class ArticleRepository extends ServiceEntityRepository
             $input = str_ireplace($vulgar_words, "****", $input);
             return $input;
         }
+
+        
+        
+
+
+
+
+
 //    /**
 //     * @return Article[] Returns an array of Article objects
 //     */

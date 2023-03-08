@@ -1,3 +1,16 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+app_article_like:
+    path: '/article/{id}/like'
+    controller: App\Controller\ArticleController::like
+    methods: ['POST']
+    requirements:
+        id: '\d+'
+
+app_article_dislike:
+    path: '/article/{id}/dislike'
+    controller: App\Controller\ArticleController::dislike
+    methods: ['POST']
+    requirements:
+        id: '\d+'

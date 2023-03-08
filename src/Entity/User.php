@@ -62,6 +62,8 @@ class User
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Commantaire::class)]
     private Collection $commantaire;
 
+   
+
     public function __construct()
     {
         $this->commande = new ArrayCollection();
@@ -71,6 +73,7 @@ class User
         $this->question = new ArrayCollection();
         $this->reponse = new ArrayCollection();
         $this->commantaire = new ArrayCollection();
+        
     }
 
     public function getId(): ?int
@@ -126,12 +129,12 @@ class User
         return $this;
     }
 
-    public function getZonde(): ?string
+    public function getzonde(): ?string
     {
         return $this->zonde;
     }
 
-    public function setZonde(string $zonde): self
+    public function setzonde(string $zonde): self
     {
         $this->zonde = $zonde;
 
@@ -383,4 +386,11 @@ class User
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->getId(); // replace getTitle() with the appropriate method to get a string representation of the Article object
+    }
+
+ 
 }
