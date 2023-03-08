@@ -1,21 +1,20 @@
-{% block body %}
-    <h1>Menu</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ menu.id }}</td>
-            </tr>
-            <tr>
-                <th>Titre</th>
-                <td>{{ menu.titre }}</td>
-            </tr>
-            <tr>
-                <th>Categorie</th>
-                <td>{{ menu.category}}</td>
-            </tr>
-        </tbody>
-    </table>
+{% block body %}
+<center>
+  
+    <h1>Menu</h1> 
+    </center>
+    <br>
+    <br>
+    <br>   
+    <ul>   
+    <li> Id : {{ menu.id }} </li>
+        <br>
+    <li> Titre : {{ menu.titre }} </li>
+        <br>
+    <li> Categorie : {{ menu.category }} </li>
+    </ul>   
+        
+
 
 {% endblock %}

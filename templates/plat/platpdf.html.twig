@@ -1,21 +1,20 @@
-{% block body %}
-    <h1>Plat</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Titre</th>
-                <td>{{ plat.titre }}</td>
-            </tr>
-            <tr>
-                <th>Caloris</th>
-                <td>{{ plat.caloris }}</td>
-            </tr>
-            <tr>
-                <th>Id</th>
-                <td>{{ plat.id}}</td>
-            </tr>
-        </tbody>
-    </table>
+{% block body %}
+<center>
+  
+    <h1>Plat</h1> 
+    </center>
+    <br>
+    <br>
+    <br>   
+    <ul>   
+    <li> Id : {{ plat.id }} </li>
+        <br>
+    <li> Titre : {{ plat.titre }} </li>
+        <br>
+    <li> Calories : {{ plat.caloris }} </li>
+    </ul>   
+        
+
 
 {% endblock %}
