@@ -30,6 +30,9 @@
 	<a href="{{ path('app_passe_index') }}">back to list</a>
 
 	<a href="{{ path('app_passe_edit', {'id': passe.id}) }}">edit</a>
+	<a href="{{ path('app_passe_PDF',{'id': passe.id})}}">
+		imprimer ticket</a>
+
 
 	{{ include('passe/_delete_form.html.twig') }}
 {% endblock %}

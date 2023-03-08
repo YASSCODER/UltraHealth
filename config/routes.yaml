@@ -9,5 +9,8 @@ app_evennement_participate:
 app_evennement_front_index:
     path: /fronti
     controller: App\Controller\EvennementController::indexF
+app_passe_PDF_PDF:
+    path: /fronti/{id}/pdf
+    controller: App\Controller\PasseController::PDF
 
 

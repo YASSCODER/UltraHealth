@@ -3,8 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Evennement;
+use App\Entity\Passe;
+use App\Entity\User;
 use App\Form\Evennement1Type;
 use App\Repository\EvennementRepository;
+use App\Repository\PasseRepository;
+use App\Repository\EventCategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,12 +18,9 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\ORM\EntityManagerInterface;
 //use Knp\Component\Pager\PaginatorInterface;
 use Knp\Component\Pager\PaginatorInterface;
-
-
-
-
-
-
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Mailer\MailerInterface;
 
 #[Route('/evennement')]
 class EvennementController extends AbstractController
@@ -51,15 +52,53 @@ class EvennementController extends AbstractController
             'evennement' => $evennement,
         ]);
     }
+    #[Route('/fronti/{id}/update', name: 'app_evennement_update', methods: ['POST', 'GET'])]
+    public function updateNbreParticipant(Request $request, Evennement $event, MailerInterface $mailer, PasseRepository $passeRepository): Response
+    {
+        $nbrP = $request->query->get('nbrP');
+        $p = $request->query->get('prix');
+
+        if ($nbrP) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $event->setNbrPasse($nbrP - 1);
+            $entityManager->persist($event);
+            $entityManager->flush();
+
+            if ($p) {
+                $passe = new Passe($p, $event);
+                $entityManager = $this->getDoctrine()->getManager();
+                $passe->setPrix($p);
+                $passeRepository->save($passe, true);
+                $entityManager->persist($passe);
+                $entityManager->flush();
+            }
+
+            return $this->redirectToRoute('app_evennement_front_show', ['id' => $event->getId()]);
+        }
+
+        return $this->redirectToRoute('app_evennement_index');
+    }
 
     #[Route('/fronti', name: 'app_evennement_front_indexd', methods: ['GET'])]
-    public function indexF(EvennementRepository $evennementRepository): Response
+    public function indexF(EvennementRepository $evennementRepository, EventCategoryRepository $catRepo, Request $request): Response
     {
-        $evennements = $evennementRepository->findEventsByEndDate();
+        $categories = $catRepo->findAll();
+        $filters = $request->get("categories");
+        $evennements = $evennementRepository->findEventsByEndDate($filters);
+
+        if ($request->get('ajax')) {
+            return new JsonResponse([
+                'content' => $this->renderView('evennement/_contentEventB.html.twig', [
+                    'evennements' => $evennements,
+
+                ])
+            ]);
+        }
 
 
         return $this->render('evennement/frontindex.html.twig', [
             'evennements' => $evennements,
+            'categories' => $categories,
         ]);
     }
 
@@ -140,21 +179,45 @@ class EvennementController extends AbstractController
         return $this->redirectToRoute('app_evennement_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/fronti/{id}/update', name: 'app_evennement_update', methods: ['POST', 'GET'])]
-    public function updateNbreParticipant(Request $request, Evennement $event): Response
-    {
-        $nbrP = $request->query->get('nbrP');
 
-        if ($nbrP) {
+
+    #[Route('/fronti/{id}/part', name: 'app_evennement_part', methods: ['POST', 'GET'])]
+    public function part(Request $request, PasseRepository $passeRepository, Evennement $evennement, Passe $passe): Response
+    {
+        $p = $request->query->get('prix');
+        if ($p) {
+            $passe = new Passe($p);
             $entityManager = $this->getDoctrine()->getManager();
-            $event->setNbrPasse($nbrP - 1);
-            $entityManager->persist($event);
+            $passe->setPrix($p);
+            $entityManager->persist($passe);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_evennement_front_show', ['id' => $event->getId()]);
+            return $this->redirectToRoute('app_evennement_front_show', ['id' => $evennement->getId()]);
+        }
+    }
+
+
+    #[Route('/fronti', name: 'event_search')]
+    public function searchAction(Request $request, EntityManagerInterface $em)
+    {
+
+        $requestString = $request->get('q');
+        $event =  $em->getRepository(Evennement::class)->findEntitiesByString($requestString);
+
+        if (!count($event)) {
+            $result['events']['error'] = "Aucun evennement trouvé  ";
+        } else {
+            $result['events'] = $this->getRealEntities($event);
         }
 
-        return $this->redirectToRoute('app_evennement_index');
+        return new Response(json_encode($result));
+    }
+    public function getRealEntities($events)
+    {
+        foreach ($events as $event) {
+            $realEntities[$event->getId()] = [$event->getTitre(), $event->getZone()];
+        }
+        return $realEntities;
     }
 
     /*

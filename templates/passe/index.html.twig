@@ -35,6 +35,9 @@
 			{% endfor %}
 		</tbody>
 	</table>
+	<div class="pagination">
+		{{ knp_pagination_render(passes) }}
+	</div>
 
-	<a href="{{ path('app_passe_new') }}">Create new</a>
+
 {% endblock %}

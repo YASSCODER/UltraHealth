@@ -17,6 +17,7 @@
 				<th>Zone</th>
 				<th>Eventimg</th>
 				<th>NbrPasse</th>
+				<th>prix</th>
 				<th>actions</th>
 			</tr>
 		</thead>
@@ -31,6 +32,7 @@
 					<td>{{ evennement.zone }}</td>
 					<td>{{ evennement.eventimg }}</td>
 					<td>{{ evennement.nbrPasse }}</td>
+					<td>{{ evennement.prix }}</td>
 					<td>
 						<a href="{{ path('app_evennement_show', {'id': evennement.id}) }}">show</a>
 						<a href="{{ path('app_evennement_edit', {'id': evennement.id}) }}">edit</a>

@@ -48,10 +48,15 @@
 				<td>{{ evennement.nbrPasse }}</td>
 			</tr>
 			<tr>
+				<th>prix ticket:
+				</th>
+				<td>{{ evennement.prix }}</td>
+			</tr>
+			<tr>
 				<th>
 					<a href="{{ path('app_evennement_front_indexd') }}" style="color: #295C6E; border-radius: 5px; border: 1px solid #222875;  padding: 5px 10px; background-color: #D6D6D6;">back to list</a>
-					<a href="{{ path('app_evennement_update', {'id': evennement.id, 'nbrP': evennement.nbrPasse }) }}" style="color: #295C6E; border-radius: 5px; border: 1px solid #222875;  padding: 5px 10px; background-color: #D6D6D6;">BUY</a>
-					<a href="{{ path('app_evennement_participate') }}" style="color: #295C6E; border-radius: 5px; border: 1px solid #222875;  padding: 5px 10px; background-color: #D6D6D6;">participate</a>
+					<a href="{{ path('app_evennement_update', {'id': evennement.id, 'nbrP': evennement.nbrPasse,'prix': evennement.prix }) }}" style="color: #295C6E; border-radius: 5px; border: 1px solid #222875;  padding: 5px 10px; background-color: #D6D6D6;">BUY</a>
+					<a href="{{ path('app_evennement_part',{'id': evennement.id, 'prix': evennement.prix }) }}) }}" style="color: #295C6E; border-radius: 5px; border: 1px solid #222875;  padding: 5px 10px; background-color: #D6D6D6;">participate</a>
 				</th>
 				<td></td>
 			</tr>

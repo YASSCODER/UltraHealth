@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Evennement;
+use App\Entity\Passe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -30,6 +31,15 @@ class EvennementRepository extends ServiceEntityRepository
         }
     }
 
+    public function saveP(Passe $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
     public function remove(Evennement $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
@@ -40,10 +50,14 @@ class EvennementRepository extends ServiceEntityRepository
     }
 
 
-    public function findEventsByEndDate()
+    public function findEventsByEndDate($filters = null)
     {
-        $qb = $this->createQueryBuilder('e')
-            ->andWhere('e.dateFin >= :today')
+        $qb = $this->createQueryBuilder('e');
+        if ($filters != null) {
+            $qb->andWhere('e.category IN (:cats)')
+                ->setParameter(':cats', array_values($filters));
+        }
+        $qb->andWhere('e.dateFin >= :today')
             ->setParameter('today', new \DateTime('today'))
             ->orderBy('e.dateFin', 'ASC');
         return $qb->getQuery()->getResult();
@@ -57,6 +71,18 @@ class EvennementRepository extends ServiceEntityRepository
             ->setParameter('searchTerm', '%' . $searchTerm . '%');
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function findEntitiesByString($str)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT e
+                FROM App\Entity\Evennement e
+                WHERE (e.titre LIKE :str) OR (e.zone LIKE :str)'
+            )
+            ->setParameter('str', '%' . $str . '%')
+            ->getResult();
     }
 
 

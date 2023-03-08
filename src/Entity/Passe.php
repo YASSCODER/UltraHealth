@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\PasseRepository;
+use App\Entity\Evennement;
+use App\Entity\User;
+use App\Repository\EvennementRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -15,18 +18,18 @@ class Passe
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
-    #[Assert\NotBlank(message: "code ne peux pas être vide! ")]
+    /* #[Assert\NotBlank(message: "code ne peux pas être vide! ")]
     #[Assert\Length(
         min: 3,
         max: 10,
         minMessage: "The name must be at least {{ limit }} characters long",
         maxMessage: "The name cannot be longer than {{ limit }} characters"
-    )]
+    )]*/
     private ?string $code = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank(message: "price evennement ne peux pas être vide! ")]
-    #[Assert\Positive(message: "price doit etre positive! ")]
+    /*#[Assert\NotBlank(message: "price evennement ne peux pas être vide! ")]
+    #[Assert\Positive(message: "price doit etre positive! ")]*/
     private ?float $prix = null;
 
     #[ORM\OneToOne(inversedBy: 'passe', cascade: ['persist', 'remove'])]
@@ -36,6 +39,14 @@ class Passe
     #[ORM\ManyToOne(inversedBy: 'Passe')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $PasseOwner = null;
+
+    public function __construct($price = null, $event = null)
+    {
+        $this->code = uniqid();
+        $this->prix = $price;
+        $this->evennement = $event;
+        // $this->PasseOwner = $u;
+    }
 
     public function getId(): ?int
     {

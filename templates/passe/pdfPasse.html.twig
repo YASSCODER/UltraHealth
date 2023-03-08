@@ -1,0 +1,89 @@
+<html>
+	<head>
+		<style>
+			body {
+				font-size: 12px;
+				font-family: 'Helvetica', Arial, sans-serif;
+				margin: 0;
+			}
+			.container {
+				width: 720px;
+				height: 170px;
+				margin: 0 auto;
+				border-radius: 4px;
+				background-color: #4537de;
+				box-shadow: 0 8px 16px rgba(35, 51, 64, 0.25);
+			}
+			.column-1 {
+				float: left;
+				width: 500px;
+				height: 170px;
+				border-right: 2px dashed #fff;
+			}
+			.column-2 {
+				float: right;
+				width: 200px;
+				height: 170px;
+			}
+			.text-frame {
+				padding: 40px;
+				height: 120px;
+			}
+			.qr-holder {
+				position: relative;
+				width: 160px;
+				height: 160px;
+				margin: 5px;
+				background-color: #fff;
+				text-align: center;
+				line-height: 10px;
+				z-index: 1;
+			}
+			.qr-holder > img {
+				margin-top: 20px;
+			}
+			.event {
+				font-size: 20px;
+				color: #fff;
+				letter-spacing: 1px;
+			}
+			.date {
+				font-size: 14px;
+				line-height: 20px;
+				color: #a8bbf8;
+			}
+			.name,
+			.ticket-id {
+				font-size: 12px;
+				line-height: 18px;
+				color: #fff;
+			}
+		</style>
+	</head>
+	{% block body %}
+		<body>
+			<div class="container">
+				<div class="column-1">
+					<div class="text-frame">
+						<div class="event">NOM EVENNEMENT:
+							{{ passe.getEvennement().getTitre() }}</div>
+						<div class="date">DATE:
+							{{ passe.getEvennement().getDateDebut()|date('Y-m-d H:i:s')}}--{{ passe.getEvennement().getDateFin()|date('Y-m-d H:i:s')}}</div>
+						<hr>
+						<div class="name">PRIX:
+							{{ passe.getEvennement().getprix() }}</div>
+						<div class="ticket-id">CODE PASS:
+							{{ passe.code }}</div>
+					</div>
+				</div>
+
+				<div class="column-2">
+					<div>
+						<img src="{{asset('assets/img/ben.png')}}" width="120px" height="120px"/>
+					</div>
+				</div>
+			</div>
+		</body>
+
+	{% endblock %}
+</html>

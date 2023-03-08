@@ -76,6 +76,11 @@ class Evennement
     #[Assert\Positive(message: "nombre passe doit etre positive! ")]
     private ?int $nbrPasse = null;
 
+    #[ORM\Column(nullable: true)]
+    #[Assert\NotBlank(message: "price evennement ne peux pas être vide! ")]
+    #[Assert\Positive(message: "price doit etre positive! ")]
+    private ?float $prix = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -196,6 +201,18 @@ class Evennement
     public function setNbrPasse(?int $nbrPasse): self
     {
         $this->nbrPasse = $nbrPasse;
+
+        return $this;
+    }
+
+    public function getPrix(): ?float
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(?float $prix): self
+    {
+        $this->prix = $prix;
 
         return $this;
     }

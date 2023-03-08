@@ -33,6 +33,9 @@
 			{% endfor %}
 		</tbody>
 	</table>
+	<div class="pagination">
+		{{ knp_pagination_render(event_categories) }}
+	</div>
 
 	<a href="{{ path('app_event_category_new') }}">Create new</a>
 {% endblock %}

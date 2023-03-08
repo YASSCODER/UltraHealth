@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Validator\Constraints\Expression;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class Evennement1Type extends AbstractType
 {
@@ -46,6 +47,15 @@ class Evennement1Type extends AbstractType
                 ],
             ])
             ->add('nbrPasse')
+            ->add('prix', NumberType::class, [
+                'label' => 'price',
+                'required' => true,
+                'attr' => [
+                    'min' => 1,
+                    'max' => 10,
+                    'step' => 1,
+                ]
+            ],)
             ->add('category');
     }
 
