@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'basefront.html.twig' %}
 {% block head %}
 
 <style>	
@@ -13,17 +13,18 @@
 
 
 {% block body %}
-    <header class="bg-secondary py-5">
+<br><br><br><br><br><br><br><br>
+    <div class="bg-secondary py-5">
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-center text-white">
                 <h1 class="display-4 fw-bolder">Liste Des Menus</h1>
             </div>
         </div>
-    </header>
+    </div>
 <br>
 
 <div style="padding:0px 25px" >
-{{ include ('menu/searchformadmin.html.twig') }}
+<center>{{ include ('menu/searchform.html.twig') }} </center>
     <div class="row row-cols-1 row-cols-md-4 g-4">
         {% for menu in menus %}
             <div class="col mb-5">
@@ -38,7 +39,7 @@
                             <h6 class="fw-bolder">Category: {{ menu.category}}</h6>
                            
                             <div style="padding:20px 0 0 0">
-                           <a href="{{ path('app_menu_show', {'id': menu.id}) }}" style="color: #295C6E; border-radius: 5px; border: 1px solid #222875;  padding: 5px 10px; background-color: #D6D6D6;">Show Details</a>
+                           <a href="{{ path('app_menufront_show', {'id': menu.id}) }}" style="color: #295C6E; border-radius: 5px; border: 1px solid #222875;  padding: 5px 10px; background-color: #D6D6D6;">Show Details</a>
                         </div>
                         </div>
                     </div>
@@ -51,7 +52,6 @@
         {% endfor %}
     </div>
 </div>
-<center><a href="{{ path('app_plat_new') }}" style="color: #466A20; border: 2px solid #466A20; border-radius: 10px; background-color: #D6D6D6; padding: 5px 10px; font-size:15px; font-weight: bold;">Create new</a><center>
 <br>
 </div>
 

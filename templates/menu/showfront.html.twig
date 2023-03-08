@@ -1,16 +1,17 @@
-{% extends 'base.html.twig' %}
+{% extends 'basefront.html.twig' %}
 
 
 
 {% block body %}
+<br><br><br><br><br><br><br><br><br><br>    
 <div class="container">
-<header class="bg-secondary py-5">
+<div class="bg-secondary py-5">
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-center text-white">
                 <h1 class="display-4 fw-bolder">Details Menu</h1>
             </div>
         </div>
-    </header>
+    </div>
 <br>
 <br>
 
@@ -34,17 +35,15 @@
     <div class="text-center">
   <div class="btn-show-container">
     <div style="display: inline-block" >
-    <div  style="border-radius: 5px; padding:4.8px 13px 8px 13px; background-color: #EBBC00;">
-        <a href="{{ path('app_menu_edit', {'id': menu.id}) }}" style="color: #ffffff;">Edit</a>
+    
+      <a href="{{ path('app_pdf_menufront_show',{'id': menu.id}) }}" style="color: #295C6E; border-radius: 10px; border: 1px solid #222875;  padding: 5px 10px; background-color: #D6D6D6;">Telecharger Fichier PDF</a>
+    
     </div>
-    </div>
-    <div style="display: inline-block">
-        {{ include('menu/_delete_form.html.twig') }}
-    </div>
+    
 </div>
 <br>
     <div class="text-center">
-    <a href="{{ path('app_menu_index') }}" style="color: #295C6E; border-radius: 10px; border: 1px solid #222875;  padding: 5px 10px; background-color: #D6D6D6;">Back To List</a>
+    <a href="{{ path('app_menufront_index') }}" style="color: #295C6E; border-radius: 10px; border: 1px solid #222875;  padding: 5px 10px; background-color: #D6D6D6;">Back To List</a>
     <br>
     </div>
     </div>

@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Dompdf\Dompdf;
+use Dompdf\Options;
 #[Route('/menu')]
 class MenuController extends AbstractController
 {
@@ -17,6 +19,14 @@ class MenuController extends AbstractController
     public function index(MenuRepository $menuRepository): Response
     {
         return $this->render('menu/index.html.twig', [
+            'menus' => $menuRepository->findAll(),
+        ]);
+    }   
+
+    #[Route('/m', name: 'app_menufront_index', methods: ['GET'])]
+    public function indexm(MenuRepository $menuRepository): Response
+    {
+        return $this->render('menu/indexfront.html.twig', [
             'menus' => $menuRepository->findAll(),
         ]);
     }
@@ -39,6 +49,28 @@ class MenuController extends AbstractController
             'form' => $form,
         ]);
     }
+    #[Route('/search', name: 'search_menus', methods: ['GET','POST'])]
+    public function searchPlats(Request $request, MenuRepository $platRepository)
+    {
+        $searchQuery = $request->query->get('searchQuery', '');
+        
+        $menus = $platRepository->searchByTitre($searchQuery);
+        
+        return $this->render('menu/searchresult.html.twig', [
+            'menus' => $menus,
+        ]);
+    }
+    #[Route('/searchadmin', name: 'search_menuadmin', methods: ['GET','POST'])]
+    public function searchPlatadmin(Request $request, MenuRepository $platRepository)
+    {
+        $searchQueryadmin = $request->query->get('searchQueryadmin', '');
+        
+        $menus = $platRepository->searchByTitre($searchQueryadmin);
+        
+        return $this->render('menu/searchresultadmin.html.twig', [
+            'menus' => $menus,
+        ]);
+    }
 
     #[Route('/{id}', name: 'app_menu_show', methods: ['GET'])]
     public function show(Menu $menu): Response
@@ -47,6 +79,51 @@ class MenuController extends AbstractController
             'menu' => $menu,
         ]);
     }
+    #[Route('/m/{id}', name: 'app_menufront_show', methods: ['GET'])]
+    public function showm(Menu $menu): Response
+    {
+        return $this->render('menu/showfront.html.twig', [
+            'menu' => $menu,
+        ]);
+    }
+    #[Route('/m/{id}/pdf', name: 'app_pdf_menufront_show', methods: ['GET'])]
+    public function indexx(Menu $menu)
+    {
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+        
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+        
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('menu/menupdf.html.twig', [
+            'menu' => $menu,
+        ]);
+        
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+        
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Store PDF Binary Data
+        $output = $dompdf->output();
+       
+        $publicDirectory = $this->getParameter('menu_pdf_directory');
+
+        $pdfFilepath =  $publicDirectory . '/' . uniqid() . '.pdf';
+
+        // Write file to the desired path
+        file_put_contents($pdfFilepath, $output);
+        
+        // Send some text response
+        return new Response("The PDF file has been succesfully generated !");
+    }
+
 
     #[Route('/{id}/edit', name: 'app_menu_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Menu $menu, MenuRepository $menuRepository): Response

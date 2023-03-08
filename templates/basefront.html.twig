@@ -5,7 +5,7 @@
                          {% block title %}{% endblock %} 
                  </title> 
                  <link 
-                 rel="icon" href="{{asset('assets/img/logo.png')}}"> 
+                 rel="icon" href="{{asset('assets/img/logo3.png')}}"> 
   
                  {# Run composer require symfony/webpack-encore-bundle to start using Symfony UX #} 
                  {% block stylesheets %} 
@@ -33,7 +33,7 @@
                  <header> 
                          <div class="header-top wow fadeIn"> 
                                  <div class="container"> 
-                                         <a class="navbar-brand" href="{{ asset ('assets/index.html')}}"><img src="{{asset('assets/img/logo.png')}}" width=" 75" height=" 50"></a> 
+                                         <a class="navbar-brand" href="{{ asset ('assets/index.html')}}"><img src="{{asset('assets/img/logo2.png')}}" width=" 75" height=" 50"></a> 
                                          <div class="right-header"> 
                                                  <div class="header-info"> 
                                                          <div class="info-inner"> 
@@ -47,7 +47,7 @@
                                                                          <i class="fa fa-envelope" aria-hidden="true"></i> 
                                                                  </span> 
                                                                  <span class="iconcont"> 
-
+                                                                 <a href="{{asset ('assets/#')}}">  Email</a>
                                                                  </span> 
                                                          </div> 
                                                          <div class="info-inner"> 
@@ -75,14 +75,14 @@
                                                           <table style="border-collapse: collapse;">
                                                           <tr>
                                                                  <td> 
-                                                                         <a href="{{ path('app_ingrediantfront_index') }}" style="text-decoration: none; color: white; font-size: 20px; padding: 0 10px ">Liste des Menus</a> 
+                                                                         <a href="{{ path('app_menufront_index') }}" style="text-decoration: none; color: white; font-size: 20px; padding: 0 10px ">Liste des Menus</a> 
                                                                  </td> 
                                                                  
                                                                  <td> 
                                                                          <a  href="{{ path('app_platfront_index')}}" style="text-decoration: none; color: white; font-size: 20px; padding: 0px 10px;">Listes Des Plats</a> 
                                                                  </td> 
                                                                  <td> 
-                                                                         <a  href="{{ asset ('assets/#price')}}" style="text-decoration: none; color: white; font-size: 20px; padding: 0 10px ">Liste des Ingrédients</a> 
+                                                                         <a  href="{{ path('app_ingrediantfront_index')}}" style="text-decoration: none; color: white; font-size: 20px; padding: 0 10px ">Liste des Ingrédients</a> 
                                                                  </td> 
                                                                  <td> 
                                                                          <a  href="{{ asset ('assets/#testimonials')}}" style="text-decoration: none; color: white; font-size: 20px; padding: 0 10px ">Nutritionnistes</a> 

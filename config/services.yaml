@@ -6,6 +6,7 @@
 parameters:
     ingrediant_pdf_directory: '%kernel.project_dir%/public/pdf/ingrediants'
     plat_pdf_directory: '%kernel.project_dir%/public/pdf/plats'
+    menu_pdf_directory: '%kernel.project_dir%/public/pdf/menus'
 
 
 services:
