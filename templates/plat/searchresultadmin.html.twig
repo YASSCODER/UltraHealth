@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        table {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            border: 1px solid black;
+            text-align: left;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+
+    <center><h1>Search Results</h1></center>
+    
+    {% if plats is empty %}
+        <p>No results found.</p>
+    {% else %}
+    <center> <table border="1" >
+     <tr>
+                <th>Plat</th>
+                <th>Calories</th>
+                <th>Id</th>
+            </tr>
+            {% for plat in plats %}
+            <tr>
+                <td>{{ plat.titre }}</td>
+                <td>{{plat.caloris}}</td>
+                <td>{{plat.id}}</td>
+            </td>
+            {% endfor %}
+    </table>    </center>   
+    {% endif %}
+{% endblock %}

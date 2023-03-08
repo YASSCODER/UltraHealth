@@ -39,6 +39,15 @@ class PlatRepository extends ServiceEntityRepository
         }
     }
 
+    public function searchByTitre($searchQuery)
+    {
+        return $this->createQueryBuilder('i')
+            ->where('i.titre LIKE :query')
+            ->setParameter('query', '%'.$searchQuery.'%')
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Plat[] Returns an array of Plat objects
 //     */

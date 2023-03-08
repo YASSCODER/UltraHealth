@@ -1,0 +1,130 @@
+<html> 
+         <head> 
+                 <meta charset="UTF-8"> 
+                 <title> 
+                         {% block title %}{% endblock %} 
+                 </title> 
+                 <link 
+                 rel="icon" href="{{asset('assets/img/logo.png')}}"> 
+  
+                 {# Run composer require symfony/webpack-encore-bundle to start using Symfony UX #} 
+                 {% block stylesheets %} 
+                         <!-- Bootstrap CSS --> 
+                         <link 
+                         rel="stylesheet" href="{{ asset ('assets/css/bootstrap.min.css')}}"> 
+                         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
+                         <!-- Site CSS --> 
+                        
+                         <!-- Colors CSS --> 
+                         <link 
+                         rel="stylesheet" href="{{asset ('assets/css/colors.css')}}"> 
+                         <!-- ALL VERSION CSS --> 
+                         <link 
+                         rel="stylesheet" href="{{ asset ('assets/css/versions.css')}}"> 
+                         <!-- Responsive CSS --> 
+                         
+                         <!-- Custom CSS --> 
+                         <link rel="stylesheet" href="{{ asset ('assets/css/custom.css')}}"> 
+                 {% endblock %} 
+  
+         </head> 
+  
+         <body> 
+                 <header> 
+                         <div class="header-top wow fadeIn"> 
+                                 <div class="container"> 
+                                         <a class="navbar-brand" href="{{ asset ('assets/index.html')}}"><img src="{{asset('assets/img/logo.png')}}" width=" 75" height=" 50"></a> 
+                                         <div class="right-header"> 
+                                                 <div class="header-info"> 
+                                                         <div class="info-inner"> 
+                                                                 <span class="icontop"><img src="{{ asset ('assets/images/phone-icon.png')}}" alt="#"></span> 
+                                                                 <span class="iconcont"> 
+                                                                         <a href="{{ asset ('assets/tel:800 123 456')}}">800 123 456</a> 
+                                                                 </span> 
+                                                         </div> 
+                                                         <div class="info-inner"> 
+                                                                 <span class="icontop"> 
+                                                                         <i class="fa fa-envelope" aria-hidden="true"></i> 
+                                                                 </span> 
+                                                                 <span class="iconcont"> 
+
+                                                                 </span> 
+                                                         </div> 
+                                                         <div class="info-inner"> 
+                                                                 <span class="icontop"> 
+                                                                         <i class="fa fa-clock-o" aria-hidden="true"></i> 
+                                                                 </span> 
+                                                                 <span class="iconcont"> 
+                                                                         <a data-scroll href="{{ asset ('assets/#')}}">Daily: 7:00am - 8:00pm</a> 
+                                                                 </span> 
+                                                         </div> 
+                                                 </div> 
+                                         </div> 
+                                 </div> 
+                         </div> 
+                         <div class="header-bottom wow fadeIn"> 
+                                 <div class="container"> 
+                                         <nav class="main-menu"> 
+                                                 <div class="navbar-header"> 
+                                                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> 
+                                                                 <i class="fa fa-bars" aria-hidden="true"></i> 
+                                                         </button> 
+                                                 </div>
+                                                 <div id="navbar" class="navbar-collapse collapse"> 
+                                                 <br>
+                                                          <table style="border-collapse: collapse;">
+                                                          <tr>
+                                                                 <td> 
+                                                                         <a href="{{ path('app_ingrediantfront_index') }}" style="text-decoration: none; color: white; font-size: 20px; padding: 0 10px ">Liste des Menus</a> 
+                                                                 </td> 
+                                                                 
+                                                                 <td> 
+                                                                         <a  href="{{ path('app_platfront_index')}}" style="text-decoration: none; color: white; font-size: 20px; padding: 0px 10px;">Listes Des Plats</a> 
+                                                                 </td> 
+                                                                 <td> 
+                                                                         <a  href="{{ asset ('assets/#price')}}" style="text-decoration: none; color: white; font-size: 20px; padding: 0 10px ">Liste des Ingrédients</a> 
+                                                                 </td> 
+                                                                 <td> 
+                                                                         <a  href="{{ asset ('assets/#testimonials')}}" style="text-decoration: none; color: white; font-size: 20px; padding: 0 10px ">Nutritionnistes</a> 
+                                                                 </td> 
+                                                                 <td> 
+                                                                         <a href="{{ asset ('assets/#getintouch')}}" style="text-decoration: none; color: white; font-size: 20px; padding: 0 10px ">Contact</a> 
+                                                                 </td> 
+                                                                 </tr>
+                                                         </table> 
+                                                 </div> 
+                                         </nav> 
+                                         <div class="serch-bar"> 
+                                                 <div id="custom-search-input"> 
+                                                         <div class="input-group col-md-12"> 
+                                                                 <input type="text" class="form-control input-lg" placeholder="Search"/> 
+                                                                 <span class="input-group-btn"> 
+                                                                         <button class="btn btn-info btn-lg" type="button"> 
+                                                                                 <i class="fa fa-search" aria-hidden="true"></i> 
+                                                                         </button> 
+                                                                 </span> 
+                                                         </div> 
+                                                 </div> 
+                                         </div> 
+                                 </div> 
+                         </div> 
+                 </header> 
+
+                        
+                                         {% block body %}
+                                         
+                                         {% endblock %} 
+  
+                                 {% block javascripts %} 
+                                         <script src="{{ asset ('assets/js/modernizer.js')}}"></script> 
+                                      
+  
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
+
+
+                                 {% endblock %} 
+                         </body> 
+                 </body> 
+         </html>

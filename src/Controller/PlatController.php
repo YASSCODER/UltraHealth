@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
 #[Route('/plat')]
 class PlatController extends AbstractController
 {
@@ -17,6 +20,13 @@ class PlatController extends AbstractController
     public function index(PlatRepository $platRepository): Response
     {
         return $this->render('plat/index.html.twig', [
+            'plats' => $platRepository->findAll(),
+        ]);
+    }
+    #[Route('/p', name: 'app_platfront_index', methods: ['GET'])]
+    public function indexp(PlatRepository $platRepository): Response
+    {
+        return $this->render('plat/indexfront.html.twig', [
             'plats' => $platRepository->findAll(),
         ]);
     }
@@ -39,6 +49,28 @@ class PlatController extends AbstractController
             'form' => $form,
         ]);
     }
+    #[Route('/search', name: 'search_plats', methods: ['GET','POST'])]
+    public function searchPlats(Request $request, PlatRepository $platRepository)
+    {
+        $searchQuery = $request->query->get('searchQuery', '');
+        
+        $plats = $platRepository->searchByTitre($searchQuery);
+        
+        return $this->render('plat/searchresult.html.twig', [
+            'plats' => $plats,
+        ]);
+    }
+    #[Route('/searchadmin', name: 'search_platadmin', methods: ['GET','POST'])]
+    public function searchPlatadmin(Request $request, PlatRepository $platRepository)
+    {
+        $searchQueryadmin = $request->query->get('searchQueryadmin', '');
+        
+        $plats = $platRepository->searchByTitre($searchQueryadmin);
+        
+        return $this->render('plat/searchresultadmin.html.twig', [
+            'plats' => $plats,
+        ]);
+    }
 
     #[Route('/{id}', name: 'app_plat_show', methods: ['GET'])]
     public function show(Plat $plat): Response
@@ -46,6 +78,50 @@ class PlatController extends AbstractController
         return $this->render('plat/show.html.twig', [
             'plat' => $plat,
         ]);
+    }
+    #[Route('/p/{id}', name: 'app_platfront_show', methods: ['GET'])]
+    public function showc(Plat $plat): Response
+    {
+        return $this->render('plat/showfront.html.twig', [
+            'plat' => $plat,
+        ]);
+    }
+    #[Route('/p/{id}/pdf', name: 'app_pdf_platfront_show', methods: ['GET'])]
+    public function indexx(Plat $plat)
+    {
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+        
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+        
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('plat/platpdf.html.twig', [
+            'plat' => $plat,
+        ]);
+        
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+        
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Store PDF Binary Data
+        $output = $dompdf->output();
+       
+        $publicDirectory = $this->getParameter('plat_pdf_directory');
+
+        $pdfFilepath =  $publicDirectory . '/' . uniqid() . '.pdf';
+
+        // Write file to the desired path
+        file_put_contents($pdfFilepath, $output);
+        
+        // Send some text response
+        return new Response("The PDF file has been succesfully generated !");
     }
 
     #[Route('/{id}/edit', name: 'app_plat_edit', methods: ['GET', 'POST'])]

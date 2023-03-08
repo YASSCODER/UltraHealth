@@ -1,0 +1,38 @@
+{% extends 'basefront.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        table {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            border: 1px solid black;
+            text-align: left;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+<br><br><br><br><br><br><br><br>
+    <center><h1>Search Results</h1></center>
+    
+    {% if ingrediants is empty %}
+        <p>No results found.</p>
+    {% else %}
+    <center> <table border="1" >
+     <tr>
+                <th>Ingredient</th>
+                <th>Calories</th>
+                <th>Weight</th>
+            </tr>
+            {% for ingrediant in ingrediants %}
+            <tr>
+                <td>{{ ingrediant.titre }}</td>
+                <td>{{ingrediant.caloris}}</td>
+                <td>{{ingrediant.poids}}</td>
+            </td>
+            {% endfor %}
+    </table>    </center>   
+    {% endif %}
+{% endblock %}

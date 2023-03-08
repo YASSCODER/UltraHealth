@@ -1,0 +1,49 @@
+{% extends 'basefront.html.twig' %}
+
+
+{% block body %}
+<br><br><br><br><br><br><br><br><br><br>
+<div class="container">
+<div class="bg-secondary py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">Details Plat</h1>
+            </div>
+        </div>
+    </div>
+<br>
+<br>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ plat.id }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ plat.titre }}</td>
+            </tr>
+            <tr>
+                <th>Caloris</th>
+                <td>{{ plat.caloris }}</td>
+            </tr>
+        </tbody>
+    </table>
+       <br>
+    <div class="text-center">
+  <div class="btn-show-container">
+    <div style="display: inline-block" >
+    
+       <a href="{{ path('app_pdf_platfront_show',{'id': plat.id}) }}" style="color: #295C6E; border-radius: 10px; border: 1px solid #222875;  padding: 5px 10px; background-color: #D6D6D6;">Telecharger Fichier PDF</a>
+    
+    </div>
+</div>
+<br>
+    <div class="text-center">
+    <a href="{{ path('app_platfront_index') }}" style="color: #295C6E; border-radius: 10px; border: 1px solid #222875;  padding: 5px 10px; background-color: #D6D6D6;">Back To List</a>
+    <br>
+    <br>
+    </div>
+    </div>
+{% endblock %}

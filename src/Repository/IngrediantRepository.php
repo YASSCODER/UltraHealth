@@ -38,6 +38,15 @@ class IngrediantRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    
+    public function searchByTitre($searchQuery)
+    {
+        return $this->createQueryBuilder('i')
+            ->where('i.titre LIKE :query')
+            ->setParameter('query', '%'.$searchQuery.'%')
+            ->getQuery()
+            ->getResult();
+    }
 
 //    /**
 //     * @return Ingrediant[] Returns an array of Ingrediant objects
@@ -63,4 +72,5 @@ class IngrediantRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
 }

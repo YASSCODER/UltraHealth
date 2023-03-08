@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+
 {% block head %}
 
 <style>	
@@ -23,6 +24,8 @@
 <br>
 
 <div style="padding:0px 25px" >
+{{ include ('ingrediant/searchformadmin.html.twig') }}
+<br>
     <div class="row row-cols-1 row-cols-md-4 g-4">
         {% for ingrediant in ingrediants %}
             <div class="col mb-5">

@@ -1,0 +1,48 @@
+{% extends 'basefront.html.twig' %}
+{% block head %}
+{% endblock %}
+
+
+
+{% block body %}
+<br><br><br><br><br><br><br><br>
+
+<div style="padding:50px 50px" >
+<center>{{ include ('ingrediant/searchform.html.twig') }} </center>
+<div>
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+    <br>
+        {% for ingrediant in ingrediants %}
+            <div class="col mb-5">
+                <div class="card h-100">
+                    <!-- Product image-->
+                    <center><img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." /></center>
+                    <!-- Product details-->
+                   <center> <div class="card-body -4" style="background-color: #F0F0F2; padding: 5px 10px 10px"> 
+                        <div class="text-center">
+                            <!-- Product name-->
+                            <h5 class="fw-bolder">Ingrediant Name: {{ ingrediant.titre }}</h5>
+                            <h6 class="fw-bolder">Energy: {{ ingrediant.caloris }} Kcal/100g</h6>
+                            <h6 class="fw-bolder">Serving Size: {{ ingrediant.poids }} grams</h6>
+                            <div style="padding:20px 0 0 0">
+                           <a href="{{ path('app_ingrediantfront_show', {'id': ingrediant.id}) }}" style="color: #295C6E; border-radius: 5px; border: 1px solid #222875;  padding: 5px 10px; background-color: #D6D6D6;">Show Details</a>
+                        </div>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+            </center>
+            <br>
+        {% else %}
+            <div class="col-12">
+                <div class="alert alert-warning">No records found</div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+</div>
+<br>
+</div>
+
+
+{% endblock %}
