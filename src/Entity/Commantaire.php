@@ -25,7 +25,7 @@ class Commantaire
 
     #[ORM\ManyToOne(inversedBy: 'commantaire')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $author = null;
+    private ?Utilisateur $utilisateur = null;
 
     public function getId(): ?int
     {
@@ -68,14 +68,15 @@ class Commantaire
         return $this;
     }
 
-    public function getAuthor(): ?User
+
+    public function getUtilisateur(): ?Utilisateur
     {
-        return $this->author;
+        return $this->utilisateur;
     }
 
-    public function setAuthor(?User $author): self
+    public function setUtilisateur(?Utilisateur $utilisateur): self
     {
-        $this->author = $author;
+        $this->utilisateur = $utilisateur;
 
         return $this;
     }

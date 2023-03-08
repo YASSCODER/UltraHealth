@@ -2,80 +2,69 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
+use App\Repository\UtilisateurRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: '`user`')]
-class User
+#[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
+class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(length: 180, unique: true)]
+    private ?string $email = null;
+
+    #[ORM\Column]
+    private array $roles = [];
+
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column]
+    private ?string $password = null;
+
     #[ORM\Column(length: 8)]
-    #[Assert\NotBlank]
-    #[Assert\Length(
-        min: 8,
-        max: 8,
-        minMessage: 'Your CIN must be at least {{ limit }} 8 characters',
-        maxMessage: 'Your CIN must be at least {{ limit }} 8 characters',
-    )]
     private ?string $cin = null;
 
     #[ORM\Column(length: 30)]
-    #[Assert\NotBlank]
     private ?string $nom = null;
 
     #[ORM\Column(length: 30)]
-    #[Assert\NotBlank]
     private ?string $prenom = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $dateNaissance = null;
-
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank]
     private ?string $zone = null;
 
-    #[ORM\Column(length: 50)]
-    #[Assert\Email(
-        message: 'The email {{ value }} is not a valid email.',
-    )]
-    private ?string $email = null;
-
-    #[ORM\Column(length: 30)]
-    #[Assert\NotBlank]
-    private ?string $password = null;
-
-    #[ORM\Column(length: 30)]
-    private ?string $role = null;
-
-    #[ORM\OneToMany(mappedBy: 'commandeOwner', targetEntity: Commande::class)]
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Commande::class, orphanRemoval: true)]
     private Collection $commande;
 
-    #[ORM\OneToMany(mappedBy: 'PasseOwner', targetEntity: Passe::class)]
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Passe::class, orphanRemoval: true)]
     private Collection $Passe;
 
-    #[ORM\OneToMany(mappedBy: 'userOwner', targetEntity: Menu::class)]
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Menu::class, orphanRemoval: true)]
     private Collection $menu;
 
-    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Article::class)]
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Article::class, orphanRemoval: true)]
     private Collection $article;
 
-    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Question::class)]
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Question::class, orphanRemoval: true)]
     private Collection $question;
 
-    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Reponse::class)]
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Question::class, orphanRemoval: true)]
     private Collection $reponse;
 
-    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Commantaire::class)]
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Commantaire::class)]
     private Collection $commantaire;
+
+    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    private ?\DateTimeImmutable $dateNaissance = null;
 
     public function __construct()
     {
@@ -91,6 +80,90 @@ class User
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @deprecated since Symfony 5.3, use getUserIdentifier instead
+     */
+    public function getUsername(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Returning a salt is only needed, if you are not using a modern
+     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
+     *
+     * @see UserInterface
+     */
+    public function getSalt(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
     public function getCin(): ?string
@@ -129,18 +202,6 @@ class User
         return $this;
     }
 
-    public function getDateNaissance(): ?\DateTimeInterface
-    {
-        return $this->dateNaissance;
-    }
-
-    public function setDateNaissance(\DateTimeInterface $dateNaissance): self
-    {
-        $this->dateNaissance = $dateNaissance;
-
-        return $this;
-    }
-
     public function getZone(): ?string
     {
         return $this->zone;
@@ -149,42 +210,6 @@ class User
     public function setZone(string $zone): self
     {
         $this->zone = $zone;
-
-        return $this;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    public function getRole(): ?string
-    {
-        return $this->role;
-    }
-
-    public function setRole(string $role): self
-    {
-        $this->role = $role;
 
         return $this;
     }
@@ -201,7 +226,7 @@ class User
     {
         if (!$this->commande->contains($commande)) {
             $this->commande->add($commande);
-            $commande->setCommandeOwner($this);
+            $commande->setUtilisateur($this);
         }
 
         return $this;
@@ -211,8 +236,8 @@ class User
     {
         if ($this->commande->removeElement($commande)) {
             // set the owning side to null (unless already changed)
-            if ($commande->getCommandeOwner() === $this) {
-                $commande->setCommandeOwner(null);
+            if ($commande->getUtilisateur() === $this) {
+                $commande->setUtilisateur(null);
             }
         }
 
@@ -231,7 +256,7 @@ class User
     {
         if (!$this->Passe->contains($passe)) {
             $this->Passe->add($passe);
-            $passe->setPasseOwner($this);
+            $passe->setUtilisateur($this);
         }
 
         return $this;
@@ -241,8 +266,8 @@ class User
     {
         if ($this->Passe->removeElement($passe)) {
             // set the owning side to null (unless already changed)
-            if ($passe->getPasseOwner() === $this) {
-                $passe->setPasseOwner(null);
+            if ($passe->getUtilisateur() === $this) {
+                $passe->setUtilisateur(null);
             }
         }
 
@@ -261,7 +286,7 @@ class User
     {
         if (!$this->menu->contains($menu)) {
             $this->menu->add($menu);
-            $menu->setUserOwner($this);
+            $menu->setUtilisateur($this);
         }
 
         return $this;
@@ -271,8 +296,8 @@ class User
     {
         if ($this->menu->removeElement($menu)) {
             // set the owning side to null (unless already changed)
-            if ($menu->getUserOwner() === $this) {
-                $menu->setUserOwner(null);
+            if ($menu->getUtilisateur() === $this) {
+                $menu->setUtilisateur(null);
             }
         }
 
@@ -291,7 +316,7 @@ class User
     {
         if (!$this->article->contains($article)) {
             $this->article->add($article);
-            $article->setAuthor($this);
+            $article->setUtilisateur($this);
         }
 
         return $this;
@@ -301,8 +326,8 @@ class User
     {
         if ($this->article->removeElement($article)) {
             // set the owning side to null (unless already changed)
-            if ($article->getAuthor() === $this) {
-                $article->setAuthor(null);
+            if ($article->getUtilisateur() === $this) {
+                $article->setUtilisateur(null);
             }
         }
 
@@ -321,7 +346,7 @@ class User
     {
         if (!$this->question->contains($question)) {
             $this->question->add($question);
-            $question->setAuthor($this);
+            $question->setUtilisateur($this);
         }
 
         return $this;
@@ -331,8 +356,8 @@ class User
     {
         if ($this->question->removeElement($question)) {
             // set the owning side to null (unless already changed)
-            if ($question->getAuthor() === $this) {
-                $question->setAuthor(null);
+            if ($question->getUtilisateur() === $this) {
+                $question->setUtilisateur(null);
             }
         }
 
@@ -340,29 +365,29 @@ class User
     }
 
     /**
-     * @return Collection<int, Reponse>
+     * @return Collection<int, Question>
      */
     public function getReponse(): Collection
     {
         return $this->reponse;
     }
 
-    public function addReponse(Reponse $reponse): self
+    public function addReponse(Question $reponse): self
     {
         if (!$this->reponse->contains($reponse)) {
             $this->reponse->add($reponse);
-            $reponse->setAuthor($this);
+            $reponse->setUtilisateur($this);
         }
 
         return $this;
     }
 
-    public function removeReponse(Reponse $reponse): self
+    public function removeReponse(Question $reponse): self
     {
         if ($this->reponse->removeElement($reponse)) {
             // set the owning side to null (unless already changed)
-            if ($reponse->getAuthor() === $this) {
-                $reponse->setAuthor(null);
+            if ($reponse->getUtilisateur() === $this) {
+                $reponse->setUtilisateur(null);
             }
         }
 
@@ -381,7 +406,7 @@ class User
     {
         if (!$this->commantaire->contains($commantaire)) {
             $this->commantaire->add($commantaire);
-            $commantaire->setAuthor($this);
+            $commantaire->setUtilisateur($this);
         }
 
         return $this;
@@ -391,10 +416,22 @@ class User
     {
         if ($this->commantaire->removeElement($commantaire)) {
             // set the owning side to null (unless already changed)
-            if ($commantaire->getAuthor() === $this) {
-                $commantaire->setAuthor(null);
+            if ($commantaire->getUtilisateur() === $this) {
+                $commantaire->setUtilisateur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDateNaissance(): ?\DateTimeImmutable
+    {
+        return $this->dateNaissance;
+    }
+
+    public function setDateNaissance(\DateTimeImmutable $dateNaissance): self
+    {
+        $this->dateNaissance = $dateNaissance;
 
         return $this;
     }

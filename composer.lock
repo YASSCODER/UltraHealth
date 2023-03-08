@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "53619c4978cd65befeeb18b8314e4cdf",
+    "content-hash": "9387a61f35c305d7745cee368f4d8eb1",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -4345,16 +4345,16 @@
         },
         {
             "name": "symfony/mailer",
-            "version": "v5.4.19",
+            "version": "v5.4.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/mailer.git",
-                "reference": "66081dc01cfc04fdea08bbd253f44627ec5591dd"
+                "reference": "60c5f5a29399ff591fadd99da345a4a8bf048c41"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/mailer/zipball/66081dc01cfc04fdea08bbd253f44627ec5591dd",
-                "reference": "66081dc01cfc04fdea08bbd253f44627ec5591dd",
+                "url": "https://api.github.com/repos/symfony/mailer/zipball/60c5f5a29399ff591fadd99da345a4a8bf048c41",
+                "reference": "60c5f5a29399ff591fadd99da345a4a8bf048c41",
                 "shasum": ""
             },
             "require": {
@@ -4372,7 +4372,7 @@
                 "symfony/http-kernel": "<4.4"
             },
             "require-dev": {
-                "symfony/http-client-contracts": "^1.1|^2|^3",
+                "symfony/http-client": "^4.4|^5.0|^6.0",
                 "symfony/messenger": "^4.4|^5.0|^6.0"
             },
             "type": "library",
@@ -4401,7 +4401,7 @@
             "description": "Helps sending emails",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/mailer/tree/v5.4.19"
+                "source": "https://github.com/symfony/mailer/tree/v5.4.21"
             },
             "funding": [
                 {
@@ -4417,7 +4417,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-01-09T05:43:46+00:00"
+            "time": "2023-02-21T10:48:16+00:00"
         },
         {
             "name": "symfony/messenger",
@@ -4924,16 +4924,16 @@
         },
         {
             "name": "symfony/password-hasher",
-            "version": "v5.4.19",
+            "version": "v5.4.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/password-hasher.git",
-                "reference": "51b4b4d9e368fa6e31daa24866499781848c77d3"
+                "reference": "7ce4529b2b2ea7de3b6f344a1a41f58201999180"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/password-hasher/zipball/51b4b4d9e368fa6e31daa24866499781848c77d3",
-                "reference": "51b4b4d9e368fa6e31daa24866499781848c77d3",
+                "url": "https://api.github.com/repos/symfony/password-hasher/zipball/7ce4529b2b2ea7de3b6f344a1a41f58201999180",
+                "reference": "7ce4529b2b2ea7de3b6f344a1a41f58201999180",
                 "shasum": ""
             },
             "require": {
@@ -4977,7 +4977,7 @@
                 "password"
             ],
             "support": {
-                "source": "https://github.com/symfony/password-hasher/tree/v5.4.19"
+                "source": "https://github.com/symfony/password-hasher/tree/v5.4.21"
             },
             "funding": [
                 {
@@ -4993,7 +4993,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-01-01T08:32:19+00:00"
+            "time": "2023-02-14T08:03:56+00:00"
         },
         {
             "name": "symfony/polyfill-intl-grapheme",
@@ -6128,16 +6128,16 @@
         },
         {
             "name": "symfony/security-bundle",
-            "version": "v5.4.20",
+            "version": "v5.4.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/security-bundle.git",
-                "reference": "1a049b77e70e890c5d5d2105d96ce8b35890197e"
+                "reference": "a85747ee4508d236e171a3cc8c2ce58c5f24f990"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/security-bundle/zipball/1a049b77e70e890c5d5d2105d96ce8b35890197e",
-                "reference": "1a049b77e70e890c5d5d2105d96ce8b35890197e",
+                "url": "https://api.github.com/repos/symfony/security-bundle/zipball/a85747ee4508d236e171a3cc8c2ce58c5f24f990",
+                "reference": "a85747ee4508d236e171a3cc8c2ce58c5f24f990",
                 "shasum": ""
             },
             "require": {
@@ -6210,7 +6210,7 @@
             "description": "Provides a tight integration of the Security component into the Symfony full-stack framework",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/security-bundle/tree/v5.4.20"
+                "source": "https://github.com/symfony/security-bundle/tree/v5.4.21"
             },
             "funding": [
                 {
@@ -6226,7 +6226,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-01-30T09:35:58+00:00"
+            "time": "2023-02-26T12:08:44+00:00"
         },
         {
             "name": "symfony/security-core",
@@ -7700,6 +7700,53 @@
                 }
             ],
             "time": "2023-01-10T18:51:14+00:00"
+        },
+        {
+            "name": "symfonycasts/verify-email-bundle",
+            "version": "v1.13.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SymfonyCasts/verify-email-bundle.git",
+                "reference": "eb7bc997f36ad872a0d56bf209fe37fed148b0a7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SymfonyCasts/verify-email-bundle/zipball/eb7bc997f36ad872a0d56bf209fe37fed148b0a7",
+                "reference": "eb7bc997f36ad872a0d56bf209fe37fed148b0a7",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=7.2.5",
+                "symfony/config": "^5.4 | ^6.0",
+                "symfony/dependency-injection": "^5.4 | ^6.0",
+                "symfony/deprecation-contracts": "^2.2 | ^3.0",
+                "symfony/http-kernel": "^5.4 | ^6.0",
+                "symfony/routing": "^5.4 | ^6.0"
+            },
+            "require-dev": {
+                "doctrine/orm": "^2.7",
+                "doctrine/persistence": "^2.0",
+                "symfony/framework-bundle": "^5.4 | ^6.0",
+                "symfony/phpunit-bridge": "^5.4 | ^6.0",
+                "vimeo/psalm": "^4.3"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "SymfonyCasts\\Bundle\\VerifyEmail\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Simple, stylish Email Verification for Symfony",
+            "support": {
+                "issues": "https://github.com/SymfonyCasts/verify-email-bundle/issues",
+                "source": "https://github.com/SymfonyCasts/verify-email-bundle/tree/v1.13.0"
+            },
+            "time": "2023-01-04T12:46:15+00:00"
         },
         {
             "name": "twig/extra-bundle",
