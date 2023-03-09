@@ -63,4 +63,12 @@ class PasseRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function findOneBySomeField($ID): ?Passe
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.id = :ID')
+            ->setParameter('ID', $ID)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

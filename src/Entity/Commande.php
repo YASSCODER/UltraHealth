@@ -27,7 +27,7 @@ class Commande
 
     #[ORM\ManyToOne(inversedBy: 'commande')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $commandeOwner = null;
+    private ?Utilisateur $utilisateur = null;
 
     public function __construct()
     {
@@ -87,14 +87,14 @@ class Commande
         return $this;
     }
 
-    public function getCommandeOwner(): ?User
+    public function getUtilisateur(): ?Utilisateur
     {
-        return $this->commandeOwner;
+        return $this->utilisateur;
     }
 
-    public function setCommandeOwner(?User $commandeOwner): self
+    public function setUtilisateur(?Utilisateur $utilisateur): self
     {
-        $this->commandeOwner = $commandeOwner;
+        $this->utilisateur = $utilisateur;
 
         return $this;
     }

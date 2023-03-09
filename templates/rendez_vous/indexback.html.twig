@@ -1,0 +1,40 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}RendezVous index{% endblock %}
+
+{% block body %}
+    <h1>RendezVous index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>DateRdv</th>
+                <th>Heure</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for rendez_vou in rendez_vouses %}
+            <tr>
+                <td>{{ rendez_vou.id }}</td>
+             //   <td>{{ rendez_vou.dateRdv ? rendez_vou.dateRdv|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ rendez_vou.dateRdv ? rendez_vou.dateRdv|date('Y-m-d ') : '' }}</td>
+ 
+                <td>{{ rendez_vou.heure ? rendez_vou.heure|date('H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_rendez_vous_back_show', {'id': rendez_vou.id}) }}">show</a>
+                    <a href="{{ path('app_rendez_vous_back_edit', {'id': rendez_vou.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+       <div class="align-center" style="color: black; float: left; padding: 8px 16px;  text-decoration: none; display: inline-block;> {{ knp_pagination_render(rendez_vouses) }}</div>
+	
+    <a href="{{ path('app_rendez_vous_back_new') }}">Create new</a>
+{% endblock %}

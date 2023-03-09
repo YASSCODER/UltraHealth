@@ -1,0 +1,13 @@
+{% extends 'baseAchref.html.twig' %}
+
+{% block title %}Edit Passe{% endblock %}
+
+{% block body %}
+    <h1>Edit Passe</h1>
+
+    {{ include('passe/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_passe_index') }}">back to list</a>
+
+    {{ include('passe/_delete_form.html.twig') }}
+{% endblock %}

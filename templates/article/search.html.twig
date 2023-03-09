@@ -1,0 +1,22 @@
+{% extends 'basesofien.html.twig' %}
+
+{% block title %}Search Articles{% endblock %}
+
+{% block body %}
+    <h1>Search Articles</h1>
+
+    <form method="get" action="{{ path('search_article') }}">
+        <input type="text" name="q" value="{{ app.request.query.get('q') }}">
+        <button type="submit">Search</button>
+    </form>
+
+    {% if articles is not empty %}
+        <ul>
+            {% for article in articles %}
+                <li><a href="{{ path('app_article_show', {'id': article.id}) }}">{{ article.titre }} </a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No articles found</p>
+    {% endif %}
+{% endblock %}

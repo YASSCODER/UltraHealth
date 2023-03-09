@@ -36,6 +36,15 @@ class Evennement
     #[ORM\OneToOne(mappedBy: 'evennement', cascade: ['persist', 'remove'])]
     private ?Passe $passe = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $eventimg = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $nbrPasse = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $prix = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -128,5 +137,46 @@ class Evennement
         $this->passe = $passe;
 
         return $this;
+    }
+
+    public function getEventimg(): ?string
+    {
+        return $this->eventimg;
+    }
+
+    public function setEventimg(string $eventimg): self
+    {
+        $this->eventimg = $eventimg;
+
+        return $this;
+    }
+
+    public function getNbrPasse(): ?int
+    {
+        return $this->nbrPasse;
+    }
+
+    public function setNbrPasse(?int $nbrPasse): self
+    {
+        $this->nbrPasse = $nbrPasse;
+
+        return $this;
+    }
+
+    public function getPrix(): ?float
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(?float $prix): self
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->titre;
     }
 }

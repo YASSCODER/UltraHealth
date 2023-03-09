@@ -1,0 +1,11 @@
+{{ form_start(form,{attr:{novalidate:'novalidate'}}) }}
+    {{ form_row(form.titre,{'attr': {'class': 'input'}}) }}
+    {{ form_errors(form.titre,{'attr':{'class':'text-danger'}}) }}
+    {{ form_row(form.description,{'attr': {'class': 'input'}}) }}
+    {{ form_row(form.image,{'attr': {'class': 'input'}} )}}
+    {{ form_row(form.utilisateur,{'attr': {'class': 'input'}}) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+
+     <button type="button" onclick="window.location.href='{{ path('app_article_index') }}'" class="btn">back to list</button>   
+
+{{ form_end(form) }}

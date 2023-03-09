@@ -1,0 +1,39 @@
+{% extends 'backbasesofien.html.twig' %}
+
+{% block title %}Commantaire index{% endblock %}
+
+{% block body %}
+<div class="shadow">
+    <h1>Commantaire index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Description</th>
+                <th>Created_at</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for commantaire in commantaires %}
+            <tr>
+                <td>{{ commantaire.id }}</td>
+                <td>{{ commantaire.description }}</td>
+                <td>{{ commantaire.createdAt ? commantaire.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_commantaire_backshow', {'id': commantaire.id}) }}">show</a>
+                    <a href="{{ path('app_commantaire_backedit', {'id': commantaire.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_commantaire_new') }}">Create new</a>
+    </div>
+{% endblock %}

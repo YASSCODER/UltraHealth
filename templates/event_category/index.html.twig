@@ -1,0 +1,38 @@
+{% extends 'baseAchref.html.twig' %}
+
+{% block title %}EventCategory
+{% endblock %}
+
+{% block body %}
+
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Titre</th>
+				<th>Description</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for event_category in event_categories %}
+				<tr>
+					<td>{{ event_category.id }}</td>
+					<td>{{ event_category.titre }}</td>
+					<td>{{ event_category.description }}</td>
+					<td>
+						<a href="{{ path('app_event_category_show', {'id': event_category.id}) }}">show</a>
+						<a href="{{ path('app_event_category_edit', {'id': event_category.id}) }}">edit</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a href="{{ path('app_event_category_new') }}">Create new</a>
+{% endblock %}

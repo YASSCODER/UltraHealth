@@ -39,6 +39,18 @@ class ConsultationRepository extends ServiceEntityRepository
         }
     }
 
+
+    public function searchByTitre($searchQuery)
+    {
+        return $this->createQueryBuilder('i')
+            ->where('i.traitement LIKE :query')
+            ->setParameter('query', '%'.$searchQuery.'%')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+ 
 //    /**
 //     * @return Consultation[] Returns an array of Consultation objects
 //     */

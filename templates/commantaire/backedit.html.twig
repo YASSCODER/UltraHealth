@@ -1,0 +1,14 @@
+{% extends 'backbasesofien.html.twig' %}
+
+{% block title %}Edit Commantaire{% endblock %}
+
+{% block body %}
+<div class="shadow">
+    <h1>Edit Commantaire</h1>
+
+    {{ include('commantaire/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_commantaire_backindex') }}">back to list</a>
+
+    {{ include('commantaire/_delete_form.html.twig') }}</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'frontbase.html.twig' %}
+	{% set queryParams = app.request.query.all %}
+	{% set queryString = queryParams|filter(( v , k ) => k != "page")|url_encode  %}
+	
+	{% block title %}EVENNEMENT
+	{% endblock %}
+	
+	
+	{% block body %}
+		<div class="container">
+			<div class="grix xs1 sm5 gutter-0 card">
+				<div class="col-xs1">
+					<p>filtre:
+					</p>
+					<form id="filters">
+						{% for categorie in categories %}
+							{% if queryParams is not empty and queryParams.categories is defined %}
+								{% set checked = (categorie.id in queryParams.categories)? "checked" : "" %}
+							{% else %}
+								{% set checked = "" %}
+							{% endif %}
+	
+							<input type="checkbox" name="categories[]" id="cat{{categorie.id}}" value="{{categorie.id}}" {{checked}}><label for="cat{{categorie.id}}">{{categorie.titre}}</label>
+	
+	
+						{% endfor %}
+					</form>
+				</div>
+				<div class="col-xs1 col-sm4" id="content">
+					{% include "evennement/_contentEventB.html.twig" %}
+				</div>
+			</div>
+		</div>
+	{% endblock %}
+	
+	
+	{% block javascripts %}
+		<script src="{{asset('assets/js/filterEvent.js')}}"></script>
+	{% endblock %}

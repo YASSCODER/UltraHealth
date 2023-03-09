@@ -1,0 +1,48 @@
+{% extends 'backbasesofien.html.twig' %}
+    {% set queryParams = app.request.query.all %}
+    {% set queryString = queryParams|filter(( v , k ) => k != "page")|url_encode  %}
+    {% block title %}Article index{% endblock %}
+    
+    {% block body %}
+    
+    
+            <div class="container">
+            <div class="grix xs1 sm5 gutter-0 card">
+    
+       <div class="col-xs1">
+                    <p>filtre:
+                    </p>
+                    <form id="filters">
+                        {% for auther in authers %}
+                            {% if queryParams is not empty and queryParams.authers is defined %}
+                                {% set checked = (auther.id in queryParams.authers)? "checked" : "" %}
+                            {% else %}
+                                {% set checked = "" %}
+                            {% endif %}
+    
+                            <input type="checkbox" name="articles[]" id="art{{auther.id}}" value="{{auther.id}}" {{checked}}><label for="art{{auther.id}}">{{auther.nom}} {{auther.prenom}}</label>
+    
+    
+                        {% endfor %}
+                    </form>
+            
+                 
+    
+    
+    
+            </div>   
+         <div class="col-xs1 col-sm4" id="content">         
+        {% include "article/filtre.html.twig" %}
+        </div>
+        </div>
+            
+    
+      <div class="form-group">  <a class="shadow__btn" href="{{ path('app_article_new') }}"> new article</a></div>
+    </div>
+        </div>
+    {% endblock %}
+    
+    {% block javascripts %}
+                <script src="{{ asset ('assets/js/filtre.js')}}"></script>
+{% endblock %}
+    

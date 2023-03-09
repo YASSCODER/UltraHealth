@@ -1,0 +1,13 @@
+{% extends 'backbasesofien.html.twig' %}
+
+{% block title %}New Commantaire{% endblock %}
+
+{% block body %}
+<div class="form-group">
+    <h1>Create new Commantaire</h1>
+
+    {{ include('commantaire/_form.html.twig') }}
+
+    <a href="{{ path('app_commantaire_backindex') }}">back to list</a>
+    </div>
+{% endblock %}

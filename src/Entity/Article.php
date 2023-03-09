@@ -30,9 +30,13 @@ class Article
     #[ORM\OneToMany(mappedBy: 'poste', targetEntity: Commantaire::class, orphanRemoval: true)]
     private Collection $commantaires;
 
+
     #[ORM\ManyToOne(inversedBy: 'article')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $author = null;
+    private ?Utilisateur $utilisateur = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
 
     public function __construct()
     {
@@ -122,14 +126,27 @@ class Article
         return $this;
     }
 
-    public function getAuthor(): ?User
+
+    public function getUtilisateur(): ?Utilisateur
     {
-        return $this->author;
+        return $this->utilisateur;
     }
 
-    public function setAuthor(?User $author): self
+    public function setUtilisateur(?Utilisateur $utilisateur): self
     {
-        $this->author = $author;
+        $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

@@ -1,0 +1,40 @@
+{% extends 'frontbase.html.twig' %}
+
+{% block title %}Passe
+{% endblock %}
+
+{% block body %}
+
+
+	<table class="table">
+		<thead>
+			<tr>
+
+				<th>Code</th>
+				<th>Prix</th>
+				<th>evennement</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for passe in passes %}
+				<tr>
+
+					<td>{{ passe.code }}</td>
+					<td>{{ passe.prix }}</td>
+					<td>{{ passe.getEvennement().getTitre() }}</td>
+					<td>
+						<a href="{{ path('app_passe_front_show', {'id': passe.id}) }}">show</a>
+
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+
+{% endblock %}

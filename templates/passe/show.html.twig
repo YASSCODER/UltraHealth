@@ -1,0 +1,37 @@
+{% extends 'baseAchref.html.twig' %}
+
+{% block title %}Passe
+{% endblock %}
+
+{% block body %}
+	<h1>Passe</h1>
+
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ passe.id }}</td>
+			</tr>
+			<tr>
+				<th>Code</th>
+				<td>{{ passe.code }}</td>
+			</tr>
+			<tr>
+				<th>Prix</th>
+				<td>{{ passe.prix }}</td>
+			</tr>
+			<tr>
+				<th>evennement</th>
+				<td>{{ passe.getEvennement().getTitre() }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<a href="{{ path('app_passe_index') }}">back to list</a>
+
+	<a href="{{ path('app_passe_edit', {'id': passe.id}) }}">edit</a>
+	<a href="{{ path('app_passe_PDF',{'id': passe.id})}}">
+		imprimer ticket</a>
+
+	{{ include('passe/_delete_form.html.twig') }}
+{% endblock %}
