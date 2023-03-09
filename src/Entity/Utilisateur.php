@@ -435,8 +435,11 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+<<<<<<< HEAD
     public function __toString()
     {
         return $this->email;
     }
+=======
+>>>>>>> f9dfe56eeb28b24e0ae2931064d4a01cf1a02be5
 }

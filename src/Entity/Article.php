@@ -34,9 +34,12 @@ class Article
     #[ORM\ManyToOne(inversedBy: 'article')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Utilisateur $utilisateur = null;
+<<<<<<< HEAD
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
+=======
+>>>>>>> f9dfe56eeb28b24e0ae2931064d4a01cf1a02be5
 
     public function __construct()
     {
@@ -135,6 +138,7 @@ class Article
     public function setUtilisateur(?Utilisateur $utilisateur): self
     {
         $this->utilisateur = $utilisateur;
+<<<<<<< HEAD
 
         return $this;
     }
@@ -147,6 +151,8 @@ class Article
     public function setImage(?string $image): self
     {
         $this->image = $image;
+=======
+>>>>>>> f9dfe56eeb28b24e0ae2931064d4a01cf1a02be5
 
         return $this;
     }
