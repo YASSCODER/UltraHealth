@@ -13,6 +13,18 @@ use Symfony\Component\Routing\Annotation\Route;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
+use Doctrine\Persistence\ManagerRegistry;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Color\Color;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
+use Endroid\QrCode\Label\Label;
+use Endroid\QrCode\Logo\Logo;
+use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
+use Endroid\QrCode\Writer\PngWriter;
+use Endroid\QrCode\Writer\ValidationException;
+use Endroid\QrCode\Label\Font\Not;
+
 #[Route('/plat')]
 class PlatController extends AbstractController
 {
@@ -70,6 +82,35 @@ class PlatController extends AbstractController
         return $this->render('plat/searchresultadmin.html.twig', [
             'plats' => $plats,
         ]);
+    }
+
+    #[Route('/m/QrCode/{id}', name: 'app_QrCode')]
+    public function qrCode(ManagerRegistry $doctrine, $id, PlatRepository $Plat)
+    {
+        return $this->render("plat/qrcodeplat.html.twig", ['id' => $id]);
+    }
+
+    #[Route('/m/QrCode/generate/{id}', name: 'app_qrplat_codes')]
+    public function qrGenerator(ManagerRegistry $doctrine, $id, PlatRepository $Plat)
+    {
+        $em = $doctrine->getManager();
+        $res = $Plat->find($id);
+      //  $qrcode = QrCode::create($res->getNom() .  " Et le prix est: " . $res->getPrix())
+        $qrcode = QrCode::create( " - Votre Apercu Plat  est:". $res->getId() )
+
+            ->setEncoding(new Encoding('UTF-8'))
+            ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())
+            ->setSize(300)
+            ->setMargin(10)
+            ->setRoundBlockSizeMode(new RoundBlockSizeModeMargin())
+            ->setForegroundColor(new Color(0, 0, 0))
+            ->setBackgroundColor(new Color(255, 255, 255));
+        $writer = new PngWriter();
+        return new Response($writer->write($qrcode)->getString(),
+            Response::HTTP_OK,
+            ['content-type' => 'image/png']
+        );
+
     }
 
     #[Route('/{id}', name: 'app_plat_show', methods: ['GET'])]

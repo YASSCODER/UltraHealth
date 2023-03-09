@@ -12,6 +12,19 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
+
+use Doctrine\Persistence\ManagerRegistry;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Color\Color;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
+use Endroid\QrCode\Label\Label;
+use Endroid\QrCode\Logo\Logo;
+use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
+use Endroid\QrCode\Writer\PngWriter;
+use Endroid\QrCode\Writer\ValidationException;
+use Endroid\QrCode\Label\Font\Not;
+
 #[Route('/menu')]
 class MenuController extends AbstractController
 {
@@ -70,6 +83,34 @@ class MenuController extends AbstractController
         return $this->render('menu/searchresultadmin.html.twig', [
             'menus' => $menus,
         ]);
+    }
+    #[Route('/m/QrCode/{id}', name: 'app_QrCode')]
+    public function qrCode(ManagerRegistry $doctrine, $id, MenuRepository $Menu)
+    {
+        return $this->render("menu/qrcodemenu.html.twig", ['id' => $id]);
+    }
+
+    #[Route('/m/QrCode/generate/{id}', name: 'app_qrmenu_codes')]
+    public function qrGenerator(ManagerRegistry $doctrine, $id, MenuRepository $Menu)
+    {
+        $em = $doctrine->getManager();
+        $res = $Menu->find($id);
+      //  $qrcode = QrCode::create($res->getNom() .  " Et le prix est: " . $res->getPrix())
+        $qrcode = QrCode::create( " - Votre fiche Menu est:". $res->getId() )
+
+            ->setEncoding(new Encoding('UTF-8'))
+            ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())
+            ->setSize(300)
+            ->setMargin(10)
+            ->setRoundBlockSizeMode(new RoundBlockSizeModeMargin())
+            ->setForegroundColor(new Color(0, 0, 0))
+            ->setBackgroundColor(new Color(255, 255, 255));
+        $writer = new PngWriter();
+        return new Response($writer->write($qrcode)->getString(),
+            Response::HTTP_OK,
+            ['content-type' => 'image/png']
+        );
+
     }
 
     #[Route('/{id}', name: 'app_menu_show', methods: ['GET'])]

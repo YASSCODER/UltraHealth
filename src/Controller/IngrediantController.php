@@ -14,6 +14,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 // Include Dompdf required namespaces
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Doctrine\Persistence\ManagerRegistry;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Color\Color;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
+use Endroid\QrCode\Label\Label;
+use Endroid\QrCode\Logo\Logo;
+use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
+use Endroid\QrCode\Writer\PngWriter;
+use Endroid\QrCode\Writer\ValidationException;
+use Endroid\QrCode\Label\Font\Not;
 
 #[Route('/ingrediant')]
 class IngrediantController extends AbstractController
@@ -74,6 +85,34 @@ class IngrediantController extends AbstractController
             'ingrediant' => $ingrediant,
             'form' => $form,
         ]);
+    }
+    #[Route('/c/QrCode/{id}', name: 'app_QrCode')]
+    public function qrCode(ManagerRegistry $doctrine, $id, IngrediantRepository $Ingrediant)
+    {
+        return $this->render("ingrediant/qrcodeingrediant.html.twig", ['id' => $id]);
+    }
+
+    #[Route('/c/QrCode/generate/{id}', name: 'app_qringrediant_codes')]
+    public function qrGenerator(ManagerRegistry $doctrine, $id, IngrediantRepository $Ingrediant)
+    {
+        $em = $doctrine->getManager();
+        $res = $Ingrediant->find($id);
+      //  $qrcode = QrCode::create($res->getNom() .  " Et le prix est: " . $res->getPrix())
+        $qrcode = QrCode::create( " - Votre fiche Ingrediant est:". $res->getId() )
+
+            ->setEncoding(new Encoding('UTF-8'))
+            ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())
+            ->setSize(300)
+            ->setMargin(10)
+            ->setRoundBlockSizeMode(new RoundBlockSizeModeMargin())
+            ->setForegroundColor(new Color(0, 0, 0))
+            ->setBackgroundColor(new Color(255, 255, 255));
+        $writer = new PngWriter();
+        return new Response($writer->write($qrcode)->getString(),
+            Response::HTTP_OK,
+            ['content-type' => 'image/png']
+        );
+
     }
 
     #[Route('/{id}', name: 'app_ingrediant_show', methods: ['GET'])]
