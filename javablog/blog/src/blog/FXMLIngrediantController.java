@@ -21,7 +21,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-import Entities.Blog;
+
 import Entities.Ingrediant;
 
 import Service.ServiceIngrediant;
@@ -81,7 +81,7 @@ import javax.imageio.ImageIO;
 public class FXMLIngrediantController implements Initializable {
 
     private Label label;
-
+   
     @FXML
     private TextField tftitre;
     @FXML
@@ -104,6 +104,8 @@ public class FXMLIngrediantController implements Initializable {
     private TextField idsup;
     @FXML
     private TextField tfsearch;
+    @FXML
+    private TextField tftype;
     private int vartri = 0;
 
     @Override
@@ -210,6 +212,7 @@ public class FXMLIngrediantController implements Initializable {
         newStage.setScene(scene);
         newStage.show();
     }
+    // create a new PDF document
     @FXML
     private void CreerPDF(ActionEvent event) {
         Ingrediant c = tablec.getSelectionModel().getSelectedItem();
@@ -232,7 +235,7 @@ public class FXMLIngrediantController implements Initializable {
     
         
         
-       // create a new PDF document
+       
 
 
     
@@ -253,7 +256,7 @@ public class FXMLIngrediantController implements Initializable {
     @FXML
     private void searchkey(KeyEvent event) {
         ServiceIngrediant sc = new ServiceIngrediant();
-        ObservableList<Ingrediant> ingredients = sc.search(tfsearch.getText());
+        ObservableList<Ingrediant> ingredients = sc.search(tfsearch.getText(),tftype.getText());
         idt.setCellValueFactory(new PropertyValueFactory<Ingrediant, Integer>("id"));
         ttitre.setCellValueFactory(new PropertyValueFactory<Ingrediant, String>("titre"));
         tcaloris.setCellValueFactory(new PropertyValueFactory<Ingrediant, Integer>("caloris"));

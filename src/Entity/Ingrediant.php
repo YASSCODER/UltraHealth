@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: IngrediantRepository::class)]
 class Ingrediant
@@ -14,21 +15,33 @@ class Ingrediant
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    /**
+     *  @Groups({"post:read"})
+    */
     private ?int $id = null;
  
     #[ORM\Column(length: 30)]   
     #[Assert\NotNull(message: 'Please enter a value.')]
     #[Assert\Type('string', message: 'Please enter a valid name.')]
+    /**
+     *  @Groups({"post:read"})
+    */
     private ?string $titre = null;
 
     #[ORM\Column]
     #[Assert\NotBlank(message: 'This field can not be empty')]
     #[Assert\Positive(message: 'Please enter a positive number')]
+    /**
+     *  @Groups({"post:read"})
+    */
     private ?int $caloris = null;
 
     #[ORM\Column]
     #[Assert\NotBlank(message: 'This field can not be empty')]
     #[Assert\Positive(message: 'Please enter a positive number')]
+    /**
+     *  @Groups({"post:read"})
+    */
     private ?float $poids = null;
 
 

@@ -6,7 +6,7 @@
 package Service;
 
 import Entities.Ingrediant;
-import Entities.Blog;
+
 
 import Services.IServiceIngrediant;
 import Utiles.Maconnexion;
@@ -139,8 +139,36 @@ public class ServiceIngrediant implements IServiceIngrediant {
           
         }
     }
+ 
+    
+    // RECHERCHE SELON TITRE OU ID 29/04/2023 
+    
+    public ObservableList<Ingrediant> search(String input, String searchType) {
+    ObservableList<Ingrediant> ingredients = FXCollections.observableArrayList();
+    try {
+        Statement stm;
+        stm = cnx.createStatement();
+        String query = "SELECT * from ingrediant where " + searchType + " like '%" + input + "%'";
+        ResultSet rst = stm.executeQuery(query);
+        Ingrediant form;
+        while (rst.next()) {
+            Ingrediant c = new Ingrediant();
+            c.setId(rst.getInt("id"));
+            c.setTitre(rst.getString("titre"));
+            c.setCaloris(Integer.parseInt(rst.getString("caloris")));
+            c.setPoids(Integer.parseInt(rst.getString("poids")));
+            form = new Ingrediant(rst.getInt("id"), rst.getString("titre"), rst.getInt("caloris"), rst.getInt("poids"));
+            ingredients.add(form);
+        }
 
-    public ObservableList<Ingrediant> search(String input) {
+    } catch (SQLException ex) {
+        Logger.getLogger(ServiceIngrediant.class.getName()).log(Level.SEVERE, null, ex);
+    }
+
+    return ingredients;
+}
+    
+    /*public ObservableList<Ingrediant> search(String input) {
         ObservableList<Ingrediant> ingredients = FXCollections.observableArrayList();
         try {
             Statement stm;
@@ -163,7 +191,7 @@ public class ServiceIngrediant implements IServiceIngrediant {
         }
 
         return ingredients;
-    }
+    }*/
 
     public ObservableList<Ingrediant> triasc() {
         ObservableList<Ingrediant> ingredients = FXCollections.observableArrayList();
