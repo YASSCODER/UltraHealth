@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="578.0" prefWidth="1043.0"  xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gui.FXMLIngrediantController">
+   <children>
+      <ImageView fitHeight="581.0" fitWidth="790.0" layoutX="256.0" layoutY="-1.0">
+         <image>
+            <Image url="@../Images/dark-blue-ornament-texture-wallpaper-preview.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="750.0" layoutY="223.0" text="Titre:" textFill="WHITE" />
+      <Button layoutX="285.0" layoutY="469.0" mnemonicParsing="false" onAction="#AfficherIngrediant" prefHeight="47.0" prefWidth="117.0" style="-fx-label-padding: 9; -fx-background-color: #F0882F; -fx-border-radius: 15; -fx-background-radius: 15; -fx-cursor: hand;" text="Afficher">
+         <graphic>
+            <ImageView fitHeight="33.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/icons8-trier-64.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button layoutX="820.0" layoutY="369.0" mnemonicParsing="false" onAction="#AjouterIngrediant" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Ajouter" textFill="#00fadf">
+         <font>
+            <Font name="Segoe UI Semibold" size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="33.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/icons8-ajouter-64.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <TextField fx:id="idsup" blendMode="LIGHTEN" cache="true" layoutX="881.0" layoutY="474.0" prefHeight="36.0" prefWidth="67.0" style="-fx-background-color: #370898; -fx-background-radius: 10px; -fx-padding: 10px 20px; -fx-text-fill: white;" />
+      <TextField fx:id="tfsearch" blendMode="DIFFERENCE" layoutX="327.0" layoutY="46.0" onKeyReleased="#searchkey" prefHeight="33.0" prefWidth="163.0" promptText="Chercher " />
+      <Button layoutX="652.0" layoutY="52.0" mnemonicParsing="false" onMouseClicked="#tributton" prefHeight="33.0" prefWidth="75.0" style="-fx-background-radius: 5px;" text="Trier" />
+      <ImageView fitHeight="125.0" fitWidth="200.0">
+         <image>
+            <Image url="@../../../../dark-blue-ornament-texture-wallpaper-preview.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="750.0" layoutY="272.0" text="Caloris K/cal:" textFill="WHITE" />
+      <ImageView fitHeight="42.0" fitWidth="43.0" layoutX="285.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/icons8-google-web-recherche-64.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="tfcaloris" blendMode="LIGHTEN" layoutX="837.0" layoutY="263.0" style="-fx-background-color: #370898; -fx-padding: 10px 20px; -fx-background-radius: 10px; -fx-text-fill: white;" stylesheets="@style.css" />
+      <TextField fx:id="tftitre" blendMode="LIGHTEN" layoutX="837.0" layoutY="214.0" style="-fx-background-color: #370898; -fx-padding: 10px 20px; -fx-background-radius: 10px; -fx-text-fill: white;" stylesheets="@style.css" />
+      <TextField fx:id="tfpoids" blendMode="LIGHTEN" focusTraversable="false" layoutX="837.0" layoutY="316.0" prefHeight="26.0" prefWidth="182.0" style="-fx-background-color: #370898; -fx-padding: 10px 20px; -fx-background-radius: 10px; -fx-text-fill: white;" stylesheets="@style.css" />
+      <Button layoutX="914.0" layoutY="369.0" mnemonicParsing="false" onAction="#ModifierIngrediant" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Modifier" textFill="#00fadf">
+         <font>
+            <Font name="Segoe UI Semibold" size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="33.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/icons8-approuver-et-mettre-à-jour-64.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="837.0" layoutY="515.0" mnemonicParsing="false" onAction="#SupprimerIngrediant" prefHeight="30.0" prefWidth="127.0" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Supprimer" textFill="#00fadf">
+         <font>
+            <Font name="Segoe UI Semibold" size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="33.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/icons8-supprimer-64.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <TableView fx:id="tablec" layoutX="285.0" layoutY="86.0" onMouseClicked="#selectionner" prefHeight="373.0" prefWidth="442.0">
+         <columns>
+            <TableColumn fx:id="ttitre" minWidth="0.0" prefWidth="159.0" text="Titre" />
+            <TableColumn fx:id="tcaloris" prefWidth="167.0" text="Caloris" />
+            <TableColumn fx:id="tpoids" minWidth="0.0" prefWidth="115.0" text="Poids" />
+         </columns>
+      </TableView>
+      <Button fx:id="buttonqr" layoutX="443.0" layoutY="469.0" mnemonicParsing="false" onAction="#CreerPDF" prefHeight="47.0" prefWidth="127.0" style="-fx-background-color: #F0882F; -fx-cursor: hand; -fx-border-radius: 15; -fx-background-radius: 15;" text="Obtenir PDF">
+         <graphic>
+            <ImageView fitHeight="26.0" fitWidth="26.0">
+               <image>
+                  <Image url="@../Images/png-transparent-computer-icons-pdf-others-text-rectangle-logo.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <VBox alignment="TOP_CENTER" layoutY="-7.0" prefHeight="588.0" prefWidth="256.0" style="-fx-background-color: #05071F;">
+         <children>
+            <ImageView fitHeight="73.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/jimmy-fallon.png" />
+               </image>
+               <VBox.margin>
+                  <Insets bottom="10.0" top="50.0" />
+               </VBox.margin>
+            </ImageView>
+            <Label text="Salim Aloui" textFill="#e7e5e5">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </Label>
+            <Button fx:id="btnOverview" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@style.css" text="Home" textFill="#e7e5e5">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/icons8_Home_32px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </Button>
+            <Button fx:id="btnBlog" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false"   prefHeight="42.0" prefWidth="261.0" stylesheets="@style.css" text="Ingredients">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/icons8_Open_Envelope_32px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </Button>
+            <Button fx:id="btnPlat" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleGoToPlatButton" prefHeight="42.0" prefWidth="259.0" stylesheets="@style.css" text="Plats">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/icons8_Person_32px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </Button>
+            <Button fx:id="btnMenus" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleGoToMenuButton" prefHeight="42.0" prefWidth="259.0" stylesheets="@style.css" text="Menus">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/icons8_Xbox_Menu_32px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </Button>
+            <Button fx:id="btnPackages" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@style.css" text="Boutique">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/icons8_Box_32px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </Button>
+            <Button fx:id="btnSettings" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@style.css" text="Options">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/icons8_Slider__32px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </Button>
+            <Button fx:id="btnSignout" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@style.css" text="Sign Out">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/icons8_Sign_Out_32px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </Button>
+         </children>
+      </VBox>
+      <Label layoutX="750.0" layoutY="325.0" text="Poids:" textFill="WHITE" />
+      <Button fx:id="buttonqr1" layoutX="600.0" layoutY="469.0" mnemonicParsing="false" onAction="#CreerQR" prefHeight="47.0" prefWidth="127.0" style="-fx-background-color: #F0882F; -fx-cursor: hand; -fx-border-radius: 15; -fx-background-radius: 15;" text="Afficher QR">
+         <graphic>
+            <ImageView fitHeight="26.0" fitWidth="26.0">
+               <image>
+                  <Image url="@../Images/png-clipart-qr-code-information-qr-code-android-qrcode-text-rectangle-thumbnail.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+       
+   </children>
+</AnchorPane>

@@ -6,7 +6,8 @@
 package Service;
 
 import Entities.Plat;
-import Services.IServicePlat;
+import IService.IService;
+
 import Utiles.Maconnexion;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -24,7 +25,7 @@ import javafx.scene.control.ButtonType;
  *
  * @author Mega-PC
  */
-public class ServicePlat implements IServicePlat  {
+public class ServicePlat extends BaseService  {
     Connection cnx;
 
     public ServicePlat() {
@@ -85,11 +86,11 @@ public class ServicePlat implements IServicePlat  {
     }
 
     @Override
-    public void supprimerPlat(int id) {
+    public void supprimerPlat(String titre) {
         try {
             Statement stm = cnx.createStatement();
 
-            String query = " Delete FROM plat where id='" + id + "'";
+            String query = " Delete FROM plat where titre='" + titre + "'";
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation Dialog");
             alert.setHeaderText("Confirmation ");
@@ -137,7 +138,7 @@ public class ServicePlat implements IServicePlat  {
         try {
             Statement stm;
             stm = cnx.createStatement();
-            String query = "SELECT * from plat where titre like '%" + input + "%'";
+           String query = "SELECT * FROM plat WHERE titre LIKE '%" + input + "%' OR caloris LIKE '%" + input + "%' OR ingrediants_id LIKE '%" + input + "%'";
             ResultSet rst = stm.executeQuery(query);
             Plat form;
             while (rst.next()) {

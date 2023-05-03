@@ -6,9 +6,10 @@
 package Service;
 
 import Entities.Ingrediant;
+import IService.IService;
 
 
-import Services.IServiceIngrediant;
+
 import Utiles.Maconnexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,7 +32,7 @@ import javafx.scene.control.ButtonType;
  *
  * @author User
  */
-public class ServiceIngrediant implements IServiceIngrediant {
+public class ServiceIngrediant extends BaseService {
 
     Connection cnx;
 
@@ -93,11 +94,11 @@ public class ServiceIngrediant implements IServiceIngrediant {
     }
 
     @Override
-    public void supprimerIngrediant(int id) {
+    public void supprimerIngrediant(String titre) {
         try {
             Statement stm = cnx.createStatement();
 
-            String query = " Delete FROM ingrediant where id='" + id + "'";
+            String query = " Delete FROM ingrediant where titre='" + titre + "'";
             Alert alert = new Alert(AlertType.CONFIRMATION);
             alert.setTitle("Confirmation Dialog");
             alert.setHeaderText("Confirmation ");
@@ -143,12 +144,12 @@ public class ServiceIngrediant implements IServiceIngrediant {
     
     // RECHERCHE SELON TITRE OU ID 29/04/2023 
     
-    public ObservableList<Ingrediant> search(String input, String searchType) {
+    public ObservableList<Ingrediant> search(String input) {
     ObservableList<Ingrediant> ingredients = FXCollections.observableArrayList();
     try {
         Statement stm;
         stm = cnx.createStatement();
-        String query = "SELECT * from ingrediant where " + searchType + " like '%" + input + "%'";
+           String query = "SELECT * FROM ingrediant WHERE titre LIKE '%" + input + "%' OR caloris LIKE '%" + input + "%' OR poids LIKE '%" + input + "%'";
         ResultSet rst = stm.executeQuery(query);
         Ingrediant form;
         while (rst.next()) {

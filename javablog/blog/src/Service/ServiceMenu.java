@@ -6,7 +6,8 @@
 package Service;
 
 import Entities.Menu;
-import Services.IServiceMenu;
+import IService.IService;
+
 import Utiles.Maconnexion;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -24,7 +25,7 @@ import javafx.scene.control.ButtonType;
  *
  * @author Mega-PC
  */
-public class ServiceMenu implements IServiceMenu  {
+public   class ServiceMenu extends BaseService  {
     Connection cnx;
 
     public ServiceMenu() {
@@ -85,11 +86,11 @@ public class ServiceMenu implements IServiceMenu  {
     }
 
     @Override
-    public void supprimerMenu(int id) {
+    public void supprimerMenu(String titre) {
         try {
             Statement stm = cnx.createStatement();
 
-            String query = " Delete FROM menu where id='" + id + "'";
+            String query = " Delete FROM menu where titre='" + titre + "'";
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation Dialog");
             alert.setHeaderText("Confirmation ");
@@ -117,7 +118,8 @@ public class ServiceMenu implements IServiceMenu  {
 
 
           Statement stm = cnx.createStatement();
-          String query = "UPDATE menu SET titre='" + m.getTitre() + "', category=" + m.getCategory() + ", plats_id=" + m.getPlats_id() + " WHERE id=" + m.getId();
+          
+          String query = "UPDATE menu SET titre='" + m.getTitre() + "', category='" + m.getCategory() + "', plats_id=" + m.getPlats_id() + " WHERE id=" + m.getId();
           stm.executeUpdate(query);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Update");
@@ -137,7 +139,7 @@ public class ServiceMenu implements IServiceMenu  {
         try {
             Statement stm;
             stm = cnx.createStatement();
-            String query = "SELECT * from menu where titre like '%" + input + "%'";
+             String query = "SELECT * FROM menu WHERE titre LIKE '%" + input + "%' OR category LIKE '%" + input + "%' OR plats_id LIKE '%" + input + "%'";
             ResultSet rst = stm.executeQuery(query);
             Menu form;
             while (rst.next()) {

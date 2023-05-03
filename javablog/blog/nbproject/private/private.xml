@@ -3,7 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Mega-PC/Desktop/javablog/blog/src/blog/FXMLIngrediantController.java</file>
+            <file>file:/C:/Users/Mega-PC/Desktop/javablog/blog/src/Gui/FXMLIngrediantController.java</file>
+            <file>file:/C:/Users/Mega-PC/Desktop/javablog/blog/src/Service/ServiceMenu.java</file>
+            <file>file:/C:/Users/Mega-PC/Desktop/javablog/blog/src/Service/ServicePlat.java</file>
+            <file>file:/C:/Users/Mega-PC/Desktop/javablog/blog/src/IService/IService.java</file>
+            <file>file:/C:/Users/Mega-PC/Desktop/javablog/blog/src/Gui/FXMLMenuController.java</file>
+            <file>file:/C:/Users/Mega-PC/Desktop/javablog/blog/src/Gui/blog.fxml</file>
+            <file>file:/C:/Users/Mega-PC/Desktop/javablog/blog/src/Gui/style.css</file>
+            <file>file:/C:/Users/Mega-PC/Desktop/javablog/blog/src/Gui/plat.fxml</file>
+            <file>file:/C:/Users/Mega-PC/Desktop/javablog/blog/src/Service/BaseService.java</file>
+            <file>file:/C:/Users/Mega-PC/Desktop/javablog/blog/src/Gui/menu.fxml</file>
+            <file>file:/C:/Users/Mega-PC/Desktop/javablog/blog/src/Gui/FXMLPlatController.java</file>
             <file>file:/C:/Users/Mega-PC/Desktop/javablog/blog/src/Service/ServiceIngrediant.java</file>
         </group>
     </open-files>
