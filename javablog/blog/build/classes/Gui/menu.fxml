@@ -40,7 +40,7 @@
             </ImageView>
          </graphic></Button>
       <TextField fx:id="idsup" blendMode="LIGHTEN" cache="true" layoutX="881.0" layoutY="474.0" prefHeight="36.0" prefWidth="67.0" style="-fx-background-color: #370898; -fx-background-radius: 10px; -fx-padding: 10px 20px; -fx-text-fill: white;" />
-      <TextField fx:id="tfsearch" blendMode="DIFFERENCE" layoutX="327.0" layoutY="46.0" onKeyReleased="#searchkey" prefHeight="33.0" prefWidth="163.0" promptText="Chercher Selon Titre" />
+      <TextField fx:id="tfsearch" blendMode="DIFFERENCE" layoutX="327.0" layoutY="46.0" onKeyReleased="#searchkey" prefHeight="33.0" prefWidth="163.0" promptText="Chercher" />
       <Button layoutX="652.0" layoutY="52.0" mnemonicParsing="false" onMouseClicked="#tributton" prefHeight="33.0" prefWidth="75.0" style="-fx-background-radius: 5px;" text="Trier" />
       <ImageView fitHeight="125.0" fitWidth="200.0">
          <image>

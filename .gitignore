@@ -19,3 +19,5 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+/nbproject/private/
+/javablog/blog/dist/
