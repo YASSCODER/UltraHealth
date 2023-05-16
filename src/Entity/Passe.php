@@ -26,7 +26,7 @@ class Passe
     #[ORM\ManyToOne(inversedBy: 'Passe')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Utilisateur $utilisateur = null;
-<<<<<<< HEAD
+
 
     public function __construct($price = null, $event = null)
     {
@@ -35,8 +35,6 @@ class Passe
         $this->evennement = $event;
         $this->utilisateur = null;
     }
-=======
->>>>>>> f9dfe56eeb28b24e0ae2931064d4a01cf1a02be5
 
     public function getId(): ?int
     {
